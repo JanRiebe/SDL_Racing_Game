@@ -19,7 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedTexture.cpp" />
+    <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnimatedTexture.h" />
+    <ClInclude Include="LTexture.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{69d591d8-5701-4cae-b171-a69cca8ea401}</ProjectGuid>
