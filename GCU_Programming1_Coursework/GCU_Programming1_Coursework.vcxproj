@@ -20,11 +20,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedTexture.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="IInputChannelListener.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputChannel.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractEvent.h" />
     <ClInclude Include="AnimatedTexture.h" />
+    <ClInclude Include="Association.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="IInputChannelListener.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="InputChannel.h" />
     <ClInclude Include="LTexture.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

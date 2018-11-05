@@ -12,6 +12,8 @@ http://lazyfoo.net/tutorials/SDL/11_clip_rendering_and_sprite_sheets/index.php
 #include <chrono>
 #include "LTexture.h"
 #include "AnimatedTexture.h"
+#include "Input.h"
+#include "Controller.h"
 
 using namespace std::chrono;
 
@@ -81,6 +83,23 @@ int main(int argc, char* args[]) {		// SLD requires a main with these types of a
 
 			int time = 0;
 
+
+			//Creating test controllers
+			Controller testController_1(1);
+			Controller testController_2(2);
+
+			//Registering the test controller to an input channel.
+			Input::RegisterChannelListener(&testController_1, 0);
+			Input::RegisterChannelListener(&testController_2, 1);
+
+			//Registering the keyboard as input for the firts two channels
+			//TODO handle device registration within the input manager
+			Input::RegisterDevice(KEYBOARD_WASD, 0);
+			Input::RegisterDevice(KEYBOARD_ARROWS, 1);
+
+
+
+
 			//While application is running 
 			while (!quit) {
 				double elapsedTime = getElapsedSeconds();
@@ -93,35 +112,7 @@ int main(int argc, char* args[]) {		// SLD requires a main with these types of a
 					{
 						quit = true;
 					}
-					else if (e.type == SDL_KEYDOWN)
-					{
-						// Switching off all animations,
-						// to then switch on the right one only.
-						gAnimatedTexture_up.play(false);
-						gAnimatedTexture_down.play(false);
-						gAnimatedTexture_left.play(false);
-						gAnimatedTexture_right.play(false);
-
-						//Select surfaces based on key press 
-						switch (e.key.keysym.sym)
-						{
-						case SDLK_UP:
-							gAnimatedTexture_up.play(true);
-							break;
-						case SDLK_DOWN:
-							gAnimatedTexture_down.play(true);
-							break;
-						case SDLK_LEFT:
-							gAnimatedTexture_left.play(true);
-							break;
-						case SDLK_RIGHT:
-							gAnimatedTexture_right.play(true);
-							break;
-						default:
-
-							break;
-						}
-					}
+					Input::SDLEventIn(e);
 				}
 
 				// Update objects
@@ -201,6 +192,13 @@ bool init()
 					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					success = false;
 				}
+
+				//Initialising input management
+				if(!Input::Initialise())
+				{
+					printf("Input could not be initialised.");
+					success = false;
+				}
 			}
 		}
 	}
@@ -259,6 +257,10 @@ void close()
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 	gRenderer = NULL;
+
+	//Quit input manager
+	Input::Quit();
+
 	//Quit SDL subsystems 
 	IMG_Quit();
 	SDL_Quit();
