@@ -1,3 +1,9 @@
+/***************************************************************
+Abstracts user input into actions that are more directly
+related to the game and independent of the input device
+and the input library used.
+****************************************************************/
+
 #pragma once
 
 enum AbstractEventFlag

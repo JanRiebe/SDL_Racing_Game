@@ -1,3 +1,11 @@
+/***************************************************************
+A map that allows looking up elements in both directions.
+Each element is associated with a single other element.
+
+This is for example used by the input manager to handle
+the one to one relationship between input devices and channels.
+****************************************************************/
+
 #pragma once
 
 #include <map>

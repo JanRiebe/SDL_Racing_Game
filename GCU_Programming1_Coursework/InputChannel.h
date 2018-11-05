@@ -1,3 +1,14 @@
+/***************************************************************
+User input is put through channel objects.
+
+The input manager associates input from different devices
+with channels so that the events in one channel represent
+the input of one user.
+
+The channel then passes on the events to all objects that
+listen to it.
+****************************************************************/
+
 #pragma once
 
 #include <vector>

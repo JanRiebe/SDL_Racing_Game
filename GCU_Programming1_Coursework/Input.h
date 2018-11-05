@@ -1,3 +1,20 @@
+/***************************************************************
+A class that manages all the user input and passes it on
+to the game.
+
+Input can be recieved from different devices.
+It is then translated into abstract input events,
+which the rest of the engine can deal with.
+
+The input manager object is hidden in a singleton and
+access is provided through static functions.
+
+Together with channels, this class decouples input from
+different sources from the rest of the engine and allows
+for multiplayer play on one device. 
+
+****************************************************************/
+
 #pragma once
 
 #include "Association.h"
@@ -16,6 +33,8 @@ enum deviceID
 	SDL_JOYSTICK_3
 };
 
+//The number of channels that are created.
+//The maximum number of players that can play.
 const int NUMBER_OF_CHANNELS = 4;
 
 
