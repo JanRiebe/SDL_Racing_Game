@@ -14,14 +14,13 @@ public:
 	virtual ~LTexture();
 	//Loads image at specified path 
 	virtual bool loadFromFile(std::string path);
-	//Deallocates texture void free();
+	//Deallocates texture
+	void free();
 	//Renders texture at given point 
 	void render(int x, int y, SDL_Rect* clip = NULL);
 	//Gets image dimensions 
 	int getWidth();
 	int getHeight();
-	//Free texture if it exists 
-	void free();
 private:
 	//The actual hardware texture 
 	SDL_Texture* mTexture;
