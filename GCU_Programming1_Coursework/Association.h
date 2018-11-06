@@ -4,6 +4,8 @@ Each element is associated with a single other element.
 
 This is for example used by the input manager to handle
 the one to one relationship between input devices and channels.
+
+At this point it only works efficiently with small types and pointers.
 ****************************************************************/
 
 #pragma once
