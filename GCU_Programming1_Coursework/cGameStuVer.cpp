@@ -43,12 +43,11 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	
 	theTextureMgr->setRenderer(theRenderer);
 	// Store the textures
-	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
+	theTextureMgr->addTextureAnimated("Charactervector", "Images\\Charactervector.png", 4, 4);
 	
-	//TODO think about how the texture manager will load different types of textures
 	animation.setSpritePos({ 0, 0 });
-	animation.setTexture(theTextureMgr->getTexture("Charactervector"));
-	animation.setSpriteDimensions(theTextureMgr->getTexture("theBackground")->getTWidth(), theTextureMgr->getTexture("animation")->getTHeight());
+	animation.setTexture(theTextureMgr->getTextureAnimated("Charactervector"));
+	animation.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
 
 	
 }

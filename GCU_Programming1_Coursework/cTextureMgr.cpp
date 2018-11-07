@@ -48,6 +48,28 @@ cTextureMgr::~cTextureMgr()
 	
 }
 
+
+
+
+/*
+=================
+- add the texture as an animated texture.
+=================
+*/
+void cTextureMgr::addTextureAnimated(LPCSTR txtName, LPCSTR theFilename, int rows, int collums)
+{
+	if (!getTextureAnimated(txtName))
+	{
+		cTextureAnimated * newTxt = new cTextureAnimated();
+		newTxt->loadTexture(theFilename, theSDLRenderer, rows, collums);
+		//Adding the animated texture both to the textureList and the animatedTextureList
+		//so that it can be accessed through both getTexture and getTextureAnimated.
+		textureList.insert(make_pair(txtName, newTxt));
+		animatedTextureList.insert(make_pair(txtName, newTxt));
+	}
+}
+
+
 void cTextureMgr::addTexture(LPCSTR txtName, LPCSTR theFilename)
 {
 	if (!getTexture(txtName))
@@ -65,6 +87,8 @@ void cTextureMgr::deleteTextures()
 		delete txt->second;
 	}
 }
+
+
 /*
 =================
 - return the texture.
@@ -82,6 +106,26 @@ cTexture* cTextureMgr::getTexture(LPCSTR textureName)        // return the textu
 		return NULL;
 	}
 }
+
+/*
+=================
+- return the texture as an animated texture.
+=================
+*/
+cTextureAnimated * cTextureMgr::getTextureAnimated(LPCSTR textureName)
+{
+	map<LPCSTR, cTextureAnimated*>::iterator txt = animatedTextureList.find(textureName);
+	if (txt != animatedTextureList.end())
+	{
+		return txt->second;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+
 /*
 =================
 - Set the renderer.

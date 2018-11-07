@@ -32,8 +32,8 @@ using namespace std;
 
 //Define the string to appear in the top left corner of the window
 #define WINDOW_TITLE "Using Arrays to map tiles and Mouse Input to plant new Trees!"
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
+#define WINDOW_WIDTH 512
+#define WINDOW_HEIGHT 384
 
 // This header file contains all the constants & enumarated types for the game
 typedef struct fpoint

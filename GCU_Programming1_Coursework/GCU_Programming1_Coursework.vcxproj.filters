@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cGameStuVer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -47,9 +44,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -26,7 +26,6 @@
     <ClCompile Include="cSprite.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
-    <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="old_main.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -39,7 +38,6 @@
     <ClInclude Include="cTexture.h" />
     <ClInclude Include="cTextureMgr.h" />
     <ClInclude Include="GameConstants.h" />
-    <ClInclude Include="LTexture.h" />
     <ClInclude Include="gameHeaders.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
