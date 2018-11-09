@@ -20,25 +20,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cSpriteAnimated.cpp" />
+    <ClCompile Include="cSpriteMap.cpp" />
+    <ClCompile Include="cSpriteSheet.cpp" />
     <ClCompile Include="cTextureAnimated.cpp" />
-    <ClCompile Include="cGameStuVer.cpp" />
+    <ClCompile Include="cGame.cpp" />
     <ClCompile Include="cSDL2WNDManager.cpp" />
     <ClCompile Include="cSprite.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
+    <ClCompile Include="cTileMap.cpp" />
     <ClCompile Include="old_main.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cSpriteAnimated.h" />
+    <ClInclude Include="cSpriteMap.h" />
+    <ClInclude Include="cSpriteSheet.h" />
     <ClInclude Include="cTextureAnimated.h" />
     <ClInclude Include="cGame.h" />
     <ClInclude Include="cSDL2WNDManager.h" />
     <ClInclude Include="cSprite.h" />
     <ClInclude Include="cTexture.h" />
     <ClInclude Include="cTextureMgr.h" />
+    <ClInclude Include="cTileMap.h" />
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="gameHeaders.h" />
+    <ClInclude Include="MapDefinition.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{69d591d8-5701-4cae-b171-a69cca8ea401}</ProjectGuid>

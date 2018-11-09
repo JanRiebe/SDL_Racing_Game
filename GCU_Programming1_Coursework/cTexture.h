@@ -11,7 +11,7 @@ cTexture.h
 
 class cTexture
 {
-protected:
+private:
 	SDL_Texture* sdlTextureID;
 	int textureWidth;
 	int textureHeight;

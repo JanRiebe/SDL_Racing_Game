@@ -45,7 +45,9 @@ private:
 	vector<LPCSTR> textureName;
 	vector<LPCSTR> texturesToUse;
 	// Sprites for displaying background and rocket textures
-	cSpriteAnimated animation;
+	//cSpriteAnimated animation;
+	cSpriteMap map;
+	cSprite test;
 	// Game objects
 	// Define the elements and there position in/on the array/map
 	//SDL_Point treeTileClicked;

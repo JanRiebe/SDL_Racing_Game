@@ -5,6 +5,7 @@
 #include "GameConstants.h"
 #include "cSprite.h"
 #include "cSpriteAnimated.h"
+#include "cSpriteMap.h"
 //#include "cBkGround.h"
 #include "cTextureMgr.h"
 #include "cTexture.h"

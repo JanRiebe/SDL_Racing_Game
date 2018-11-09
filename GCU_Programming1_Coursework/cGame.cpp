@@ -43,13 +43,21 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	
 	theTextureMgr->setRenderer(theRenderer);
 	// Store the textures
-	theTextureMgr->addTextureAnimated("Charactervector", "Images\\Charactervector.png", 4, 4);
+	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
 	
-	animation.setSpritePos({ 0, 0 });
-	animation.setTexture(theTextureMgr->getTextureAnimated("Charactervector"));
-	animation.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
+	//animation.setSpritePos({ 0, 0 });
+	//animation.setTexture(theTextureMgr->getTextureAnimated("Charactervector"));
+	//animation.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
+	
+	test.setSpritePos({ 0,0 });
+	test.setTexture(theTextureMgr->getTexture("Charactervector"));
+	test.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
 
-	
+	map.setSpritePos({ 0,0 });
+	map.setTexture(theTextureMgr->getTexture("Charactervector"));
+	map.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
+	map.setSheetGrid(4, 4);		//needs to happen after adding the texture
+	map.loadMap("foo");
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
@@ -71,7 +79,8 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
 	SDL_RenderClear(theRenderer);
 	
-	animation.render(theRenderer, NULL, NULL, animation.getSpriteScale());
+	//test.render(theRenderer, NULL, NULL, test.getSpriteScale()); this gets rendered
+	map.render(theRenderer, NULL, map.getSpriteScale());
 	
 
 	SDL_RenderPresent(theRenderer);
@@ -90,7 +99,7 @@ void cGame::update()
 
 void cGame::update(double deltaTime)
 {
-	animation.update(deltaTime);
+	//map.update(deltaTime);
 }
 
 bool cGame::getInput(bool theLoop)
