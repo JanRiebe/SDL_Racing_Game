@@ -33,15 +33,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cTextureAnimated.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cSpriteAnimated.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cTileMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cSpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,15 +66,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameHeaders.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cTextureAnimated.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cSpriteAnimated.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cTileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cSpriteSheet.h">
