@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cSpriteAnimated.cpp" />
+    <ClCompile Include="cSpriteAnimation.cpp" />
     <ClCompile Include="cSpriteMap.cpp" />
     <ClCompile Include="cSpriteSheet.cpp" />
     <ClCompile Include="cTextureAnimated.cpp" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cSpriteAnimated.h" />
+    <ClInclude Include="cSpriteAnimation.h" />
     <ClInclude Include="cSpriteMap.h" />
     <ClInclude Include="cSpriteSheet.h" />
     <ClInclude Include="cTextureAnimated.h" />

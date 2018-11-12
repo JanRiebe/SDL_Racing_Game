@@ -36,8 +36,8 @@ using namespace std;
 #define WINDOW_HEIGHT 384
 
 //Define the dimensions for tile maps
-const int MAP_WIDTH = 32;
-const int MAP_HEIGHT = 32;
+const int MAP_WIDTH = 8;
+const int MAP_HEIGHT = 8;
 
 // This header file contains all the constants & enumarated types for the game
 typedef struct fpoint

@@ -48,6 +48,8 @@ private:
 	//cSpriteAnimated animation;
 	cSpriteMap map;
 	cSprite test;
+	cSpriteAnimation anim;
+	SDL_Rect animRenderRect;
 	// Game objects
 	// Define the elements and there position in/on the array/map
 	//SDL_Point treeTileClicked;

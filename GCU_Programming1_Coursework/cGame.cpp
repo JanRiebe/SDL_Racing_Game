@@ -58,6 +58,18 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	map.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
 	map.setSheetGrid(4, 4);		//needs to happen after adding the texture
 	map.loadMap("foo");
+
+	anim.setSpritePos({ 0,100 });
+	anim.setTexture(theTextureMgr->getTexture("Charactervector"));
+	anim.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
+	anim.setSheetGrid(4, 4);
+	anim.setSpeed(4.0);
+	anim.trim(4, 4);
+	anim.play();
+	animRenderRect.w = 100;
+	animRenderRect.h = 100;
+	animRenderRect.x = 200;
+	animRenderRect.y = 100;
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
@@ -81,7 +93,8 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	
 	//test.render(theRenderer, NULL, NULL, test.getSpriteScale()); this gets rendered
 	map.render(theRenderer, NULL, map.getSpriteScale());
-	
+
+	anim.render(theRenderer, &animRenderRect, anim.getSpriteScale());
 
 	SDL_RenderPresent(theRenderer);
 }
@@ -100,6 +113,7 @@ void cGame::update()
 void cGame::update(double deltaTime)
 {
 	//map.update(deltaTime);
+	anim.update(deltaTime);
 }
 
 bool cGame::getInput(bool theLoop)
