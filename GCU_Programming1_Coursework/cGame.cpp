@@ -32,9 +32,21 @@ cGame* cGame::getInstance()
 	return cGame::pInstance;
 }
 
+void cGame::setActiveScene(string sceneName)
+{
+	if (scenes.count(sceneName) != 0)
+	{
+		activeScene = scenes[sceneName];
+		activeScene->initialise();
+	}
+	else
+		cout << "Failed to activate scene '" << sceneName << "'. No scene with this name found." << endl;
+}
+
 
 void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
+
 	this->m_lastTime = high_resolution_clock::now();
 
 	// Clear the buffer with a black background
@@ -51,7 +63,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	tmpSprite->setTexture(theTextureMgr->getTexture("Charactervector"));
 	tmpSprite->setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
 	sprites.push_back(tmpSprite);
-
+	*/
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ 100,0 });
 	tmpSpriteMap->setTexture(theTextureMgr->getTexture("Charactervector"));
@@ -59,7 +71,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	tmpSpriteMap->loadMap("foo");
 	tmpSpriteMap->setSheetGrid(4, 4);
 	sprites.push_back(tmpSpriteMap);
-	*/
+	
 	cSpriteAnimation* tmpSpriteAnim = new cSpriteAnimation();
 	tmpSpriteAnim->setTexture(theTextureMgr->getTexture("Charactervector"));
 	tmpSpriteAnim->setSpriteScale({0.1f, 0.1f});
@@ -90,11 +102,7 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
 	SDL_RenderClear(theRenderer);
 	
-	// Rendering all sprites
-	vector<cSprite*>::iterator it = sprites.begin();
-	for (it; it != sprites.end(); ++it) {
-		(*it)->render(theRenderer, &camera);
-	}
+	activeScene->render(theRenderer);
 
 	SDL_RenderPresent(theRenderer);
 }
@@ -112,11 +120,7 @@ void cGame::update()
 
 void cGame::update(double deltaTime)
 {
-	// Updating all sprites
-	vector<cSprite*>::iterator it = sprites.begin();
-	for (it; it != sprites.end(); ++it) {
-		(*it)->update(deltaTime);
-	}
+	activeScene->update(deltaTime);
 }
 
 bool cGame::getInput(bool theLoop)

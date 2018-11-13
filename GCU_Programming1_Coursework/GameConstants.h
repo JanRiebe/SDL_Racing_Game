@@ -39,6 +39,9 @@ using namespace std;
 const int MAP_WIDTH = 8;
 const int MAP_HEIGHT = 8;
 
+//The maximum number of players
+const int MAX_PLAYERS = 4;
+
 // This header file contains all the constants & enumarated types for the game
 typedef struct fpoint
 {

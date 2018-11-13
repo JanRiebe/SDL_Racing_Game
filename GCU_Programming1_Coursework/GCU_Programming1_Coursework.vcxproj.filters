@@ -45,10 +45,13 @@
     <ClCompile Include="cSpriteAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IScene.cpp">
+    <ClCompile Include="cCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cCamera.cpp">
+    <ClCompile Include="cScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneRacing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,10 +89,13 @@
     <ClInclude Include="cSpriteAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
+    <ClInclude Include="cCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cCamera.h">
+    <ClInclude Include="cScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneRacing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

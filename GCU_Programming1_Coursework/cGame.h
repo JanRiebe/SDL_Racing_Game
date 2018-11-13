@@ -32,8 +32,10 @@ public:
 
 	static cGame* getInstance();
 
-private:
+	// Sets the active scene to be updated and rendered.
+	void setActiveScene(string sceneName);
 
+private:
 	static cGame* pInstance;
 
 	// for framerates
@@ -46,6 +48,9 @@ private:
 	vector<LPCSTR> texturesToUse;
 
 	vector<cSprite*> sprites;
+
+	map<string, cScene*> scenes;
+	cScene* activeScene;
 	
 	cCamera camera;
 };

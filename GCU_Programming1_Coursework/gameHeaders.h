@@ -10,6 +10,7 @@
 #include "cTextureMgr.h"
 #include "cTexture.h"
 #include "cCamera.h"
+#include "cScene.h"
 //#include "cTileMap.h"
 //#include "cTreePicker.h"
 
