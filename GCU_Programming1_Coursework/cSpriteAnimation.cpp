@@ -20,6 +20,14 @@ cSpriteAnimation::~cSpriteAnimation()
 {
 }
 
+void cSpriteAnimation::render(SDL_Renderer * theRenderer, cCamera * theCamera)
+{
+	// Getting the target rect from current frame,
+	// using the camera to translate world to screen position
+	// and calling sprite sheet to render the sprite.
+	cSpriteSheet::render(theRenderer, getCurrentFrame(), &theCamera->WorldToScreen(transform), (double)spriteRotationAngle, &spriteCentre, spriteScale);
+}
+
 void cSpriteAnimation::render(SDL_Renderer * theRenderer, SDL_Rect * theDestRect, FPoint theScaling)
 {
 	cSpriteSheet::render(theRenderer, getCurrentFrame(), theDestRect, theScaling);

@@ -44,16 +44,10 @@ private:
 	// game related variables
 	vector<LPCSTR> textureName;
 	vector<LPCSTR> texturesToUse;
-	// Sprites for displaying background and rocket textures
-	//cSpriteAnimated animation;
-	cSpriteMap map;
-	cSprite test;
-	cSpriteAnimation anim;
-	SDL_Rect animRenderRect;
-	// Game objects
-	// Define the elements and there position in/on the array/map
-	//SDL_Point treeTileClicked;
-	//SDL_Point mapTileClicked;
+
+	vector<cSprite*> sprites;
+	
+	cCamera camera;
 };
 
 #endif

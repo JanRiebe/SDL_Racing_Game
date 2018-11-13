@@ -10,14 +10,14 @@ cSprite.h
 
 #include "cTextureMgr.h"
 #include "cTexture.h"
+#include "cCamera.h"
 
 
 class cSprite
 {
-private:
+protected:
 	// position
-	SDL_Rect spritePos_2D;
-	SDL_Rect spriteDimensions;
+	SDL_Rect transform;
 	SDL_Point spriteCentre;
 	FPoint spriteScale;
 	float spriteRotationAngle;
@@ -26,14 +26,15 @@ private:
 	cTexture* spriteTexture;
 
 	// Texture width & Height
-	int textureWidth;
-	int textureHeight;
+	SDL_Rect textureDimension;
 
 
 public:
 	cSprite();			// Default constructor
 	cSprite(cTexture* theSpriteTexture);			// Default constructor
 	~cSprite();			// Destructor
+	// Renders this sprite based on the internal variables spritePos_2D, spriteScale and spriteRotationAngle. This should be overwritten by subclasses and used in general for rendering. 
+	virtual void render(SDL_Renderer* theRenderer, cCamera* theCamera);
 	void render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, FPoint theScaling);
 	void render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling);
 	SDL_Rect getSpritePos();  // Return the sprites current position

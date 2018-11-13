@@ -21,6 +21,8 @@ void cSpriteSheet::render(SDL_Renderer * theRenderer, int sheetIndex, SDL_Rect *
 	cSprite::render(theRenderer, findSourceRect(sheetIndex), theDestRect, rotAngle, spriteCentre, theScaling);
 }
 
+
+
 cSpriteSheet::cSpriteSheet(int sheetRows, int sheetColumns):rows(sheetRows), columns(sheetColumns), cSprite()
 {
 }
@@ -45,6 +47,6 @@ void cSpriteSheet::setSheetGrid(int sheetRows, int sheetColumns)
 	columns = sheetColumns;
 
 	//Set width and height of source rect that will be used to cut out the tile to render.
-	sourceRect.w = getSpriteDimensions().w / columns;
-	sourceRect.h = getSpriteDimensions().h / rows;
+	sourceRect.w = textureDimension.w / columns;
+	sourceRect.h = textureDimension.h / rows;
 }

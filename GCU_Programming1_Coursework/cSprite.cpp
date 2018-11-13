@@ -15,7 +15,7 @@ cSprite.cpp
 cSprite::cSprite() 			// Default constructor
 {
 
-	this->spritePos_2D = { 0, 0, 0, 0 };
+	this->transform = { 0, 0, 0, 0 };
 	this->spriteTexture = NULL;
 	this->spriteCentre = {0, 0};
 	this->spriteScale = { 1, 1 };
@@ -26,8 +26,8 @@ cSprite::cSprite(cTexture* theSpriteTexture) 			// Default constructor
 {
 	this->spriteTexture = theSpriteTexture;
 	this->setSpriteDimensions(this->spriteTexture->getTWidth(), this->spriteTexture->getTHeight());
-	this->spritePos_2D = { 0, 0, this->spriteTexture->getTWidth(), this->spriteTexture->getTHeight() };
-	this->spriteCentre = { this->spritePos_2D.w / 2, this->spritePos_2D.h / 2};
+	this->transform = { 0, 0, this->spriteTexture->getTWidth(), this->spriteTexture->getTHeight() };
+	this->spriteCentre = { this->transform.w / 2, this->transform.h / 2};
 	this->spriteScale = { 1, 1 };
 	this->spriteRotationAngle = 0;
 }
@@ -48,7 +48,7 @@ cSprite::~cSprite()			// Destructor
 
 SDL_Rect cSprite::getSpritePos()  // Return the sprites current position
 {
-	return this->spritePos_2D;
+	return this->transform;
 }
 
 /*
@@ -59,8 +59,8 @@ SDL_Rect cSprite::getSpritePos()  // Return the sprites current position
 
 void cSprite::setSpritePos(SDL_Point sPosition)  // set the position of the sprite
 {
-	this->spritePos_2D.x = sPosition.x;
-	this->spritePos_2D.y = sPosition.y;
+	this->transform.x = sPosition.x;
+	this->transform.y = sPosition.y;
 }
 
 /*
@@ -83,10 +83,23 @@ cTexture* cSprite::getTexture()  // Return the sprites current image
 void cSprite::setTexture(cTexture* theSpriteTexture)  // set the image of the sprite
 {
 	this->spriteTexture = theSpriteTexture;
-	this->setSpriteDimensions(spriteTexture->getTWidth(), spriteTexture->getTHeight());
-	this->spritePos_2D.w = textureWidth;
-	this->spritePos_2D.h = textureHeight;
-	this->spriteCentre = { this->spritePos_2D.w / 2, this->spritePos_2D.h / 2 };
+
+	// Saving the width and height of the texture for easy access.
+	this->textureDimension.w = spriteTexture->getTWidth();
+	this->textureDimension.h = spriteTexture->getTHeight();
+	// Setting the dimensions of the transform rect depending on the texture size and the scale.
+	this->transform.w = (int)textureDimension.w * spriteScale.X;
+	this->transform.h = (int)textureDimension.h * spriteScale.Y;
+	// Setting the sprite center.
+	this->spriteCentre = { this->transform.w / 2, this->transform.h / 2 };
+}
+
+
+
+void cSprite::render(SDL_Renderer * theRenderer, cCamera * theCamera)
+{
+	// Using the camera to translate world to screen position and rendering the sprite based on position.
+	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), &textureDimension, &theCamera->WorldToScreen(transform), (double)spriteRotationAngle, &spriteCentre, spriteScale);
 }
 
 
@@ -95,21 +108,25 @@ void cSprite::render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rec
 	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), theSourceRect, theDestRect, theScaling);
 }
 
+
 void cSprite::render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling)
 {
 	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), theSourceRect, theDestRect, rotAngle, spriteCentre, theScaling);
 }
+
+
 /*
 =================
 - Set the sprite dimensions.
 =================
 */
-void cSprite::setSpriteDimensions(int texWidth, int textHeight)
+
+void cSprite::setSpriteDimensions(int width, int height)
 {
-	this->textureWidth = texWidth;
-	this->textureHeight = textHeight;
-	this->spriteDimensions = { 0, 0, texWidth, textHeight };
+	this->transform.w = width;
+	this->transform.h = height;
 }
+
 
 /*
 =================
@@ -118,7 +135,7 @@ void cSprite::setSpriteDimensions(int texWidth, int textHeight)
 */
 SDL_Rect cSprite::getSpriteDimensions()
 {
-	return this->spriteDimensions;
+	return this->transform;
 }
 /*
 =================
@@ -161,8 +178,10 @@ FPoint cSprite::getSpriteScale()  // Return the sprites current scaling
 
 void cSprite::setSpriteScale(FPoint sScale)  // set the sprites current scaling
 {
-	this->spriteScale.X += sScale.X;
-	this->spriteScale.Y += sScale.Y;
+	this->spriteScale.X = sScale.X;
+	this->spriteScale.Y = sScale.Y;
+	// Updating the transforms based on the new scale.
+	scaleSprite();
 }
 /*
 =================
@@ -173,11 +192,11 @@ void cSprite::setSpriteScale(FPoint sScale)  // set the sprites current scaling
 void cSprite::scaleSprite()  // set the sprites current scaling
 {
 	// Scale sprite
-	this->spritePos_2D.w = (int)(this->spriteDimensions.w * this->spriteScale.X);
-	this->spritePos_2D.h = (int)(this->spriteDimensions.h * this->spriteScale.Y);
+	this->transform.w = (int)(this->textureDimension.w * this->spriteScale.X);
+	this->transform.h = (int)(this->textureDimension.h * this->spriteScale.Y);
 	// Scale Sprite Centre for rotation.
-	this->spriteCentre.x = this->spritePos_2D.w / 2;
-	this->spriteCentre.y = this->spritePos_2D.h / 2;
+	this->spriteCentre.x = this->transform.w / 2;
+	this->spriteCentre.y = this->transform.h / 2;
 }
 /*
 =================

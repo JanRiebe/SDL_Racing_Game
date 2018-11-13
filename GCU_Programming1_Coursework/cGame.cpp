@@ -36,40 +36,39 @@ cGame* cGame::getInstance()
 void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
 	this->m_lastTime = high_resolution_clock::now();
-	
+
 	// Clear the buffer with a black background
 	SDL_SetRenderDrawColor(theRenderer, 0, 0, 0, 255);
 	SDL_RenderPresent(theRenderer);
-	
+
 	theTextureMgr->setRenderer(theRenderer);
 	// Store the textures
 	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
-	
-	//animation.setSpritePos({ 0, 0 });
-	//animation.setTexture(theTextureMgr->getTextureAnimated("Charactervector"));
-	//animation.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
-	
-	test.setSpritePos({ 0,0 });
-	test.setTexture(theTextureMgr->getTexture("Charactervector"));
-	test.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
 
-	map.setSpritePos({ 0,0 });
-	map.setTexture(theTextureMgr->getTexture("Charactervector"));
-	map.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
-	map.setSheetGrid(4, 4);		//needs to happen after adding the texture
-	map.loadMap("foo");
+	/*
+	cSprite* tmpSprite = new cSprite();
+	tmpSprite->setSpritePos({ 0,0 });
+	tmpSprite->setTexture(theTextureMgr->getTexture("Charactervector"));
+	tmpSprite->setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
+	sprites.push_back(tmpSprite);
 
-	anim.setSpritePos({ 0,100 });
-	anim.setTexture(theTextureMgr->getTexture("Charactervector"));
-	anim.setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
-	anim.setSheetGrid(4, 4);
-	anim.setSpeed(4.0);
-	anim.trim(4, 4);
-	anim.play();
-	animRenderRect.w = 100;
-	animRenderRect.h = 100;
-	animRenderRect.x = 200;
-	animRenderRect.y = 100;
+	cSpriteMap* tmpSpriteMap = new cSpriteMap();
+	tmpSpriteMap->setSpritePos({ 100,0 });
+	tmpSpriteMap->setTexture(theTextureMgr->getTexture("Charactervector"));
+	tmpSpriteMap->setSpriteScale({0.3f, 1.0f});
+	tmpSpriteMap->loadMap("foo");
+	tmpSpriteMap->setSheetGrid(4, 4);
+	sprites.push_back(tmpSpriteMap);
+	*/
+	cSpriteAnimation* tmpSpriteAnim = new cSpriteAnimation();
+	tmpSpriteAnim->setTexture(theTextureMgr->getTexture("Charactervector"));
+	tmpSpriteAnim->setSpriteScale({0.1f, 0.1f});
+	tmpSpriteAnim->setSheetGrid(4, 4);
+	tmpSpriteAnim->setSpeed(4.0);
+	tmpSpriteAnim->trim(4, 4);
+	tmpSpriteAnim->play();
+	sprites.push_back(tmpSpriteAnim);
+	
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
@@ -91,10 +90,11 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
 	SDL_RenderClear(theRenderer);
 	
-	//test.render(theRenderer, NULL, NULL, test.getSpriteScale()); this gets rendered
-	map.render(theRenderer, NULL, map.getSpriteScale());
-
-	anim.render(theRenderer, &animRenderRect, anim.getSpriteScale());
+	// Rendering all sprites
+	vector<cSprite*>::iterator it = sprites.begin();
+	for (it; it != sprites.end(); ++it) {
+		(*it)->render(theRenderer, &camera);
+	}
 
 	SDL_RenderPresent(theRenderer);
 }
@@ -112,8 +112,11 @@ void cGame::update()
 
 void cGame::update(double deltaTime)
 {
-	//map.update(deltaTime);
-	anim.update(deltaTime);
+	// Updating all sprites
+	vector<cSprite*>::iterator it = sprites.begin();
+	for (it; it != sprites.end(); ++it) {
+		(*it)->update(deltaTime);
+	}
 }
 
 bool cGame::getInput(bool theLoop)
@@ -137,7 +140,6 @@ bool cGame::getInput(bool theLoop)
 				case SDL_BUTTON_LEFT:
 				{
 					cout << "Left mouse button pressed.\n";
-					//TODO test changing the animation
 				}
 				break;
 				case SDL_BUTTON_RIGHT:

@@ -11,6 +11,17 @@ cSpriteMap::~cSpriteMap()
 {
 }
 
+void cSpriteMap::render(SDL_Renderer * theRenderer, cCamera * theCamera)
+{
+	for (int x = 0; x < MAP_WIDTH; ++x)
+	{
+		for (int y = 0; y < MAP_HEIGHT; ++y)
+		{
+			cSpriteSheet::render(theRenderer, mapDef.tiles[x][y], findDestinationRect(x, y, &theCamera->WorldToScreen(transform)), spriteScale);
+		}
+	}
+}
+
 void cSpriteMap::render(SDL_Renderer * theRenderer, SDL_Rect * theDestRect, FPoint theScaling)
 {
 	for (int x = 0; x < MAP_WIDTH; ++x)
@@ -47,10 +58,10 @@ SDL_Rect * cSpriteMap::findDestinationRect(int tileIndex_x, int tileIndex_y, SDL
 	}
 	else
 	{
-		whole_w = WINDOW_WIDTH;
-		whole_h = WINDOW_HEIGHT;
-		whole_x = 0;
-		whole_y = 0;
+		whole_w = transform.w;
+		whole_h = transform.h;
+		whole_x = transform.x;
+		whole_y = transform.y;
 	}
 		
 	destinationRect.w = whole_w / MAP_WIDTH;

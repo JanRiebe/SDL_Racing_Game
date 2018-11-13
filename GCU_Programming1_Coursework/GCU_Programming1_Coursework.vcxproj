@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cSpriteAnimation.cpp" />
     <ClCompile Include="cSpriteMap.cpp" />
     <ClCompile Include="cSpriteSheet.cpp" />
@@ -27,10 +28,12 @@
     <ClCompile Include="cSprite.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
+    <ClCompile Include="IScene.cpp" />
     <ClCompile Include="old_main.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cCamera.h" />
     <ClInclude Include="cSpriteAnimation.h" />
     <ClInclude Include="cSpriteMap.h" />
     <ClInclude Include="cSpriteSheet.h" />
@@ -41,6 +44,7 @@
     <ClInclude Include="cTextureMgr.h" />
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="gameHeaders.h" />
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="MapDefinition.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

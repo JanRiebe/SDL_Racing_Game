@@ -9,6 +9,7 @@
 //#include "cBkGround.h"
 #include "cTextureMgr.h"
 #include "cTexture.h"
+#include "cCamera.h"
 //#include "cTileMap.h"
 //#include "cTreePicker.h"
 

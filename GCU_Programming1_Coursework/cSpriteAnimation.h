@@ -16,6 +16,8 @@ private:
 public:
 	cSpriteAnimation();
 	~cSpriteAnimation();
+	// Renders this sprite based on the internal variables spritePos_2D, spriteScale and spriteRotationAngle. This should be overwritten by subclasses and used in general for rendering. 
+	virtual void render(SDL_Renderer* theRenderer, cCamera* theCamera);
 	//Renders the current frame of the animation.
 	void render(SDL_Renderer* theRenderer, SDL_Rect* theDestRect, FPoint theScaling);
 	//Renders the current frame of the animation. Allows rotating.
