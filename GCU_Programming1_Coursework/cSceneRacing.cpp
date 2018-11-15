@@ -22,10 +22,13 @@ void cSceneRacing::initialise(cTextureMgr* theTextureMgr)
 
 	// Creating a controller and registering to all 4 channels.
 	Controller* contr = new Controller(0);
+	
 	Input::RegisterChannelListener(contr, 0);
+	/*
 	Input::RegisterChannelListener(contr, 1);
 	Input::RegisterChannelListener(contr, 2);
 	Input::RegisterChannelListener(contr, 3);
+	*/
 	controllers.push_back(contr);
 
 	// Creating a viewport for the controller.

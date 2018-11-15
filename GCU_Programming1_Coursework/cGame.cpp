@@ -85,7 +85,6 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	*/
 
 	scenes["race"] = new cSceneRacing();
-	scenes["race"]->initialise(theTextureMgr);
 	setActiveScene("race");
 }
 
