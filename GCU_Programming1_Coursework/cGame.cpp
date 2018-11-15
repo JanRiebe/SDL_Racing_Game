@@ -37,7 +37,7 @@ void cGame::setActiveScene(string sceneName)
 	if (scenes.count(sceneName) != 0)
 	{
 		activeScene = scenes[sceneName];
-		activeScene->initialise();
+		activeScene->initialise(theTextureMgr);
 	}
 	else
 		cout << "Failed to activate scene '" << sceneName << "'. No scene with this name found." << endl;

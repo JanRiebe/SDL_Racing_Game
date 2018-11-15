@@ -15,15 +15,18 @@ cScene::~cScene()
 
 void cScene::update(double deltaTime)
 {
+	/*
 	// Updating all sprites
 	vector<cSprite*>::iterator it = sprites.begin();
 	for (it; it != sprites.end(); ++it) {
 		(*it)->update(deltaTime);
 	}
+	*/
 }
 
 void cScene::render(SDL_Renderer * theRenderer)
 {
+	/*
 	// Rendering one viewport for every player
 	vector<Controller>::iterator controller = controllers.begin();
 	for (controller; controller != controllers.end(); ++controller)
@@ -38,4 +41,5 @@ void cScene::render(SDL_Renderer * theRenderer)
 			(*it)->render(theRenderer, &cameras[&(*controller)]);
 		}
 	}
+	*/
 }

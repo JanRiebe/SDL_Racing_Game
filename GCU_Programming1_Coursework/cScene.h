@@ -1,7 +1,6 @@
 #pragma once
 #include "gameHeaders.h"
-
-class Controller;
+#include "inputHeaders.h"
 
 class cScene
 {
