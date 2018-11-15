@@ -3,6 +3,7 @@
 
 #include "cSDL2WNDManager.h"
 #include "cGame.h"
+#include "Input.h"
 
 using namespace std;
 

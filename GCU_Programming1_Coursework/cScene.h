@@ -1,12 +1,21 @@
 #pragma once
-#include "gameHeaders.h"
-#include "inputHeaders.h"
+#include <vector>
+#include <map>
+#include "SDL.h"
+
+using namespace std;
+
+// Forward declarations
+class Controller;
+class cSprite;
+class cCamera;
+class cTextureMgr;
 
 class cScene
 {
 protected:
 	vector<cSprite*> sprites;
-	vector<Controller> controllers;
+	vector<Controller*> controllers;
 	map<Controller*, SDL_Rect> viewports;
 	map<Controller*, cCamera> cameras;
 public:

@@ -1,5 +1,6 @@
 #include "cSceneRacing.h"
-
+#include "gameHeaders.h"
+#include "inputHeaders.h"
 
 
 cSceneRacing::cSceneRacing()
@@ -17,6 +18,23 @@ void cSceneRacing::initialise(cTextureMgr* theTextureMgr)
 	//one for each player.
 	//Get the number of players from the input manager.
 	
+	Input::RegisterDevice(KEYBOARD_ARROWS, 0);
+
+	// Creating a controller and registering to all 4 channels.
+	Controller* contr = new Controller(0);
+	Input::RegisterChannelListener(contr, 0);
+	Input::RegisterChannelListener(contr, 1);
+	Input::RegisterChannelListener(contr, 2);
+	Input::RegisterChannelListener(contr, 3);
+	controllers.push_back(contr);
+
+	// Creating a viewport for the controller.
+	viewports[contr].h = WINDOW_HEIGHT;
+	viewports[contr].w = WINDOW_WIDTH;
+
+	// Creating a camera for the controller.
+	cameras[contr].SetPosition({ 0,0 });
+
 	//TODO load all the sprites
 
 

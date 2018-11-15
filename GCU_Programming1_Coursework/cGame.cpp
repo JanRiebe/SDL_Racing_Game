@@ -4,6 +4,7 @@ cGame.cpp
 ==================================================================================
 */
 #include "cGame.h"
+#include "inputHeaders.h"
 
 cGame* cGame::pInstance = NULL;
 static cTextureMgr* theTextureMgr = cTextureMgr::getInstance();
@@ -16,7 +17,7 @@ Constructor
 */
 cGame::cGame()
 {
-
+	activeScene = NULL;
 }
 /*
 =================================================================================
@@ -64,6 +65,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	tmpSprite->setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
 	sprites.push_back(tmpSprite);
 	*/
+	/*
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ 100,0 });
 	tmpSpriteMap->setTexture(theTextureMgr->getTexture("Charactervector"));
@@ -80,7 +82,11 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	tmpSpriteAnim->trim(4, 4);
 	tmpSpriteAnim->play();
 	sprites.push_back(tmpSpriteAnim);
-	
+	*/
+
+	scenes["race"] = new cSceneRacing();
+	scenes["race"]->initialise(theTextureMgr);
+	setActiveScene("race");
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
@@ -102,7 +108,8 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
 	SDL_RenderClear(theRenderer);
 	
-	activeScene->render(theRenderer);
+	if(activeScene)
+		activeScene->render(theRenderer);
 
 	SDL_RenderPresent(theRenderer);
 }
@@ -120,7 +127,8 @@ void cGame::update()
 
 void cGame::update(double deltaTime)
 {
-	activeScene->update(deltaTime);
+	if(activeScene)
+		activeScene->update(deltaTime);
 }
 
 bool cGame::getInput(bool theLoop)
@@ -129,61 +137,14 @@ bool cGame::getInput(bool theLoop)
 
 	while (SDL_PollEvent(&event))
 	{
+		// Handling events that are not related to user input.
+		// Such as quitting.
 		if (event.type == SDL_QUIT)
 		{
 			theLoop = false;
 		}
-
-		//TODO use my input system here
-
-		switch (event.type)
-		{
-			case SDL_MOUSEBUTTONDOWN:
-				switch (event.button.button)
-				{
-				case SDL_BUTTON_LEFT:
-				{
-					cout << "Left mouse button pressed.\n";
-				}
-				break;
-				case SDL_BUTTON_RIGHT:
-					break;
-				default:
-					break;
-				}
-				break;
-			case SDL_MOUSEBUTTONUP:
-				switch (event.button.button)
-				{
-				case SDL_BUTTON_LEFT:
-				{
-					cout << "Left mouse button released.\n";
-				}
-				break;
-				case SDL_BUTTON_RIGHT:
-					break;
-				default:
-					break;
-				}
-				break;
-			case SDL_MOUSEMOTION:
-			{
-			}
-			break;
-			case SDL_KEYDOWN:
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					theLoop = false;
-					break;
-				default:
-					break;
-				}
-
-			default:
-				break;
-		}
-
+		// Passing the sdl event to the input manager.
+		Input::SDLEventIn(event);
 	}
 	return theLoop;
 }

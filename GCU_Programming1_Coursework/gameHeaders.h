@@ -11,6 +11,7 @@
 #include "cTexture.h"
 #include "cCamera.h"
 #include "cScene.h"
+#include "cSceneRacing.h"
 //#include "cTileMap.h"
 //#include "cTreePicker.h"
 
