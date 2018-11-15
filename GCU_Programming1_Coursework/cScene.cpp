@@ -11,18 +11,35 @@ cScene::cScene()
 
 cScene::~cScene()
 {
-	// Cleaning up the controllers.
+	// Cleaning up the controllers and cameras.
 	vector<Controller*>::iterator controller = controllers.begin();
 	while ( controller != controllers.end())
 	{
+		// Deleting the camera.
+		delete cameras[*controller];
+		// Removing the camera pointer from the map.
+		cameras.erase(*controller);
+
 		// Deleting the controller.
 		delete *controller;
-		// Removing the controller from the vector.
+		// Removing the controller pointer from the vector.
 		controllers.erase(controller);
 
 		++controller;
 	}
-	//TODO clean up sprites and cameras
+
+	// Cleaning up the sprites.
+	vector<cSprite*>::iterator sprite = sprites.begin();
+	while (sprite != sprites.end())
+	{
+		// Deleting the controller.
+		delete *sprite;
+		// Removing the controller from the vector.
+		sprites.erase(sprite);
+
+		++sprite;
+	}
+
 }
 
 
