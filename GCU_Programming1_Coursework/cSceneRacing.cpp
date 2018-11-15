@@ -87,6 +87,9 @@ void cSceneRacing::activate()
 	{
 		Input::RegisterChannelListener(*controller, channelIndex);
 	}	
+
+	cSoundMgr::getInstance()->getSnd("who")->play(1);
+	cSoundMgr::getInstance()->getSnd("shot")->play(1);
 }
 
 void cSceneRacing::deactivate()

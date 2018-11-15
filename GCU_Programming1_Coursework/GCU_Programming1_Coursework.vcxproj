@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cSceneRacing.cpp" />
+    <ClCompile Include="cSound.cpp" />
+    <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="cSpriteAnimation.cpp" />
     <ClCompile Include="cSpriteMap.cpp" />
     <ClCompile Include="cSpriteSheet.cpp" />
@@ -40,6 +42,8 @@
     <ClInclude Include="AbstractEvent.h" />
     <ClInclude Include="Association.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="cSound.h" />
+    <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="IInputChannelListener.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputChannel.h" />
@@ -124,7 +128,8 @@
     </Link>
     <PostBuildEvent>
       <Command>echo copying SDL2.dll to debug directory
-xcopy /Y "$(ProjectDir)Cards\*.*" "$(OutDir)Cards\"
+xcopy /Y "$(ProjectDir)Audio\*.*" "$(OutDir)Audio\"
+xcopy /Y "$(ProjectDir)Fonts\*.*" "$(OutDir)Fonts\"
 xcopy /Y "$(ProjectDir)Images\*.*" "$(OutDir)Images\"
 xcopy /Y "SDL2\SDL2-2.0.4\lib\x86\SDL2.dll" "$(OutDir)"
 xcopy /Y "SDL2\SDL2_image-2.0.1\lib\x86\*.dll" "$(OutDir)"
@@ -157,7 +162,8 @@ xcopy /Y "SDL2\SDL2_mixer-2.0.1\lib\x86\*.dll" "$(OutDir)"</Command>
     </Link>
     <PostBuildEvent>
       <Command>echo copying SDL2.dll to debug directory
-xcopy /Y "$(ProjectDir)Cards\*.*" "$(OutDir)Cards\"
+xcopy /Y "$(ProjectDir)Audio\*.*" "$(OutDir)Audio\"
+xcopy /Y "$(ProjectDir)Fonts\*.*" "$(OutDir)Fonts\"
 xcopy /Y "$(ProjectDir)Images\*.*" "$(OutDir)Images\"
 xcopy /Y "SDL2\SDL2-2.0.4\lib\x86\SDL2.dll" "$(OutDir)"
 xcopy /Y "SDL2\SDL2_image-2.0.1\lib\x86\*.dll" "$(OutDir)"

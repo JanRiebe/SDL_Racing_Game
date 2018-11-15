@@ -66,7 +66,6 @@ void cScene::render(SDL_Renderer * theRenderer)
 		// Rendering all sprites one by one
 		vector<cSprite*>::iterator it = sprites.begin();
 		for (it; it != sprites.end(); ++it) {
-			cout << "render sprite\n";
 			// Rendering the sprite using the camera for the relevant player
 			(*it)->render(theRenderer, cameras[*controller]);
 		}

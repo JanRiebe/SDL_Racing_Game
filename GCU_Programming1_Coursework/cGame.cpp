@@ -8,6 +8,8 @@ cGame.cpp
 
 cGame* cGame::pInstance = NULL;
 static cTextureMgr* theTextureMgr = cTextureMgr::getInstance();
+static cSoundMgr* theSoundMgr = cSoundMgr::getInstance();
+
 
 
 /*
@@ -59,9 +61,17 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	SDL_SetRenderDrawColor(theRenderer, 0, 0, 0, 255);
 	SDL_RenderPresent(theRenderer);
 
+	// Initialising sound manager
+	theSoundMgr->initMixer();
+
+	// Initialising texture manager
 	theTextureMgr->setRenderer(theRenderer);
 	// Store the textures
 	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
+
+	theSoundMgr->add("who", "Audio\\who10Edit.wav", soundType::music);
+	theSoundMgr->add("shot", "Audio\\shot007.wav", soundType::sfx);
+
 
 	scenes["race"] = new cSceneRacing(theTextureMgr);
 	setActiveScene("race");

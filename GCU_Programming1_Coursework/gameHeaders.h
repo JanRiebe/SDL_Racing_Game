@@ -9,6 +9,7 @@
 //#include "cBkGround.h"
 #include "cTextureMgr.h"
 #include "cTexture.h"
+#include "cSoundMgr.h"
 #include "cCamera.h"
 #include "cScene.h"
 #include "cSceneRacing.h"
