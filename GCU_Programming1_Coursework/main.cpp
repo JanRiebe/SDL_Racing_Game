@@ -3,6 +3,12 @@
 
 // SDL2 Headers
 #include <SDL.h>
+#include <SDL_image.h>		// For loading other images than bmp
+#include <stdio.h>
+#include <string>
+#include <chrono>
+#include "LTexture.h"
+#include "AnimatedTexture.h"
 
 #include "cSDL2WNDManager.h"
 #include "cGame.h"
