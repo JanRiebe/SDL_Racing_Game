@@ -9,9 +9,11 @@ class cSceneRacing :
 	public cScene
 {
 public:
-	cSceneRacing();
+	cSceneRacing(cTextureMgr* theTextureMgr);
 	~cSceneRacing();
 	// Gets called when the scene is activated.
-	void initialise(cTextureMgr* theTextureMgr);
+	void activate();
+	// Gets called when the scene is deactivated.
+	void deactivate();
 };
 

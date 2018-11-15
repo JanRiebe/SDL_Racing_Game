@@ -5,6 +5,7 @@
 
 cScene::cScene()
 {
+	isInitialised = false;
 }
 
 

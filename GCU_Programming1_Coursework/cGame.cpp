@@ -37,8 +37,13 @@ void cGame::setActiveScene(string sceneName)
 {
 	if (scenes.count(sceneName) != 0)
 	{
+		// Deactivating the old active scene, if there is one.
+		if(activeScene)
+			activeScene->deactivate();
+		// Setting the new active scene.
 		activeScene = scenes[sceneName];
-		activeScene->initialise(theTextureMgr);
+		// Activating the new active scene.
+		activeScene->activate();
 	}
 	else
 		cout << "Failed to activate scene '" << sceneName << "'. No scene with this name found." << endl;
@@ -57,34 +62,8 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theTextureMgr->setRenderer(theRenderer);
 	// Store the textures
 	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
-
-	/*
-	cSprite* tmpSprite = new cSprite();
-	tmpSprite->setSpritePos({ 0,0 });
-	tmpSprite->setTexture(theTextureMgr->getTexture("Charactervector"));
-	tmpSprite->setSpriteDimensions(theTextureMgr->getTexture("Charactervector")->getTWidth(), theTextureMgr->getTexture("Charactervector")->getTHeight());
-	sprites.push_back(tmpSprite);
-	*/
-	/*
-	cSpriteMap* tmpSpriteMap = new cSpriteMap();
-	tmpSpriteMap->setSpritePos({ 100,0 });
-	tmpSpriteMap->setTexture(theTextureMgr->getTexture("Charactervector"));
-	tmpSpriteMap->setSpriteScale({0.3f, 1.0f});
-	tmpSpriteMap->loadMap("foo");
-	tmpSpriteMap->setSheetGrid(4, 4);
-	sprites.push_back(tmpSpriteMap);
 	
-	cSpriteAnimation* tmpSpriteAnim = new cSpriteAnimation();
-	tmpSpriteAnim->setTexture(theTextureMgr->getTexture("Charactervector"));
-	tmpSpriteAnim->setSpriteScale({0.1f, 0.1f});
-	tmpSpriteAnim->setSheetGrid(4, 4);
-	tmpSpriteAnim->setSpeed(4.0);
-	tmpSpriteAnim->trim(4, 4);
-	tmpSpriteAnim->play();
-	sprites.push_back(tmpSpriteAnim);
-	*/
-
-	scenes["race"] = new cSceneRacing();
+	scenes["race"] = new cSceneRacing(theTextureMgr);
 	setActiveScene("race");
 }
 
