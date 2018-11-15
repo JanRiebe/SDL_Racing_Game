@@ -62,7 +62,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theTextureMgr->setRenderer(theRenderer);
 	// Store the textures
 	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
-	
+
 	scenes["race"] = new cSceneRacing(theTextureMgr);
 	setActiveScene("race");
 }

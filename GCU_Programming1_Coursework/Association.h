@@ -43,6 +43,9 @@ public:
 	//Returns whether an association has been made for the element
 	bool contains(B b);
 
+	//Returns how many elements are in the association.
+	int getSize();
+
 };
 
 
@@ -116,4 +119,10 @@ template<class A, class B>
 bool Association<A, B>::contains(B b)
 {
 	return ba.count(b) > 0;
+}
+
+template<class A, class B>
+inline int Association<A, B>::getSize()
+{
+	return ab.size();
 }

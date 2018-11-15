@@ -50,12 +50,18 @@ public:
 	
 	//Gives the input manager an SLD event to process.
 	static void SDLEventIn(SDL_Event e);
-	
+
 	//Registers a channel listener to the specified channel. Returns whether the registration was successfull.
 	static bool RegisterChannelListener(IInputChannelListener* l, int channelIndex);
-	
+
+	//Unregisters a channel listener from all channels it is registered to.
+	static void UnRegisterChannelListener(IInputChannelListener* l);
+
 	//Registers a device to the first available channel. Returns whether the registration was successfull.
 	static bool RegisterDevice(deviceID device, int channelIndex = 0);
+
+	//Returns the number of players that have registered via a device.
+	static int GetNumberOfPlayers();
 
 private:
 	//The constructor is private, because the input manager is a singleton.
@@ -75,7 +81,9 @@ private:
 	
 	//Registers a channel listener to the specified channel. Returns whether the registration was successfull.
 	bool RegisterCL(IInputChannelListener* l, int channelIndex);
-	
+	//Unregisters a channel listener from all channels it is registered to.
+	void UnRegisterCL(IInputChannelListener* l);
+
 	//Registers a device to the first available channel. Returns whether the registration was successfull.
 	bool RegisterD(deviceID device, int channelIndex = 0);
 };

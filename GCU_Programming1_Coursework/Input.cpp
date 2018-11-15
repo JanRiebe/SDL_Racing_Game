@@ -123,6 +123,12 @@ bool Input::RegisterChannelListener(IInputChannelListener * l, int channelIndex)
 	return instance->RegisterCL(l, channelIndex);
 }
 
+void Input::UnRegisterChannelListener(IInputChannelListener * l)
+{
+	//Passing the static function call to the singleton object.
+	instance->UnRegisterCL(l);
+}
+
 
 
 
@@ -137,6 +143,14 @@ bool Input::RegisterCL(IInputChannelListener * l, int channelIndex)
 	return true;
 }
 
+void Input::UnRegisterCL(IInputChannelListener * l)
+{
+	for (int i = 0; i < NUMBER_OF_CHANNELS; i++)
+	{
+		channels[i].UnRegister(l);
+	}
+}
+
 
 
 
@@ -146,7 +160,6 @@ bool Input::RegisterDevice(deviceID device, int channelIndex)
 	//Passing the static function call to the singleton object.
 	return instance->RegisterD(device, channelIndex);
 }
-
 
 
 bool Input::RegisterD(deviceID device, int channelIndex)
@@ -165,6 +178,17 @@ bool Input::RegisterD(deviceID device, int channelIndex)
 
 	return true;
 }
+
+
+
+
+int Input::GetNumberOfPlayers()
+{
+	return instance->connections.getSize();
+}
+
+
+
 
 
 

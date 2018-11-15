@@ -4,6 +4,7 @@
 
 cCamera::cCamera()
 {
+	pos = { 0,0 };
 }
 
 

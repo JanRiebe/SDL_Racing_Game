@@ -16,7 +16,7 @@ protected:
 	vector<cSprite*> sprites;
 	vector<Controller*> controllers;
 	map<Controller*, SDL_Rect> viewports;
-	map<Controller*, cCamera> cameras;
+	map<Controller*, cCamera*> cameras;
 	bool isInitialised;		// Indicates whether activate has been called at least once.
 public:
 	cScene();
