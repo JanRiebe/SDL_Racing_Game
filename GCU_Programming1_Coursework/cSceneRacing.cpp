@@ -8,6 +8,8 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 	// TODO do all the stuff that needs to be done only once when the scene is loaded
 	// loading textures
 	// creating sprites
+	theTextureMgr->addTexture("street", "Images\\street_tile_map.png");
+
 	// loading sounds
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
@@ -58,11 +60,11 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 
 
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
-	tmpSpriteMap->setSpritePos({ 100,0 });
-	tmpSpriteMap->setTexture(theTextureMgr->getTexture("Charactervector"));
-	tmpSpriteMap->setSpriteScale({ 0.3f, 1.0f });
-	tmpSpriteMap->loadMap("foo");
+	tmpSpriteMap->setSpritePos({ -100,-100 });
+	tmpSpriteMap->setTexture(theTextureMgr->getTexture("street"));
+	tmpSpriteMap->setSpriteScale({ 1.5f, 1.5f });
 	tmpSpriteMap->setSheetGrid(4, 4);
+	tmpSpriteMap->loadMap("foo");
 	sprites.push_back(tmpSpriteMap);
 
 	cSpriteAnimation* tmpSpriteAnim = new cSpriteAnimation();

@@ -40,6 +40,7 @@ void cSpriteMap::loadMap(string mapName)
 		for (int y = 0; y < MAP_HEIGHT; ++y)
 		{
 			mapDef.tiles[x][y] = (x*y) % (cSpriteSheet::getSheetRows()*cSpriteSheet::getSheetColumns());
+			cout << "x "<< x <<" y "<<y<<" cSpriteSheet::getSheetRows() "<< cSpriteSheet::getSheetRows()<<" cSpriteSheet::getSheetColumns() "<< cSpriteSheet::getSheetColumns() << endl;
 		}
 	}
 }
