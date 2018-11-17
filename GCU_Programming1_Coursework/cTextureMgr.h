@@ -26,5 +26,7 @@ public:
 	cTexture* getTexture(LPCSTR textureName);		// return the texture.
 	void setRenderer(SDL_Renderer* ptheRenderer); // Set the renderer
 	void deleteTextures();						// Delete all textures;
+	// Added this to allow scenes to delete the textures specific to them.
+	void deleteTexture(LPCSTR txtName);			// Delete a single textures;
 };
 #endif

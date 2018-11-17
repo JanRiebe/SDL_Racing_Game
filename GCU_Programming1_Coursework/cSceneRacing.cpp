@@ -5,15 +5,18 @@
 
 cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 {
+
+	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
+	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
+
+
+
 	// TODO do all the stuff that needs to be done only once when the scene is loaded
 	// loading textures
-	// creating sprites
 	theTextureMgr->addTexture("street", "Images\\street_tile_map.png");
 
 	// loading sounds
 
-	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
-	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
 
 	// Creating a controllers for all players.
@@ -54,10 +57,9 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 		// Creating a camera for the controller.
 		cameras[contr] = new cCamera();
 	}
+	
 
-
-	//TODO load all the sprites
-
+	// Creating sprites
 
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ -100,-100 });
@@ -75,6 +77,12 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 	tmpSpriteAnim->trim(4, 4);
 	tmpSpriteAnim->play();
 	sprites.push_back(tmpSpriteAnim);
+}
+
+cSceneRacing::~cSceneRacing()
+{
+	// Cleaning up textures and sounds loaded for this scene.
+	cTextureMgr::getInstance()->deleteTexture("street");
 }
 
 

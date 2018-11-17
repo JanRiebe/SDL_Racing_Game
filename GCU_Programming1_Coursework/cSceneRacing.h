@@ -10,6 +10,7 @@ class cSceneRacing :
 {
 public:
 	cSceneRacing(cTextureMgr* theTextureMgr);
+	~cSceneRacing();
 	// Gets called when the scene is activated.
 	void activate();
 	// Gets called when the scene is deactivated.

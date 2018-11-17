@@ -66,7 +66,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	// Initialising texture manager
 	theTextureMgr->setRenderer(theRenderer);
-	// Store the textures
+	// Store the textures that are used globally throughout the game.
 	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
 
 	theSoundMgr->add("who", "Audio\\who10Edit.wav", soundType::music);

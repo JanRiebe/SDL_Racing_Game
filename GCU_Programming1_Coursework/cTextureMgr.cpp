@@ -70,6 +70,21 @@ void cTextureMgr::deleteTextures()
 	}
 }
 
+void cTextureMgr::deleteTexture(LPCSTR txtName)
+{
+	// Deleting a single texture by
+	// safely getting a pointer to the texture,
+	cTexture* toDelete = getTexture(txtName);
+	// checking whether it's null (whether a texture with this name did exist),
+	if (toDelete)
+	{
+		// deleting the object the pointer points to
+		delete toDelete;
+		// and removing the entry from the texture list map.
+		textureList.erase(txtName);
+	}
+}
+
 
 /*
 =================
