@@ -90,6 +90,13 @@ void cSceneRacing::activate()
 
 	cSoundMgr::getInstance()->getSnd("who")->play(1);
 	cSoundMgr::getInstance()->getSnd("shot")->play(1);
+
+	// Giving the controller control over in game objects.
+	controller = controllers.begin();
+	for (controller; controller != controllers.end(); ++controller, ++channelIndex)
+	{
+		(*controller)->cam = cameras[*controller];
+	}
 }
 
 void cSceneRacing::deactivate()
