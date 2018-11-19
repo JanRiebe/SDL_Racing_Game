@@ -5,13 +5,14 @@
 #include "cTextureMgr.h"
 
 class cPlayer;
+class cCollisionMgr;
 
 class cSceneRacing :
 	public cScene
 {
 private:
 	vector<cPlayer*> players;
-
+	cCollisionMgr* theCollisionMgr;
 public:
 	cSceneRacing(cTextureMgr* theTextureMgr);
 	~cSceneRacing();
@@ -19,5 +20,6 @@ public:
 	void activate();
 	// Gets called when the scene is deactivated.
 	void deactivate();
+	void update(double deltaTime);
 };
 

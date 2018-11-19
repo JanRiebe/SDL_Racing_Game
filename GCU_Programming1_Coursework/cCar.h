@@ -1,7 +1,8 @@
 #pragma once
 #include "cSpriteAnimation.h"
+#include "cCollider.h"
 class cCar :
-	public cSpriteAnimation
+	public cSpriteAnimation, public cCollider
 {
 private:
 	// Physical state
@@ -33,5 +34,17 @@ public:
 
 	// Overwrites function in cSprite, to set the physics position as well.
 	void setSpritePos(SDL_Point worldPos);
+
+	// Called by the collision manager when this collider collides with another.
+	void onCollision(cCollider* other);
+
+	// Returns the current velocity.
+	fpoint getVelocity();
+	// Returns the mass.
+	float getMass();
+	// Returns the current rotation angle of the sprite.
+	float getAngle();
+	// Returns the current position of the sprite.
+	SDL_Point getPosition();
 };
 

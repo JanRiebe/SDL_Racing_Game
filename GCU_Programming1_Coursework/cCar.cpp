@@ -52,12 +52,12 @@ void cCar::update(double deltaTime)
 	if (velocity.length()* deltaTime > slipping)
 	{
 		//physPos += velocity * deltaTime;
-		cout << "slipping\n";
+		//cout << "slipping\n";
 	}
 	// Else the velocity is only applyied in the forward direction.
 	else
 	{
-		cout << ".\n";
+		//cout << ".\n";
 		fpoint forwards = forwardVector();
 		velocity = forwards * forwards.dotProduct(&velocity);
 	}
@@ -83,6 +83,33 @@ void cCar::setSpritePos(SDL_Point worldPos)
 	physPos.X = worldPos.x;
 	physPos.Y = worldPos.y;
 	cSprite::setSpritePos(worldPos);
+}
+
+void cCar::onCollision(cCollider * other)
+{
+	velocity = { 0,0 };
+	addImpulse(other->getVelocity()*other->getMass());
+}
+
+fpoint cCar::getVelocity()
+{
+	return velocity;
+}
+
+float cCar::getMass()
+{
+	return mass;
+}
+
+float cCar::getAngle()
+{
+	return spriteRotationAngle;
+}
+
+SDL_Point cCar::getPosition()
+{
+	SDL_Rect r = getSpritePos();
+	return{ r.x, r.y };
 }
 
 

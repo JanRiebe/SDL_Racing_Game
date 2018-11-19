@@ -26,7 +26,7 @@ public:
 	// Gets called when the scene is deactivated.
 	virtual void deactivate() = 0;
 	// Calls update on all sprites in this scene.
-	void update(double deltaTime);
+	virtual void update(double deltaTime);
 	// Calls render on all sprites in this scene.
 	void render(SDL_Renderer* theRenderer);
 };

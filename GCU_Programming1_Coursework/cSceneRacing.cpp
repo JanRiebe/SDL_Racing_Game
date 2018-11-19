@@ -3,6 +3,7 @@
 #include "inputHeaders.h"
 #include "cPlayer.h"
 #include "cCar.h"
+#include "cCollisionMgr.h"
 
 
 cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
@@ -11,6 +12,8 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
+	// Creating collsion manager
+	theCollisionMgr = new cCollisionMgr();
 
 
 	// TODO do all the stuff that needs to be done only once when the scene is loaded
@@ -86,8 +89,10 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 		testCar->setSpeed(1);
 		testCar->trim(0, 1);
 		testCar->play();
+		testCar->bBox = { testCar->getSpritePos().x,testCar->getSpritePos().y,testCar->getSpriteDimensions().w, testCar->getSpriteDimensions().h / 2 };
 		sprites.push_back(testCar);
-
+		theCollisionMgr->addCollider(testCar);
+		
 		// Pinning the camera to a sprite.
 		newCam->setTarget(testCar);
 
@@ -101,6 +106,9 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 
 cSceneRacing::~cSceneRacing()
 {
+	// Cleaning up collision manager
+	delete theCollisionMgr;
+
 	// Cleaning up textures and sounds loaded for this scene.
 	cTextureMgr::getInstance()->deleteTexture("street");
 	cTextureMgr::getInstance()->deleteTexture("car_01");
@@ -146,5 +154,14 @@ void cSceneRacing::deactivate()
 	{	
 		Input::UnRegisterChannelListener(*player);
 	}
+}
+
+void cSceneRacing::update(double deltaTime)
+{
+	// Letting scene update prites and cameras and stuff.
+	cScene::update(deltaTime);
+
+	// Calculating collisions
+	theCollisionMgr->calcColl();
 }
 
