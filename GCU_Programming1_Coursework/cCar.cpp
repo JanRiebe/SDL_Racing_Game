@@ -44,22 +44,24 @@ void cCar::update(double deltaTime)
 	
 	// Calculating new rotation.
 	// velocity.length() is the current speed
-	spriteRotationAngle += steering * steerReactive * velocity.length()* deltaTime;
+	spriteRotationAngle += steering * steerReactive * sqrt(velocity.length())* deltaTime;
 
 	// Calculating new position.
 	// If velocity is over tire slipping point,
 	// the velocity is simply applied in both dimentions.
 	if (velocity.length()* deltaTime > slipping)
 	{
-		physPos += velocity * deltaTime;
+		//physPos += velocity * deltaTime;
 		cout << "slipping\n";
 	}
 	// Else the velocity is only applyied in the forward direction.
 	else
 	{
+		cout << ".\n";
 		fpoint forwards = forwardVector();
-		physPos += forwards * forwards.dotProduct(&velocity) * deltaTime;
+		velocity = forwards * forwards.dotProduct(&velocity);
 	}
+	physPos += velocity * deltaTime;
 
 	// Apply the physical position to the sprite pixel position.
 	transform.x = physPos.X;
@@ -74,6 +76,13 @@ void cCar::update(double deltaTime)
 
 
 	cSpriteAnimation::update(deltaTime);
+}
+
+void cCar::setSpritePos(SDL_Point worldPos)
+{
+	physPos.X = worldPos.x;
+	physPos.Y = worldPos.y;
+	cSprite::setSpritePos(worldPos);
 }
 
 

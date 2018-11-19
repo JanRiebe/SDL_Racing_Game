@@ -7,10 +7,10 @@ cCamera::cCamera()
 {
 	pos = { 0,0 };
 	viewport.x = 0;
-	viewport.y = 1;
-	viewport.w = WINDOW_WIDTH;
-	viewport.h = WINDOW_HEIGHT;
-	cout << "Camera created with basic viewport " << viewport.w << " " << viewport.h << endl;
+	viewport.y = 0;
+	SetViewport({0,0, WINDOW_WIDTH, WINDOW_HEIGHT });
+
+	target = NULL;
 }
 
 
@@ -44,4 +44,22 @@ SDL_Rect cCamera::WorldToScreen(SDL_Rect worldPos)
 	worldPos.x -= pos.x;
 	worldPos.y -= pos.y;
 	return worldPos;
+}
+
+void cCamera::update(double deltaTime)
+{
+	// If a target has been set for this camera
+	if (target)
+	{
+		// move the camera position to the target position.
+		pos.x = target->getSpritePos().x + offset.x;
+		pos.y = target->getSpritePos().y + offset.y;
+	}
+}
+
+void cCamera::setTarget(cSprite * t)
+{
+	target = t;
+	offset.x = (t->getSpriteDimensions().w - viewport.w) / 2;
+	offset.y = (t->getSpriteDimensions().h - viewport.h) / 2;
 }

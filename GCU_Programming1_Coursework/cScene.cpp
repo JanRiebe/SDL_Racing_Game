@@ -50,6 +50,12 @@ void cScene::update(double deltaTime)
 		(*it)->update(deltaTime);
 	}
 	
+	// Updating all cameras
+	vector<cCamera*>::iterator camera = cameras.begin();
+	for (camera; camera != cameras.end(); ++camera)
+	{
+		(*camera)->update(deltaTime);
+	}
 }
 
 void cScene::render(SDL_Renderer * theRenderer)

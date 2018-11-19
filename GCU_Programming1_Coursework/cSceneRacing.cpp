@@ -17,6 +17,7 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 	// loading textures
 	theTextureMgr->addTexture("street", "Images\\street_tile_map.png");
 	theTextureMgr->addTexture("car_01", "Images\\car_01.png");
+	theTextureMgr->addTexture("car_02", "Images\\car_02.png");
 
 	// loading sounds
 
@@ -26,7 +27,7 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ -100,-100 });
 	tmpSpriteMap->setTexture(theTextureMgr->getTexture("street"));
-	tmpSpriteMap->setSpriteScale({ 1.5f, 1.5f });
+	tmpSpriteMap->setSpriteScale({ 10.5f, 10.5f });
 	tmpSpriteMap->setSheetGrid(4, 4);
 	tmpSpriteMap->loadMap("foo");
 	sprites.push_back(tmpSpriteMap);
@@ -40,15 +41,8 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 	tmpSpriteAnim->play();
 	sprites.push_back(tmpSpriteAnim);
 	
-	cCar* testCar = new cCar(1.0f, 0.3f, 5000.0f, 1.0f, 10.0f);
-	testCar->setTexture(theTextureMgr->getTexture("car_01"));
-	testCar->setSpriteScale({ 1.0, 1.0 });
-	testCar->setSheetGrid(1, 1);
-	testCar->setSpeed(1);
-	testCar->trim(0, 1);
-	testCar->play();
-	sprites.push_back(testCar);
-	
+	cCar* testCar;
+	LPCSTR names[2] = { "car_01" ,"car_02" };
 
 	// Creating players and cameras.
 	
@@ -65,6 +59,7 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 		// The window gets first split horizontally,
 		// if more than 2 players play it also gets split vertically.
 		SDL_Rect viewport = newCam->GetViewport();
+		cout << "vp " << viewport.w << " " << viewport.h << endl;
 		if (numberOfPlayers > 1)
 		{
 			// Setting the width of the viewport to half the window.
@@ -80,7 +75,21 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 				viewport.y = (WINDOW_HEIGHT / 2)*(i / 2);
 			}
 		}
+		cout << "af " << viewport.w << " " << viewport.h << endl;
 		newCam->SetViewport(viewport);
+
+		testCar = new cCar(1.0f, 0.1f, 500.0f, 1.0f, 10.0f);
+		testCar->setTexture(theTextureMgr->getTexture(names[i]));
+		testCar->setSpriteScale({ 1.0, 1.0 });
+		testCar->setSpritePos({ 100*i, 0 });
+		testCar->setSheetGrid(1, 1);
+		testCar->setSpeed(1);
+		testCar->trim(0, 1);
+		testCar->play();
+		sprites.push_back(testCar);
+
+		// Pinning the camera to a sprite.
+		newCam->setTarget(testCar);
 
 		// Giving the player a sprite to control.
 		player->car = testCar;
@@ -94,6 +103,8 @@ cSceneRacing::~cSceneRacing()
 {
 	// Cleaning up textures and sounds loaded for this scene.
 	cTextureMgr::getInstance()->deleteTexture("street");
+	cTextureMgr::getInstance()->deleteTexture("car_01");
+	cTextureMgr::getInstance()->deleteTexture("car_02");
 
 	// Cleaning up the players and cameras.
 	vector<cPlayer*>::iterator player = players.begin();

@@ -31,5 +31,7 @@ public:
 	void steer(float angle);
 	void update(double deltaTime);
 
+	// Overwrites function in cSprite, to set the physics position as well.
+	void setSpritePos(SDL_Point worldPos);
 };
 
