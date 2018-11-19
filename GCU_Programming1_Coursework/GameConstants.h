@@ -47,6 +47,56 @@ typedef struct fpoint
 {
 	float  X;
 	float  Y;
+
+	// Overloading += operator for fpoint,
+	// to allow shorthand vector addition in physics simulation.
+	fpoint operator+=(fpoint const &other)
+	{
+		X += other.X;
+		Y += other.Y;
+		return *this;
+	}
+	// Overloading -= operator for fpoint,
+	// to allow shorthand vector subtraction in physics simulation.
+	fpoint operator-=(fpoint const &other)
+	{
+		X -= other.X;
+		Y -= other.Y;
+		return *this;
+	}
+
+	// Overloading / operator for float values,
+	// to allow shorthand vector scalar division in physics simpulation.
+	fpoint operator/(float const &f)
+	{
+		fpoint n;
+		n.X = this->X / f;
+		n.Y = this->Y / f;
+		return n;
+	}
+
+	// Overloading * operator for float values,
+	// to allow shorthand vector scalar multiplication in physics simpulation.
+	fpoint operator*(float const &f)
+	{
+		fpoint n;
+		n.X = this->X * f;
+		n.Y = this->Y * f;
+		return n;
+	}
+
+	// Calculates the length of the vector this point represents.
+	float length()
+	{
+		return sqrt(X*X + Y*Y);
+	}
+
+	// Returns the dot product.
+	float dotProduct(fpoint* other)
+	{
+		return X*other->X + Y*other->Y;
+	}
+
 }FPoint;
 
 inline SDL_Point operator+(SDL_Point const &a, SDL_Point const &b)

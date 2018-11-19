@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cCar.cpp" />
+    <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cSceneRacing.cpp" />
     <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cSoundMgr.cpp" />
@@ -41,7 +43,9 @@
   <ItemGroup>
     <ClInclude Include="AbstractEvent.h" />
     <ClInclude Include="Association.h" />
+    <ClInclude Include="cCar.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="IInputChannelListener.h" />

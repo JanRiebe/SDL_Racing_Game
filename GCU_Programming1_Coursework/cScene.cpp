@@ -11,33 +11,30 @@ cScene::cScene()
 
 cScene::~cScene()
 {
-	// Cleaning up the controllers and cameras.
-	vector<Controller*>::iterator controller = controllers.begin();
-	while ( controller != controllers.end())
-	{
-		// Deleting the camera.
-		delete cameras[*controller];
-		// Removing the camera pointer from the map.
-		cameras.erase(*controller);
-
-		// Deleting the controller.
-		delete *controller;
-		// Removing the controller pointer from the vector.
-		controllers.erase(controller);
-
-		++controller;
-	}
+	
 
 	// Cleaning up the sprites.
 	vector<cSprite*>::iterator sprite = sprites.begin();
 	while (sprite != sprites.end())
 	{
-		// Deleting the controller.
+		// Deleting the sprite.
 		delete *sprite;
-		// Removing the controller from the vector.
+		// Removing the sprite from the vector.
 		sprites.erase(sprite);
 
 		++sprite;
+	}
+
+	// Cleaning up the cameras.
+	vector<cCamera*>::iterator camera = cameras.begin();
+	while (camera != cameras.end())
+	{
+		// Deleting the camera.
+		delete *camera;
+		// Removing the camera from the vector.
+		cameras.erase(camera);
+
+		++camera;
 	}
 
 }
@@ -57,18 +54,22 @@ void cScene::update(double deltaTime)
 
 void cScene::render(SDL_Renderer * theRenderer)
 {
+	
+	int i = 0;
 	// Rendering one viewport for every player
-	vector<Controller*>::iterator controller = controllers.begin();
-	for (controller; controller != controllers.end(); ++controller)
+	vector<cCamera*>::iterator camera = cameras.begin();
+	for (camera; camera != cameras.end(); ++camera)
 	{
 		// Setting the right viewport for the player
-		SDL_RenderSetViewport(theRenderer, &viewports[*controller]);
+		SDL_RenderSetViewport(theRenderer, &(*camera)->GetViewport());
+		
 		// Rendering all sprites one by one
 		vector<cSprite*>::iterator it = sprites.begin();
 		for (it; it != sprites.end(); ++it) {
 			// Rendering the sprite using the camera for the relevant player
-			(*it)->render(theRenderer, cameras[*controller]);
+			(*it)->render(theRenderer, *camera);
 		}
+		
 	}
 	
 }

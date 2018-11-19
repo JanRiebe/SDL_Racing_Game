@@ -4,10 +4,14 @@
 #include "cCamera.h"
 #include "cTextureMgr.h"
 
+class cPlayer;
 
 class cSceneRacing :
 	public cScene
 {
+private:
+	vector<cPlayer*> players;
+
 public:
 	cSceneRacing(cTextureMgr* theTextureMgr);
 	~cSceneRacing();
