@@ -2,20 +2,20 @@
 
 #include "gameHeaders.h"
 
-class cCollider;
+class ICollidable;
 
 class cCollisionMgr
 {
 private:
-	vector<cCollider*> colliders;
-	// Checks whether the bounding boxes of two colliders overlap.
-	bool checkBBoxColl(cCollider* a, cCollider* b);
+	vector<ICollidable*> collidables;
+	// Checks whether the radius of two colliders overlap.
+	bool checkRadColl(ICollidable* a, ICollidable* b);
 	// Check whether tow colliders overlap narrowly.
 	bool checkNarrowColl(cCollider* a, cCollider* b);
 public:
 	cCollisionMgr();
 	~cCollisionMgr();
-	void addCollider(cCollider* collider);
+	void addCollidable(ICollidable* collider);
 	// Calculates collisions and informs colliders.
 	void calcColl();
 };

@@ -10,14 +10,25 @@ cCollider::cCollider()
 cCollider::~cCollider()
 {
 	// Cleaning up collision primitives.
-	vector<SDL_Rect* >::iterator prim = collisionPrimitives.begin();
-	for (prim; prim != collisionPrimitives.end();++prim)
+	vector<SDL_Point* >::iterator point = collisionPoints.begin();
+	for (point; point != collisionPoints.end();++point)
 	{
-		delete *prim;
+		delete *point;
 	}
 }
 
-void cCollider::rotate(float angle)
+void cCollider::rotate(float angle, SDL_Point center)
 {
 	//TODO rotate the primitives using the homogenous matrix method
+}
+
+bool cCollider::checkCollision(cCollider * other)
+{
+	// TODO check collision
+	return false;
+}
+
+void cCollider::generateFromSurface(SDL_Surface * s)
+{
+	//TODO generate collision points by appying edge detection filter
 }

@@ -37,6 +37,7 @@
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cScene.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="ICollidable.cpp" />
     <ClCompile Include="IInputChannelListener.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputChannel.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />
+    <ClInclude Include="ICollidable.h" />
     <ClInclude Include="IInputChannelListener.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputChannel.h" />

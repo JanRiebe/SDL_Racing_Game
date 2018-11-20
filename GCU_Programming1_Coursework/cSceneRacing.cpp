@@ -84,14 +84,17 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 		testCar = new cCar(1.0f, 0.1f, 500.0f, 1.0f, 10.0f);
 		testCar->setTexture(theTextureMgr->getTexture(names[i]));
 		testCar->setSpriteScale({ 1.0, 1.0 });
-		testCar->setSpritePos({ 100*i, 0 });
+		testCar->setSpritePos({ 0, 200*i });
+		testCar->setSpriteRotAngle(180 * i);
 		testCar->setSheetGrid(1, 1);
 		testCar->setSpeed(1);
 		testCar->trim(0, 1);
 		testCar->play();
-		testCar->bBox = { testCar->getSpritePos().x,testCar->getSpritePos().y,testCar->getSpriteDimensions().w, testCar->getSpriteDimensions().h / 2 };
+		cCollider* tmpColl = new cCollider();
+		tmpColl->generateFromSurface(theTextureMgr->getTexture(names[i])->getTexture()->.....);
+		testCar->setCollider(tmpColl);
 		sprites.push_back(testCar);
-		theCollisionMgr->addCollider(testCar);
+		theCollisionMgr->addCollidable(testCar);
 		
 		// Pinning the camera to a sprite.
 		newCam->setTarget(testCar);

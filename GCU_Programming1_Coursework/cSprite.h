@@ -12,6 +12,7 @@ cSprite.h
 #include "cTexture.h"
 #include "cCamera.h"
 
+class cCollider;
 
 class cSprite
 {
@@ -37,7 +38,7 @@ public:
 	virtual void render(SDL_Renderer* theRenderer, cCamera* theCamera);
 	void render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, FPoint theScaling);
 	void render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling);
-	SDL_Rect getSpritePos();  // Return the sprites current position
+	SDL_Point getPosition();  // Return the sprites current position
 	void setSpritePos(SDL_Point sPosition); // set the position of the sprite
 	cTexture* getTexture();  // Return the sprites current image
 	void setTexture(cTexture* theSpriteTexture);  // set the image of the sprite
@@ -50,7 +51,8 @@ public:
 	void scaleSprite(); // update the sprites width & height
 	float getSpriteRotAngle();  // Return the sprites rotation angle
 	void setSpriteRotAngle(float angle); // set the sprites rotation angle
-
+	
+	// Overwrite this to add per frame behaviour.
 	virtual void update(double deltaTime) {};
 };
 #endif

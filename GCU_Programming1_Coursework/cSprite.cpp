@@ -20,6 +20,7 @@ cSprite::cSprite() 			// Default constructor
 	this->spriteCentre = {0, 0};
 	this->spriteScale = { 1, 1 };
 	this->spriteRotationAngle = 0;
+
 }
 
 cSprite::cSprite(cTexture* theSpriteTexture) 			// Default constructor
@@ -30,6 +31,7 @@ cSprite::cSprite(cTexture* theSpriteTexture) 			// Default constructor
 	this->spriteCentre = { this->transform.w / 2, this->transform.h / 2};
 	this->spriteScale = { 1, 1 };
 	this->spriteRotationAngle = 0;
+
 }
 
 /*
@@ -46,9 +48,12 @@ cSprite::~cSprite()			// Destructor
 =================
 */
 
-SDL_Rect cSprite::getSpritePos()  // Return the sprites current position
+SDL_Point cSprite::getPosition()  // Return the sprites current position
 {
-	return this->transform;
+	SDL_Point p;
+	p.x = transform.x;
+	p.y = transform.y;
+	return p;
 }
 
 /*

@@ -52,8 +52,8 @@ void cCamera::update(double deltaTime)
 	if (target)
 	{
 		// move the camera position to the target position.
-		pos.x = target->getSpritePos().x + offset.x;
-		pos.y = target->getSpritePos().y + offset.y;
+		pos.x = target->getPosition().x + offset.x;
+		pos.y = target->getPosition().y + offset.y;
 	}
 }
 

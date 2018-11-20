@@ -1,5 +1,6 @@
 #include "cCollisionMgr.h"
 #include "cCollider.h"
+#include "ICollidable.h"
 
 cCollisionMgr::cCollisionMgr()
 {
@@ -12,75 +13,86 @@ cCollisionMgr::~cCollisionMgr()
 }
 
 
-void cCollisionMgr::addCollider(cCollider * collider)
+void cCollisionMgr::addCollidable(ICollidable * s)
 {
-	colliders.push_back(collider);
+	collidables.push_back(s);
 }
 
 void cCollisionMgr::calcColl()
 {
-	// Comparing every collider with every other collider.
-	vector<cCollider*>::iterator collA = colliders.begin();
-	for (collA; collA != colliders.end(); ++collA)
+	// Updating all colliders
+	vector<ICollidable*>::iterator cldblA = collidables.begin();
+	for (cldblA; cldblA != collidables.end(); ++cldblA)
 	{
-		// Starting collB from the end and counting down until reaching collA.
+		(*cldblA)->updateCollider();
+	}
+
+	// Comparing every collider with every other collider.
+	cldblA = collidables.begin();
+	for (cldblA; cldblA != collidables.end(); ++cldblA)
+	{
+		// Starting sprB from the end and counting down until reaching sprA.
 		// This way every combination is only checked once.
-		vector<cCollider*>::iterator collB = colliders.end();
-		collB--;
-		while (collA != collB)
+		vector<ICollidable*>::iterator cldblB = collidables.end();
+		cldblB--;
+		while (cldblA != cldblB)
 		{
-			// Checking for collision. First broad.
-			if (checkBBoxColl(*collA,*collB))
+			cCollider* collA = (*cldblA)->getCollider();
+			cCollider* collB = (*cldblB)->getCollider();
+			// Only checks if both sprites have a collider attached.
+			// Sprites without a collider are ignored in collision detection.
+			if (collA && collB)
 			{
-				// Then narrow.
-				if (checkNarrowColl(*collA, *collB))
-				{
+				// Checking for collision. First broad.
+				if (checkRadColl(*cldblA,*cldblB))
+				{				
+
 					// If they collide, inform both.
-					(*collA)->onCollision(*collB);
-					(*collB)->onCollision(*collA);
+					fpoint impA = (*cldblA)->getImpulse();
+					fpoint impB = (*cldblB)->getImpulse();
+					(*cldblA)->onCollision(impB);
+					(*cldblB)->onCollision(impA);
+					// Then narrow.
+					if (checkNarrowColl(collA, collB))
+					{
+						// TODO how does the collision information flow?
+						// should it be going right to the sprite?
+
+						// If they collide, inform both.
+						//collA->onCollision(collB);
+						//collB->onCollision(collA);
+					}
 				}
 			}
 
-			collB--;
+			cldblB--;
 		}
 	}
 }
 
 
-//TODO maybe in the broad phase I should just check for the sprite transform rect as bounding box.
-//It is already assigned and doesn't need to be updated and stuff.
-bool cCollisionMgr::checkBBoxColl(cCollider * a, cCollider * b)
+bool cCollisionMgr::checkRadColl(ICollidable * a, ICollidable * b)
 {
-	int aLeft = a->bBox.x + a->getPosition().x;
-	int aRight = a->bBox.x + a->bBox.w + a->getPosition().x;
-	int aUp = a->bBox.y + a->getPosition().y;
-	int aDown = a->bBox.y + a->bBox.h + a->getPosition().y;
+	SDL_Point aCenter = a->getCenter();
+	SDL_Point bCenter = b->getCenter();
 
-	int bLeft = b->bBox.x + b->getPosition().x;
-	int bRight = b->bBox.x + b->bBox.w + b->getPosition().x;
-	int bUp = b->bBox.y + b->getPosition().y;
-	int bDown = b->bBox.y + b->bBox.h + b->getPosition().y;
+	// Calculating distance between objects
+	int distX = aCenter.x - bCenter.x;
+	int distY = aCenter.y - bCenter.y;
+	float dist = sqrt(distX*distX + distY*distY);
 
-	return
-		// Overlapp in x dimension
-		((aLeft < bLeft && aRight > bLeft)
-			||
-			(aRight > bRight && aLeft < bRight))
-		&&
-		// Overlap in y dimension
-		((aUp < bUp && aDown > bUp)
-			||
-			(aDown > bDown && aUp < bDown));
-	
+	// Return whether the added radius of both objects is bigger than the distance.
+	return dist < a->getRadius() + b->getRadius();
 }
 
 bool cCollisionMgr::checkNarrowColl(cCollider * a, cCollider * b)
 {
+	/*
 	cout << "checkNarrowColl\n";
 	// To check the narrow collision we first need to rotate the colliders.
 	a->rotate(a->getAngle());
 	b->rotate(b->getAngle());
-
+	*/
 	//TODO implement narrow collision
 	return true;
 }
