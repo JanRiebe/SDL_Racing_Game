@@ -28,6 +28,6 @@ public:
 	// Calls update on all sprites in this scene.
 	virtual void update(double deltaTime);
 	// Calls render on all sprites in this scene.
-	void render(SDL_Renderer* theRenderer);
+	virtual void render(SDL_Renderer* theRenderer);
 };
 

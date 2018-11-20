@@ -1,5 +1,4 @@
 #include "cCollisionMgr.h"
-#include "cCollider.h"
 #include "cCar.h"
 
 cCollisionMgr::cCollisionMgr(SDL_Renderer* r)
@@ -108,17 +107,20 @@ void cCollisionMgr::calcCarCollOnScr()
 			if (checkBBoxColl(*carA, *carB, overlap))
 			{
 				std::cout << "car on screen bounding box collision\n";
-				/*
+				
 				// Narrow phase collision detection.
 				if (checkNarrowColl(*carA, *carB, overlap))
 				{
+					std::cout << "car on screen pixel perfect collision\n";
+					/*
 					// Informing the cars that they have collided.
 					fpoint impulseA = (*carA)->getImpulse();
 					fpoint impulseB = (*carB)->getImpulse();
 					(*carA)->onCollision(impulseB);
 					(*carB)->onCollision(impulseA);
+					*/
 				}
-				*/
+				
 			}
 			// Freeing up the overlap rectangle
 			delete overlap;
@@ -250,7 +252,7 @@ bool cCollisionMgr::checkNarrowColl(cSprite * a, cSprite * b, SDL_Rect* overlapR
 		// Checking through all the pixels in both surfaces.
 		// If there is a pixel in which both have an alpha value different than 0,
 		// it is considered a collision.
-		std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";	//TODO remove cout
+		//std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";	//TODO remove cout
 		for (int x = 0; x < overlapRect->w; x++)
 		{
 			for (int y = 0; y < overlapRect->h; y++) {
@@ -259,9 +261,10 @@ bool cCollisionMgr::checkNarrowColl(cSprite * a, cSprite * b, SDL_Rect* overlapR
 				{
 					isCollision = true;
 				}
-				std::cout << "- " << get_pixelAlpha(surfaceA, x, y) << " " << get_pixelAlpha(surfaceB, x, y) << " -";	//TODO remove cout
+				//TODO this only prints lots of zeros, there should be pixel values
+				//std::cout << "\t" << get_pixelAlpha(surfaceA, x, y);// << " " << get_pixelAlpha(surfaceB, x, y) << " -";	//TODO remove cout
 			}
-			std::cout << endl;	//TODO remove cout
+			//std::cout << endl;	//TODO remove cout
 		}
 	}
 	else
@@ -273,7 +276,7 @@ bool cCollisionMgr::checkNarrowColl(cSprite * a, cSprite * b, SDL_Rect* overlapR
 
 	// Resetting the render target.
 	SDL_SetRenderTarget(theRenderer, oldTarget);
-
+		
 	return isCollision;
 }
 
@@ -292,7 +295,7 @@ Uint32 cCollisionMgr::get_pixelAlpha(SDL_Surface *surface, int x, int y)
 SDL_Surface* cCollisionMgr::CreateOverlapSurface(SDL_Rect* overlapRect, cSprite* sprite, cCamera* camera)
 {
 	// Creating a render target texture with the size of the overlap rect.
-	SDL_Texture* renderTarget = SDL_CreateTexture(theRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, overlapRect->w, overlapRect->h);
+	renderTarget = SDL_CreateTexture(theRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, overlapRect->w, overlapRect->h);
 
 	// Rendering to render target.
 	// Setting the render target.
@@ -306,7 +309,7 @@ SDL_Surface* cCollisionMgr::CreateOverlapSurface(SDL_Rect* overlapRect, cSprite*
 	SDL_Surface* surface = SDL_CreateRGBSurface(0, overlapRect->w, overlapRect->h, 32, 0, 0, 0, 0);
 
 	// Cleaning up render target texture.
-	SDL_DestroyTexture(renderTarget);
+	//SDL_DestroyTexture(renderTarget);
 
 	return surface;
 }

@@ -78,12 +78,6 @@
     <ClCompile Include="cCollisionMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ICollidable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGame.h">
@@ -162,12 +156,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cCollisionMgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ICollidable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

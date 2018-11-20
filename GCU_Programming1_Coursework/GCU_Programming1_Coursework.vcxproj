@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCar.cpp" />
-    <ClCompile Include="cCollider.cpp" />
     <ClCompile Include="cCollisionMgr.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cSceneRacing.cpp" />
@@ -37,7 +36,6 @@
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cScene.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="ICollidable.cpp" />
     <ClCompile Include="IInputChannelListener.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputChannel.cpp" />
@@ -47,13 +45,11 @@
     <ClInclude Include="AbstractEvent.h" />
     <ClInclude Include="Association.h" />
     <ClInclude Include="cCar.h" />
-    <ClInclude Include="cCollider.h" />
     <ClInclude Include="cCollisionMgr.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />
-    <ClInclude Include="ICollidable.h" />
     <ClInclude Include="IInputChannelListener.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputChannel.h" />

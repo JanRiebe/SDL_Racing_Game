@@ -21,5 +21,6 @@ public:
 	// Gets called when the scene is deactivated.
 	void deactivate();
 	void update(double deltaTime);
+	void render(SDL_Renderer* renderer);	//TODO remove
 };
 

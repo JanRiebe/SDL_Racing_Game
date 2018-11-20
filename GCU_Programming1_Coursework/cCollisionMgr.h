@@ -44,5 +44,8 @@ public:
 	void addCamera(cCamera* cam);
 	// Calculates collisions and informs colliders.
 	void calcColl();
+
+
+	SDL_Texture* renderTarget;
 };
 
