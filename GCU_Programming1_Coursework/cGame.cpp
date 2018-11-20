@@ -73,7 +73,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theSoundMgr->add("shot", "Audio\\shot007.wav", soundType::sfx);
 
 
-	scenes["race"] = new cSceneRacing(theTextureMgr);
+	scenes["race"] = new cSceneRacing(theRenderer);
 	setActiveScene("race");
 }
 

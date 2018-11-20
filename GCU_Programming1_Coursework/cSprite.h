@@ -29,7 +29,6 @@ protected:
 	// Texture width & Height
 	SDL_Rect textureDimension;
 
-
 public:
 	cSprite();			// Default constructor
 	cSprite(cTexture* theSpriteTexture);			// Default constructor
@@ -54,5 +53,6 @@ public:
 	
 	// Overwrite this to add per frame behaviour.
 	virtual void update(double deltaTime) {};
+
 };
 #endif

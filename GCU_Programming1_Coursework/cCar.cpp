@@ -85,40 +85,14 @@ void cCar::setSpritePos(SDL_Point worldPos)
 	cSprite::setSpritePos(worldPos);
 }
 
-SDL_Point cCar::getCenter()
-{
-	return cSprite::getPosition()+cSprite::getSpriteCentre();
-}
-
-float cCar::getRadius()
-{
-	// If the radius hasn't been calculated yet it gets calculated from the sprite dimensions.
-	if (ICollidable::radius == 0)
-	{
-		// The radius is the length from the texture center to the texture corner.
-		float h = getSpriteDimensions().h/2;
-		float w = getSpriteDimensions().w/2;
-		ICollidable::radius = sqrt(h*h + w*w);
-	}
-
-	// Returning the readius.
-	return ICollidable::radius;
-}
-
 void cCar::onCollision(fpoint impulse)
 {
-	cout << "Collision\n";
+	cout << "Collision\n"; //TODO remove cout
 	velocity = { 0,0 };
 	addImpulse(impulse);
 }
 
-void cCar::updateCollider()
-{
-	if (collider)
-	{
-		collider->rotate(spriteRotationAngle, getSpriteCentre());
-	}
-}
+
 
 fpoint cCar::getImpulse()
 {

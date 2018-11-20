@@ -14,7 +14,7 @@ private:
 	vector<cPlayer*> players;
 	cCollisionMgr* theCollisionMgr;
 public:
-	cSceneRacing(cTextureMgr* theTextureMgr);
+	cSceneRacing(SDL_Renderer* theRenderer);
 	~cSceneRacing();
 	// Gets called when the scene is activated.
 	void activate();

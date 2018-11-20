@@ -1,6 +1,6 @@
 #include "cCollider.h"
 
-
+//TODO remove collider entirely
 
 cCollider::cCollider()
 {

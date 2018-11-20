@@ -1,10 +1,8 @@
 #pragma once
 #include "cSpriteAnimation.h"
-#include "cCollider.h"
-#include "ICollidable.h"
 
 class cCar :
-	public cSpriteAnimation, public ICollidable
+	public cSpriteAnimation
 {
 private:
 	// Physical state
@@ -37,16 +35,8 @@ public:
 	// Overwrites function in cSprite, to set the physics position as well.
 	void setSpritePos(SDL_Point worldPos);
 
-
-	// ICollidable
-	// Returns the world position in pixel.
-	SDL_Point getCenter();
-	// Returns the collsion radius for broad phase collision.
-	float getRadius();
 	// Called by the collision manager when this has collided with another ICollidable.
 	void onCollision(fpoint impulse);
-	// Called by the collision manager. Updates the rotation of the attached collider.
-	void updateCollider();
 	// Returns the current impulse.
 	fpoint getImpulse();
 };

@@ -6,21 +6,21 @@
 #include "cCollisionMgr.h"
 
 
-cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
+cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 {
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
 	// Creating collsion manager
-	theCollisionMgr = new cCollisionMgr();
+	theCollisionMgr = new cCollisionMgr(theRenderer);
 
 
 	// TODO do all the stuff that needs to be done only once when the scene is loaded
 	// loading textures
-	theTextureMgr->addTexture("street", "Images\\street_tile_map.png");
-	theTextureMgr->addTexture("car_01", "Images\\car_01.png");
-	theTextureMgr->addTexture("car_02", "Images\\car_02.png");
+	cTextureMgr::getInstance()->addTexture("street", "Images\\street_tile_map.png");
+	cTextureMgr::getInstance()->addTexture("car_01", "Images\\car_01.png");
+	cTextureMgr::getInstance()->addTexture("car_02", "Images\\car_02.png");
 
 	// loading sounds
 
@@ -29,14 +29,14 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 	
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ -100,-100 });
-	tmpSpriteMap->setTexture(theTextureMgr->getTexture("street"));
+	tmpSpriteMap->setTexture(cTextureMgr::getInstance()->getTexture("street"));
 	tmpSpriteMap->setSpriteScale({ 10.5f, 10.5f });
 	tmpSpriteMap->setSheetGrid(4, 4);
 	tmpSpriteMap->loadMap("foo");
 	sprites.push_back(tmpSpriteMap);
 	
 	cSpriteAnimation* tmpSpriteAnim = new cSpriteAnimation();
-	tmpSpriteAnim->setTexture(theTextureMgr->getTexture("Charactervector"));
+	tmpSpriteAnim->setTexture(cTextureMgr::getInstance()->getTexture("Charactervector"));
 	tmpSpriteAnim->setSpriteScale({ 0.1f, 0.1f });
 	tmpSpriteAnim->setSheetGrid(4, 4);
 	tmpSpriteAnim->setSpeed(4.0);
@@ -81,8 +81,9 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 		cout << "af " << viewport.w << " " << viewport.h << endl;
 		newCam->SetViewport(viewport);
 
+		// Assigning values to the car
 		testCar = new cCar(1.0f, 0.1f, 500.0f, 1.0f, 10.0f);
-		testCar->setTexture(theTextureMgr->getTexture(names[i]));
+		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
 		testCar->setSpriteScale({ 1.0, 1.0 });
 		testCar->setSpritePos({ 0, 200*i });
 		testCar->setSpriteRotAngle(180 * i);
@@ -90,11 +91,11 @@ cSceneRacing::cSceneRacing(cTextureMgr* theTextureMgr) : cScene()
 		testCar->setSpeed(1);
 		testCar->trim(0, 1);
 		testCar->play();
-		cCollider* tmpColl = new cCollider();
-		tmpColl->generateFromSurface(theTextureMgr->getTexture(names[i])->getTexture()->.....);
-		testCar->setCollider(tmpColl);
 		sprites.push_back(testCar);
-		theCollisionMgr->addCollidable(testCar);
+		theCollisionMgr->addCar(testCar);
+
+		// Giving the camera to the collision manager
+		theCollisionMgr->addCamera(newCam);
 		
 		// Pinning the camera to a sprite.
 		newCam->setTarget(testCar);

@@ -46,6 +46,13 @@ SDL_Rect cCamera::WorldToScreen(SDL_Rect worldPos)
 	return worldPos;
 }
 
+SDL_Point cCamera::WorldToScreen(SDL_Point worldPos)
+{
+	worldPos.x -= pos.x;
+	worldPos.y -= pos.y;
+	return worldPos;
+}
+
 void cCamera::update(double deltaTime)
 {
 	// If a target has been set for this camera

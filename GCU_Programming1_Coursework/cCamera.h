@@ -19,6 +19,7 @@ public:
 	SDL_Rect GetViewport();
 	// Translates from world position to screen position using the camera position.
 	SDL_Rect WorldToScreen(SDL_Rect worldPosition);
+	SDL_Point WorldToScreen(SDL_Point worldPosition);
 	void update(double deltaTime);
 	// Define a target the camera will follow.
 	void setTarget(cSprite* t);
