@@ -171,9 +171,6 @@ void cSceneRacing::update(double deltaTime)
 
 void cSceneRacing::render(SDL_Renderer * renderer)
 {
-	//TODO remove
-
 	cScene::render(renderer);
-	SDL_RenderCopy(renderer, theCollisionMgr->renderTarget, NULL, NULL);
 }
 

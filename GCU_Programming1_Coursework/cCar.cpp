@@ -57,7 +57,6 @@ void cCar::update(double deltaTime)
 	// Else the velocity is only applyied in the forward direction.
 	else
 	{
-		//cout << ".\n";
 		fpoint forwards = forwardVector();
 		velocity = forwards * forwards.dotProduct(&velocity);
 	}
@@ -74,7 +73,6 @@ void cCar::update(double deltaTime)
 	// Resetting steering.
 	steering = 0;
 
-
 	cSpriteAnimation::update(deltaTime);
 }
 
@@ -87,7 +85,6 @@ void cCar::setSpritePos(SDL_Point worldPos)
 
 void cCar::onCollision(fpoint impulse)
 {
-	cout << "Collision\n"; //TODO remove cout
 	velocity = { 0,0 };
 	addImpulse(impulse);
 }

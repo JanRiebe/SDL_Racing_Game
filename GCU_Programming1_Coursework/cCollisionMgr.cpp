@@ -105,20 +105,16 @@ void cCollisionMgr::calcCarCollOnScr()
 			SDL_Rect* overlap = new SDL_Rect();
 			// Broad phase collision detection.
 			if (checkBBoxColl(*carA, *carB, overlap))
-			{
-				std::cout << "car on screen bounding box collision\n";
-				
+			{				
 				// Narrow phase collision detection.
 				if (checkNarrowColl(*carA, *carB, overlap))
-				{
-					std::cout << "car on screen pixel perfect collision\n";
-					/*
+				{	
 					// Informing the cars that they have collided.
 					fpoint impulseA = (*carA)->getImpulse();
 					fpoint impulseB = (*carB)->getImpulse();
 					(*carA)->onCollision(impulseB);
 					(*carB)->onCollision(impulseA);
-					*/
+					
 				}
 				
 			}
@@ -177,13 +173,13 @@ void cCollisionMgr::calcCarSpriteColl()
 bool cCollisionMgr::checkBBoxColl(cSprite * a, cSprite * b, SDL_Rect * outOverlap)
 {
 	// Assigning more readable variables for the sides of the bounding boxes.
-	int aLeft = a->getPosition().x;
-	int aRight = a->getPosition().x + a->getSpriteDimensions().w;
+	int aLeft = a->getPosition().x - a->getSpriteCentre().x;
+	int aRight = a->getPosition().x - a->getSpriteCentre().x + a->getSpriteDimensions().h;	// Using height for x axis too, to have square bounding boxes
 	int aUp = a->getPosition().y;
 	int aDown = a->getPosition().y + a->getSpriteDimensions().h;
 
-	int bLeft = b->getPosition().x;
-	int bRight = b->getPosition().x + b->getSpriteDimensions().w;
+	int bLeft = b->getPosition().x - b->getSpriteCentre().x;
+	int bRight = b->getPosition().x - b->getSpriteCentre().x + b->getSpriteDimensions().h;	// Using height for x axis too, to have square bounding boxes
 	int bUp = b->getPosition().y;
 	int bDown = b->getPosition().y + b->getSpriteDimensions().h;
 
@@ -225,7 +221,7 @@ bool cCollisionMgr::checkNarrowColl(cSprite * a, cSprite * b, SDL_Rect* overlapR
 
 
 	// Creating a camera for rendering the sprites on the target texture instead of the world position.
-	cCamera * camera = new cCamera();
+	cCamera camera;
 	
 	// Setting the camera position to the top left of the collsion overlap rect.
 		// I want to create a surface that has just the size of the overlap.
@@ -234,41 +230,28 @@ bool cCollisionMgr::checkNarrowColl(cSprite * a, cSprite * b, SDL_Rect* overlapR
 	SDL_Point cameraPos;
 	cameraPos.x = overlapRect->x;
 	cameraPos.y = overlapRect->y;
-	camera->SetPosition(cameraPos);
+	camera.SetPosition(cameraPos);
 
-	// Create the surfaces that contain the pixel data of the overlap.
-	SDL_Surface* surfaceA = CreateOverlapSurface(overlapRect, a, camera);
-	SDL_Surface* surfaceB = CreateOverlapSurface(overlapRect, b, camera);
-
-	// If the surface was successfully created.
-	if (surfaceA && surfaceB)
+	
+	// Reading the data into the surface.
+	// From the render target, that is as big as the window,
+	// we only read the overlap region.
+	SDL_Surface* surfaceA = CreateOverlapSurface(overlapRect, a, &camera);
+	SDL_Surface* surfaceB = CreateOverlapSurface(overlapRect, b, &camera);
+	
+	// Checking through all the pixels in both surfaces.
+	// If there is a pixel in which both have an alpha value different than 0,
+	// it is considered a collision.
+	for (int x = 0; x < overlapRect->w; x++)
 	{
-		// Reading the data into the surface.
-		// From the render target, that is as big as the window,
-		// we only read the overlap region.
-		SDL_RenderReadPixels(theRenderer, overlapRect, surfaceA->format->format, surfaceA->pixels, surfaceA->pitch);
-		SDL_RenderReadPixels(theRenderer, overlapRect, surfaceB->format->format, surfaceB->pixels, surfaceB->pitch);
-
-		// Checking through all the pixels in both surfaces.
-		// If there is a pixel in which both have an alpha value different than 0,
-		// it is considered a collision.
-		//std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";	//TODO remove cout
-		for (int x = 0; x < overlapRect->w; x++)
-		{
-			for (int y = 0; y < overlapRect->h; y++) {
-				// If this pixel has an alpha != 0 in both surfaces, it is a collision.
-				if (get_pixelAlpha(surfaceA, x, y) != 0 && get_pixelAlpha(surfaceB, x, y) != 0)
-				{
-					isCollision = true;
-				}
-				//TODO this only prints lots of zeros, there should be pixel values
-				//std::cout << "\t" << get_pixelAlpha(surfaceA, x, y);// << " " << get_pixelAlpha(surfaceB, x, y) << " -";	//TODO remove cout
+		for (int y = 0; y < overlapRect->h; y++) {
+			// If this pixel has an alpha != 0 in both surfaces, it is a collision.
+			if (get_pixelAlpha(surfaceA, x, y) != 0 && get_pixelAlpha(surfaceB, x, y) != 0)
+			{
+				isCollision = true;
 			}
-			//std::cout << endl;	//TODO remove cout
 		}
 	}
-	else
-		std::cout << "Collision manager failed to create overlap surface.\n";
 	
 	// Cleaning surfaces.
 	SDL_FreeSurface(surfaceA);
@@ -284,11 +267,13 @@ bool cCollisionMgr::checkNarrowColl(cSprite * a, cSprite * b, SDL_Rect* overlapR
 // adapted from http://lazyfoo.net/SDL_tutorials/lesson31/index.php
 Uint32 cCollisionMgr::get_pixelAlpha(SDL_Surface *surface, int x, int y)
 {
-	//TODO reqrite to pass back alpha
 	//Convert the pixels to 32 bit 
 	Uint32 *pixels = (Uint32 *)surface->pixels; 
-	//Get the requested pixel 
-	return pixels[ ( y * surface->w ) + x ]; 
+	//Get the requested pixel
+	Uint32 pix = pixels[ ( y * surface->w ) + x ]; 
+	// Get the alpha from the pixel
+	// As described here https://stackoverflow.com/questions/12304273/retrieve-last-6-bits-from-an-integer
+	return pix & ((1 << 8) - 1);
 }
 
 
@@ -296,6 +281,7 @@ SDL_Surface* cCollisionMgr::CreateOverlapSurface(SDL_Rect* overlapRect, cSprite*
 {
 	// Creating a render target texture with the size of the overlap rect.
 	renderTarget = SDL_CreateTexture(theRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, overlapRect->w, overlapRect->h);
+	SDL_SetTextureBlendMode(renderTarget, SDL_BLENDMODE_BLEND);
 
 	// Rendering to render target.
 	// Setting the render target.
@@ -303,10 +289,12 @@ SDL_Surface* cCollisionMgr::CreateOverlapSurface(SDL_Rect* overlapRect, cSprite*
 	// Rendering the texture onto the new render target
 	sprite->render(theRenderer, camera);
 
-
 	// Creating a surface from the render target texture, in order to read the data.
 	// The surface has the size of the overlap rect that needs to be checked.
 	SDL_Surface* surface = SDL_CreateRGBSurface(0, overlapRect->w, overlapRect->h, 32, 0, 0, 0, 0);
+
+	// Reading the pixel data into the surface.
+	SDL_RenderReadPixels(theRenderer, NULL, surface->format->format, surface->pixels, surface->pitch);
 
 	// Cleaning up render target texture.
 	//SDL_DestroyTexture(renderTarget);

@@ -20,7 +20,6 @@ cCamera::~cCamera()
 
 void cCamera::SetViewport(SDL_Rect v)
 {
-	cout << "Viewport assigned to camera "<< v.w << " " << v.h << endl;
 	viewport = v;
 }
 

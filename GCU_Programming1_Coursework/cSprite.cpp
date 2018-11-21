@@ -116,7 +116,6 @@ void cSprite::render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rec
 
 void cSprite::render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling)
 {
-
 	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), theSourceRect, theDestRect, rotAngle, spriteCentre, theScaling);
 }
 
