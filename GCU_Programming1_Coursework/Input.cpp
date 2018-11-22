@@ -72,7 +72,6 @@ void Input::AbstractSDLEvent(SDL_Event e)
 		}
 	}
 
-
 	
 
 	

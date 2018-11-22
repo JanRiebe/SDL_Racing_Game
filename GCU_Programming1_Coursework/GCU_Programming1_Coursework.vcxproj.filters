@@ -87,6 +87,12 @@
     <ClCompile Include="cSpriteText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cButtonController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cSpriteButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGame.h">
@@ -174,6 +180,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cSpriteText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cButtonController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cSpriteButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

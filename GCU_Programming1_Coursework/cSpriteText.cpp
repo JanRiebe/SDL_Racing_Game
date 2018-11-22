@@ -36,7 +36,6 @@ void cSpriteText::setColor(SDL_Color c)
 
 void cSpriteText::setText(LPCSTR text)
 {
-	cout << "setText "<< text << endl;
 	// Giving an error if no font has been set for this.
 	if (!font)
 	{
@@ -60,6 +59,6 @@ void cSpriteText::setText(LPCSTR text)
 void cSpriteText::setText(int x, string str)
 {
 	str += " "+ to_string(x);
-	LPCSTR lpc_str = str.c_str();
+	LPCSTR lpc_str = str.c_str();		// This basically just creates a pointer to the string, so I need to keep the string in memory while I use this.
 	setText(lpc_str);
 }
