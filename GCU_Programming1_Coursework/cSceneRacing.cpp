@@ -30,7 +30,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ -100,-100 });
 	tmpSpriteMap->setTexture(cTextureMgr::getInstance()->getTexture("street"));
-	tmpSpriteMap->setSpriteScale({ 10.5f, 10.5f });
+	tmpSpriteMap->setSpriteScale({ 50, 50 });
 	tmpSpriteMap->setSheetGrid(4, 4);
 	tmpSpriteMap->loadMap("foo");
 	sprites.push_back(tmpSpriteMap);
@@ -82,7 +82,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		newCam->SetViewport(viewport);
 
 		// Assigning values to the car
-		testCar = new cCar(1.0f, 0.1f, 500.0f, 1.0f, 10.0f);
+		testCar = new cCar(1.0f, 0.1f, 500.0f, 10.0f, 5.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
 		testCar->setSpriteScale({ 1.0, 1.0 });
 		testCar->setSpritePos({ 0, 200*i });
@@ -102,16 +102,19 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 
 		// Giving the player a sprite to control.
 		player->car = testCar;
+		testCar->setController(player);
+
+		// Adding test text sprite
+		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "textureName");
+		testText->setText("Testing testing testing");
+		testText->setSpritePos({ 0, 0 });
+		testText->setSpriteScale({ 1.0,1.0 });
+		testText->setSpriteDimensions(300, 100);
+		uiSprites[newCam].push_back(testText);
+		player->setScoreSprite(testText);
 	}
 
 
-	// Adding test text sprite
-	cSprite* testText = new cSprite();
-	testText->setTexture(cTextureMgr::getInstance()->getTexture("testText"));
-	testText->setSpritePos({ 0, 0 });
-	testText->setSpriteScale({ 1.0,1.0 });
-	testText->setSpriteDimensions(300, 100);
-	uiSprites.push_back(testText);
 
 }
 

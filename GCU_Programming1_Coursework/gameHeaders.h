@@ -6,6 +6,7 @@
 #include "cSprite.h"
 #include "cSpriteAnimation.h"
 #include "cSpriteMap.h"
+#include "cSpriteText.h"
 #include "cTextureMgr.h"
 #include "cTexture.h"
 #include "cSoundMgr.h"

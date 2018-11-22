@@ -36,7 +36,8 @@ cTexture::cTexture(LPCSTR theFilename, SDL_Renderer *theRenderer)
 */
 cTexture::~cTexture()
 {
-	delete this;
+	//was: delete this
+	SDL_DestroyTexture(sdlTextureID);
 }
 
 /*
@@ -68,7 +69,6 @@ bool cTexture::loadTexture(LPCSTR theFilename, SDL_Renderer *theRenderer) 	// cr
 
 bool cTexture::loadTexture(SDL_Texture* theTexture) 	// create the texture for use.
 {
-
 	// Call SDL_Image IMG_LoadTexture to create the desired texture
 	sdlTextureID = theTexture;
 

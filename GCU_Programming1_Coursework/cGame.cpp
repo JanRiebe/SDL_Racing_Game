@@ -85,10 +85,12 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	color.a = 255;
 	SDL_Color transp = color;
 	transp.a = 0;
-	theTextureMgr->addTexture("testText",
+	theTextureMgr->addTexture("testText0",
 		cFontMgr::getInstance()->getFont("pirate")->createTextTexture(theRenderer, "Test", textType::blended, color, transp)
 	);
-
+	theTextureMgr->addTexture("testText1",
+		cFontMgr::getInstance()->getFont("pirate")->createTextTexture(theRenderer, "some other text that is super long", textType::blended, color, transp)
+	);
 
 	scenes["race"] = new cSceneRacing(theRenderer);
 	setActiveScene("race");

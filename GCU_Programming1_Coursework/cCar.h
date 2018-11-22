@@ -1,6 +1,8 @@
 #pragma once
 #include "cSpriteAnimation.h"
 
+class cPlayer;
+
 class cCar :
 	public cSpriteAnimation
 {
@@ -21,6 +23,8 @@ private:
 	// Calculates a unit vector in the sprite's forward direction.
 	fpoint forwardVector();
 
+	cPlayer* controller;		// Who controls this car.
+
 public:
 	cCar(float mass, float airResistance, float enginePower, float tireSlippingPoint, float steerReactiveness);
 	~cCar();
@@ -39,5 +43,8 @@ public:
 	void onCollision(fpoint impulse);
 	// Returns the current impulse.
 	fpoint getImpulse();
+
+	// Informs this car that it is now controlled by a player.
+	void setController(cPlayer* c);
 };
 

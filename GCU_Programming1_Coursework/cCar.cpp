@@ -1,10 +1,11 @@
 #include "cCar.h"
-
+#include "cPlayer.h"
 
 
 
 cCar::cCar(float mass, float airResistance, float enginePower, float tireSlippingPoint, float steerReactiveness): mass(mass), airResist(airResistance), engine(enginePower), slipping(tireSlippingPoint), steerReactive(steerReactiveness)
 {
+	controller = NULL;
 }
 
 
@@ -87,6 +88,14 @@ void cCar::onCollision(fpoint impulse)
 {
 	velocity = { 0,0 };
 	addImpulse(impulse);
+
+	//TODO move this into a function that is called by a destructable that has been destroyed
+	// If this car is controlled by someone.
+	if (controller)
+	{
+		// Inform this someone that he destroyed something.
+		controller->OnDestroyedSomething(1);//TODO pass in score points from the destroyed object
+	}
 }
 
 
@@ -94,6 +103,11 @@ void cCar::onCollision(fpoint impulse)
 fpoint cCar::getImpulse()
 {
 	return velocity * mass;
+}
+
+void cCar::setController(cPlayer * c)
+{
+	controller = c;
 }
 
 

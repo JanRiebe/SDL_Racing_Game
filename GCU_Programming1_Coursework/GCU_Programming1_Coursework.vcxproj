@@ -34,6 +34,7 @@
     <ClCompile Include="cGame.cpp" />
     <ClCompile Include="cSDL2WNDManager.cpp" />
     <ClCompile Include="cSprite.cpp" />
+    <ClCompile Include="cSpriteText.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cScene.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />
+    <ClInclude Include="cSpriteText.h" />
     <ClInclude Include="IInputChannelListener.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputChannel.h" />

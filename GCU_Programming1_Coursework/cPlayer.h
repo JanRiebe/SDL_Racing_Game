@@ -2,16 +2,24 @@
 #include "IInputChannelListener.h"
 
 class cCar;
+class cSpriteText;
 
 class cPlayer :
 	public IInputChannelListener
 {
-//private:
+private:
 	//cCar* car;
+	int score;
+	cSpriteText* scoreSprite;
+
 public:
 	cPlayer();
 	~cPlayer();
-	void OnEvent(AbstractEvent e);
 	cCar* car;
+	void setScoreSprite(cSpriteText* s);
+
+	void OnEvent(AbstractEvent e);
+
+	void OnDestroyedSomething(int score);
 };
 

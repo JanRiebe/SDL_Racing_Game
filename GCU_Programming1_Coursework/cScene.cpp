@@ -25,22 +25,24 @@ cScene::~cScene()
 		++sprite;
 	}
 
-	// Cleaning up the ui sprites.
-	sprite = uiSprites.begin();
-	while (sprite != uiSprites.end())
-	{
-		// Deleting the sprite.
-		delete *sprite;
-		// Removing the sprite from the vector.
-		uiSprites.erase(sprite);
+	
 
-		++sprite;
-	}
-
-	// Cleaning up the cameras.
+	// Cleaning up the cameras and ui sprites.
 	vector<cCamera*>::iterator camera = cameras.begin();
 	while (camera != cameras.end())
 	{
+		// Cleaning up the ui sprites.
+		sprite = uiSprites[(*camera)].begin();
+		while (sprite != uiSprites[(*camera)].end())
+		{
+			// Deleting the sprite.
+			delete *sprite;
+			// Removing the sprite from the vector.
+			uiSprites[(*camera)].erase(sprite);
+
+			++sprite;
+		}
+
 		// Deleting the camera.
 		delete *camera;
 		// Removing the camera from the vector.
@@ -55,25 +57,25 @@ cScene::~cScene()
 
 void cScene::update(double deltaTime)
 {
-	
+
 	// Updating all sprites
 	vector<cSprite*>::iterator it = sprites.begin();
 	for (it; it != sprites.end(); ++it) {
 		(*it)->update(deltaTime);
 	}
 
-	// Updating all ui sprites
-	it = uiSprites.begin();
-	for (it; it != uiSprites.end(); ++it) {
-		(*it)->update(deltaTime);
-	}
-
-
-	// Updating all cameras
+	// Updating all cameras and ui sprites
 	vector<cCamera*>::iterator camera = cameras.begin();
 	for (camera; camera != cameras.end(); ++camera)
 	{
+		// Updating camera
 		(*camera)->update(deltaTime);
+
+		// Updating ui sprites
+		it = uiSprites[(*camera)].begin();
+		for (it; it != uiSprites[(*camera)].end(); ++it) {
+			(*it)->update(deltaTime);
+		}
 	}
 }
 
@@ -99,8 +101,8 @@ void cScene::render(SDL_Renderer * theRenderer)
 		SDL_Point tmpCamPos = (*camera)->GetPosition();
 		// Setting the camera position to 0,0 to render in screen/viewport space.
 		(*camera)->SetPosition({ 0,0 });
-		it = uiSprites.begin();
-		for (it; it != uiSprites.end(); ++it) {
+		it = uiSprites[(*camera)].begin();
+		for (it; it != uiSprites[(*camera)].end(); ++it) {
 			// Rendering the sprite using the camera for the relevant player
 			(*it)->render(theRenderer, *camera);
 		}
