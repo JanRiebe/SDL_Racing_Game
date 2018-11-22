@@ -14,9 +14,10 @@ class cCamera;
 class cScene
 {
 protected:
-	vector<cSprite*> sprites;
+	vector<cSprite*> sprites;		// Sprites that are rendered in world space
+	vector<cSprite*> uiSprites;		// Sprites that are rendered in screen space
 	vector<cCamera*> cameras;
-	
+
 	bool isInitialised;		// Indicates whether activate has been called at least once.
 public:
 	cScene();

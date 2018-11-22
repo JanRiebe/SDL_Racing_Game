@@ -65,6 +65,28 @@ bool cTexture::loadTexture(LPCSTR theFilename, SDL_Renderer *theRenderer) 	// cr
 
 	return false;
 }
+
+bool cTexture::loadTexture(SDL_Texture* theTexture) 	// create the texture for use.
+{
+
+	// Call SDL_Image IMG_LoadTexture to create the desired texture
+	sdlTextureID = theTexture;
+
+	// Check the Texture has been created from the surface
+	if (sdlTextureID != 0)
+	{
+		cout << "Texture successfully loaded." << endl;
+		SDL_QueryTexture(sdlTextureID, NULL, NULL, &textureWidth, &textureHeight); // determine the width an height of the texture
+		return true;
+	}
+	else
+	{
+		cout << "Texture could not be loaded!!" << endl;
+		cout << SDL_GetError() << endl;
+	}
+
+	return false;
+}
 /*
 =================
 - return the texture.

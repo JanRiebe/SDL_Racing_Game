@@ -105,5 +105,6 @@ inline SDL_Point operator+(SDL_Point const &a, SDL_Point const &b)
 }
 
 enum class soundType { sfx, music };
+enum class textType { solid, blended, shaded };
 
 #endif

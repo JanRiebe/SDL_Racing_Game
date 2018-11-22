@@ -105,6 +105,13 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	}
 
 
+	// Adding test text sprite
+	cSprite* testText = new cSprite();
+	testText->setTexture(cTextureMgr::getInstance()->getTexture("testText"));
+	testText->setSpritePos({ 0, 0 });
+	testText->setSpriteScale({ 1.0,1.0 });
+	testText->setSpriteDimensions(300, 100);
+	uiSprites.push_back(testText);
 
 }
 

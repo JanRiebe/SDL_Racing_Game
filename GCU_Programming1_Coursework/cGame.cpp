@@ -8,6 +8,7 @@ cGame.cpp
 
 cGame* cGame::pInstance = NULL;
 static cTextureMgr* theTextureMgr = cTextureMgr::getInstance();
+static cFontMgr* theFontMgr = cFontMgr::getInstance();
 static cSoundMgr* theSoundMgr = cSoundMgr::getInstance();
 
 
@@ -61,6 +62,9 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	SDL_SetRenderDrawColor(theRenderer, 0, 0, 0, 255);
 	SDL_RenderPresent(theRenderer);
 
+	// Initialising font manager
+	theFontMgr->initFontLib();
+
 	// Initialising sound manager
 	theSoundMgr->initMixer();
 
@@ -71,6 +75,19 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	theSoundMgr->add("who", "Audio\\who10Edit.wav", soundType::music);
 	theSoundMgr->add("shot", "Audio\\shot007.wav", soundType::sfx);
+
+	// Adding a text texture
+	cFontMgr::getInstance()->addFont("pirate", "Fonts\\BlackPearl.ttf", 64);
+	SDL_Color color;
+	color.r = 255;
+	color.g = 255;
+	color.b = 255;
+	color.a = 255;
+	SDL_Color transp = color;
+	transp.a = 0;
+	theTextureMgr->addTexture("testText",
+		cFontMgr::getInstance()->getFont("pirate")->createTextTexture(theRenderer, "Test", textType::blended, color, transp)
+	);
 
 
 	scenes["race"] = new cSceneRacing(theRenderer);

@@ -22,6 +22,8 @@
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCar.cpp" />
     <ClCompile Include="cCollisionMgr.cpp" />
+    <ClCompile Include="cFont.cpp" />
+    <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cSceneRacing.cpp" />
     <ClCompile Include="cSound.cpp" />
@@ -46,6 +48,8 @@
     <ClInclude Include="Association.h" />
     <ClInclude Include="cCar.h" />
     <ClInclude Include="cCollisionMgr.h" />
+    <ClInclude Include="cFont.h" />
+    <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cSound.h" />

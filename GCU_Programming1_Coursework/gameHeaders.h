@@ -6,14 +6,13 @@
 #include "cSprite.h"
 #include "cSpriteAnimation.h"
 #include "cSpriteMap.h"
-//#include "cBkGround.h"
 #include "cTextureMgr.h"
 #include "cTexture.h"
 #include "cSoundMgr.h"
 #include "cCamera.h"
 #include "cScene.h"
 #include "cSceneRacing.h"
-//#include "cTileMap.h"
-//#include "cTreePicker.h"
+#include "cFont.h"
+#include "cFontMgr.h"
 
 #endif
