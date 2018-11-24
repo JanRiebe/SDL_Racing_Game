@@ -1,5 +1,6 @@
 #pragma once
 #include "cSprite.h"
+
 class cSpriteButton :
 	public cSprite
 {
@@ -8,5 +9,8 @@ public:
 	~cSpriteButton();
 
 	void OnClick();
+
+	void OnSelect();
+	void OnDeSelect();
 };
 

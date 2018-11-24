@@ -16,5 +16,7 @@
 #include "cSceneRacing.h"
 #include "cFont.h"
 #include "cFontMgr.h"
+#include "cPlayer.h"
+#include "cButtonController.h"
 
 #endif

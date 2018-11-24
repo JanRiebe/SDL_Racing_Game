@@ -1,16 +1,22 @@
 #pragma once
 #include "IInputChannelListener.h"
-#include "gameHeaders.h"
+#include <stack>
+
+using namespace std;
+
+class cSpriteButton;
 
 class cButtonController :
 	public IInputChannelListener
 {
 private:
-	vector<cSpriteButton*> buttons;
-	vector<cSpriteButton*>::iterator cursor;	// the currently selected button
+	cSpriteButton* test;
+	stack<cSpriteButton*> buttonsAbove;
+	cSpriteButton* cursor;	// the currently selected button
+	stack<cSpriteButton*> buttonsBelow;
 
 public:
-	cButtonController();
+	cButtonController(cSpriteButton* b);
 	~cButtonController();
 
 	void addButton(cSpriteButton* b);

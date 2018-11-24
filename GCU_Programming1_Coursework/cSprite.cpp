@@ -21,6 +21,7 @@ cSprite::cSprite() 			// Default constructor
 	this->spriteScale = { 1, 1 };
 	this->spriteRotationAngle = 0;
 
+	tint = { 255,255,255,255 };
 }
 
 cSprite::cSprite(cTexture* theSpriteTexture) 			// Default constructor
@@ -104,19 +105,19 @@ void cSprite::setTexture(cTexture* theSpriteTexture)  // set the image of the sp
 void cSprite::render(SDL_Renderer * theRenderer, cCamera * theCamera)
 {
 	// Using the camera to translate world to screen position and rendering the sprite based on position.
-	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), &textureDimension, &theCamera->WorldToScreen(transform), (double)spriteRotationAngle, &spriteCentre, spriteScale);
+	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), &textureDimension, &theCamera->WorldToScreen(transform), (double)spriteRotationAngle, &spriteCentre, spriteScale, tint);
 }
 
 
 void cSprite::render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, FPoint theScaling)
 {
-	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), theSourceRect, theDestRect, theScaling);
+	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), theSourceRect, theDestRect, theScaling, tint);
 }
 
 
 void cSprite::render(SDL_Renderer* theRenderer, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling)
 {
-	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), theSourceRect, theDestRect, rotAngle, spriteCentre, theScaling);
+	this->spriteTexture->renderTexture(theRenderer, this->spriteTexture->getTexture(), theSourceRect, theDestRect, rotAngle, spriteCentre, theScaling, tint);
 }
 
 

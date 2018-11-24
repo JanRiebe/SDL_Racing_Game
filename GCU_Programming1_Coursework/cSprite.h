@@ -29,6 +29,9 @@ protected:
 	// Texture width & Height
 	SDL_Rect textureDimension;
 
+	// Allows rending the texture of this sprite in a tint, without affecting the texture for other sprites.
+	SDL_Color tint;
+
 public:
 	cSprite();			// Default constructor
 	cSprite(cTexture* theSpriteTexture);			// Default constructor

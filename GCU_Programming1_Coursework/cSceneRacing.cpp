@@ -8,6 +8,15 @@
 
 cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 {
+	cSpriteButton* buttonA = new cSpriteButton();
+	buttonA->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
+	buttonA->setSpritePos({ 20,100 });
+	buttonA->setSpriteScale({ 1.0,1.0 });
+
+	cSpriteButton* buttonB = new cSpriteButton();
+	buttonB->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
+	buttonB->setSpritePos({ 20,200 });
+	buttonB->setSpriteScale({ 1.0,1.0 });
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
@@ -112,7 +121,18 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		testText->setSpriteDimensions(300, 100);
 		uiSprites[newCam].push_back(testText);
 		player->setScoreSprite(testText);
+
+
+		// Adding button sprites to scene for all cameras.
+		uiSprites[newCam].push_back(buttonA);
+		uiSprites[newCam].push_back(buttonB);
+
+		
 	}
+
+	// Adding buttons to button controller
+	buttonContr = new cButtonController(buttonA);
+	buttonContr->addButton(buttonB);
 
 
 
@@ -120,6 +140,9 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 
 cSceneRacing::~cSceneRacing()
 {
+	// Deactivate the scene, to ensure no controllers are registered to input channels anymore.
+	deactivate();
+
 	// Cleaning up collision manager
 	delete theCollisionMgr;
 
@@ -139,6 +162,9 @@ cSceneRacing::~cSceneRacing()
 
 		++player;
 	}
+
+	// Cleaning up the button controller
+	delete buttonContr;
 }
 
 
@@ -151,12 +177,18 @@ void cSceneRacing::activate()
 	int channelIndex = 0;
 	for (player; player != players.end(); ++player, ++channelIndex)
 	{
+		// Registering player controller
 		Input::RegisterChannelListener(*player, channelIndex);
-	}	
 
+		// Registering button controller
+		// The same button controller is registered to all channels,
+		// because buttons are controlled by all players.
+		Input::RegisterChannelListener(buttonContr, channelIndex);
+	}	
+	
+	// Playing background sounds
 	cSoundMgr::getInstance()->getSnd("who")->play(1);
 	cSoundMgr::getInstance()->getSnd("shot")->play(1);
-
 }
 
 void cSceneRacing::deactivate()
@@ -165,9 +197,11 @@ void cSceneRacing::deactivate()
 	// so that the scene doesn't react to user input anymore.
 	vector<cPlayer*>::iterator player = players.begin();
 	for (player; player != players.end(); ++player)
-	{	
+	{
 		Input::UnRegisterChannelListener(*player);
 	}
+	// Unregistering button controller
+	Input::UnRegisterChannelListener(buttonContr);
 }
 
 void cSceneRacing::update(double deltaTime)

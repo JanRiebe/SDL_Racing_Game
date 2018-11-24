@@ -1,3 +1,6 @@
+#pragma once
+#include "AbstractEvent.h"
+
 /***************************************************************
 Interface for all objects that want to listen to input events.
 
@@ -5,9 +8,7 @@ Input events come through channels.
 Linsteners register to one or more channels to recieve input.
 ****************************************************************/
 
-#pragma once
 
-#include "AbstractEvent.h"
 
 class InputChannel;
 

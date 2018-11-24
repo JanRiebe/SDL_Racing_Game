@@ -120,16 +120,24 @@ int cTexture::getTHeight() 						// Return height of texture;
 - Render the texture.
 =================
 */
-void cTexture::renderTexture(SDL_Renderer* theRenderer, SDL_Texture* ptheTexture, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, FPoint theScaling)
+void cTexture::renderTexture(SDL_Renderer* theRenderer, SDL_Texture* ptheTexture, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, FPoint theScaling, SDL_Color tint)
 {
-	//SDL_RenderSetScale(theRenderer, theScaling.X, theScaling.Y);
+	// Tinting the texture
+	SDL_SetTextureColorMod(ptheTexture, tint.r, tint.g, tint.b);
+	// Rendering the texture
 	SDL_RenderCopy(theRenderer, ptheTexture, theSourceRect, theDestRect);
+	// Resetting tint
+	SDL_SetTextureColorMod(ptheTexture, 255, 255, 255);
 }
 
-void cTexture::renderTexture(SDL_Renderer* theRenderer, SDL_Texture* ptheTexture, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling)
+void cTexture::renderTexture(SDL_Renderer* theRenderer, SDL_Texture* ptheTexture, SDL_Rect* theSourceRect, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling, SDL_Color tint)
 {
-	//SDL_RenderSetScale(theRenderer, theScaling.X, theScaling.Y);
+	// Tinting the texture
+	SDL_SetTextureColorMod(ptheTexture, tint.r, tint.g, tint.b);
+	// Rendering the texture
 	SDL_RenderCopyEx(theRenderer, ptheTexture, theSourceRect, theDestRect, rotAngle, spriteCentre, SDL_FLIP_NONE);
+	// Resetting tint
+	SDL_SetTextureColorMod(ptheTexture, 255, 255, 255);
 }
 
 

@@ -1,12 +1,18 @@
 #include "cButtonController.h"
+#include "cSpriteButton.h"
+
+/*
+Research on stacks
+https://en.cppreference.com/w/cpp/container/stack
+https://www.sitesbay.com/cpp-datastructure/cpp-stack-example
+*/
 
 
-
-cButtonController::cButtonController()
-{
-	// Marking that no button is associated with the cursor yet.
-	// buttons.end() points outside buttons, so it is not associated with an actual button.
-	cursor = buttons.end();
+cButtonController::cButtonController(cSpriteButton* b)
+{	
+	// Setting the cursor to the initial button.
+	cursor = b;
+	cursor->OnSelect();
 }
 
 
@@ -15,35 +21,57 @@ cButtonController::~cButtonController()
 }
 
 void cButtonController::addButton(cSpriteButton* b)
-{
-	buttons.push_back(b);
-
-	// If this was the first button added, set the cursor to it.
-	if (cursor == buttons.end())
-		cursor = buttons.begin();
+{	
+	buttonsBelow.push(b);
 }
 
 void cButtonController::OnEvent(AbstractEvent e)
 {
+	
 	if (e.flag == AbstractEventFlag::CONFIRM)
 	{
 		// If there is a button selected,
 		// evoke it's OnClick.
-		if (cursor != buttons.end())
-			(*cursor)->OnClick();
+		if (cursor)
+			cursor->OnClick();
 	}
 	else if (e.flag == AbstractEventFlag::DIRECTION)
 	{
 		// Changing selected button
-		if (e.value_y > 0)
+		// Moving cursor down, if there is a button left above.
+		if (e.value_y > 0 && buttonsAbove.size())
 		{
-			cursor++;
-			if (cursor != buttons.end())
-				cursor = buttons.begin();
+			// Unhighlighting the old cursor.
+			cursor->OnDeSelect();
+
+			// Push the button that was selected to the buttons below.
+			buttonsBelow.push(cursor);
+
+			// Select the top button from the buttons above as the new cursor.
+			cursor = buttonsAbove.top();
+			// Remove the button from the buttons above, because it is now the cursor.
+			buttonsAbove.pop();
+
+			// Highlighting the new cursor.
+			cursor->OnSelect();				
 		}
-		else if (e.value_y < 0 && cursor != buttons.begin())
+		// Moving cursor down, if there is a button left below..
+		else if (e.value_y < 0 && buttonsBelow.size())
 		{
-			cursor--;
+			// Unhighlighting the old cursor.
+			cursor->OnDeSelect();
+
+			// Push the button that was selected to the buttons above.
+			buttonsAbove.push(cursor);
+
+			// Select the top button from the buttons below as the new cursor.
+			cursor = buttonsBelow.top();
+			// Remove the button from the buttons below, because it is now the cursor.
+			buttonsBelow.pop();
+
+			// Highlighting the new cursor.
+			cursor->OnSelect();
 		}
 	}
+	
 }
