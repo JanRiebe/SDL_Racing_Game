@@ -6,17 +6,30 @@
 #include "cCollisionMgr.h"
 
 
+//TODO remove test callback function
+void testfuntionA()
+{
+	cout << "function A evoked\n";
+}
+void testfuntionB()
+{
+	cout << "function B evoked\n";
+}
+
 cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 {
+
 	cSpriteButton* buttonA = new cSpriteButton();
 	buttonA->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
 	buttonA->setSpritePos({ 20,100 });
 	buttonA->setSpriteScale({ 1.0,1.0 });
+	buttonA->setCallbackFunction(&testfuntionA);
 
 	cSpriteButton* buttonB = new cSpriteButton();
 	buttonB->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
 	buttonB->setSpritePos({ 20,200 });
 	buttonB->setSpriteScale({ 1.0,1.0 });
+	buttonB->setCallbackFunction(&testfuntionB);
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
