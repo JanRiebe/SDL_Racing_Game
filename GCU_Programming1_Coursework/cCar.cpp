@@ -74,7 +74,7 @@ void cCar::update(double deltaTime)
 	// Resetting steering.
 	steering = 0;
 
-	cSpriteAnimation::update(deltaTime);
+	cSpriteSheet::update(deltaTime);
 }
 
 void cCar::setSpritePos(SDL_Point worldPos)
@@ -88,6 +88,9 @@ void cCar::onCollision(fpoint impulse)
 {
 	velocity = { 0,0 };
 	addImpulse(impulse);
+
+	damage += impulse.length();
+	cout << "Car damage " << damage << endl;
 
 	//TODO move this into a function that is called by a destructable that has been destroyed
 	// If this car is controlled by someone.

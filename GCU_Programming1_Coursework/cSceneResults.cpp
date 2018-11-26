@@ -1,4 +1,4 @@
-#include "cSceneStart.h"
+#include "cSceneResults.h"
 #include "GameConstants.h"
 #include "gameHeaders.h"
 #include "inputHeaders.h"
@@ -7,14 +7,12 @@
 
 
 
-cSceneStart::cSceneStart(SDL_Renderer* theRenderer)
+cSceneResults::cSceneResults(SDL_Renderer* theRenderer)
 {
-	
-
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
-	
+
 
 	// loading textures
 	cTextureMgr::getInstance()->addTexture("Background", "Images\\tmp_menu_bg.jpg");
@@ -41,47 +39,32 @@ cSceneStart::cSceneStart(SDL_Renderer* theRenderer)
 	sprites.push_back(background);
 
 	// Adding title text sprite
-	cSpriteText* titleText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "titleTxt");
-	titleText->setText("Jan's fun and educational racing game");
-	titleText->setSpriteDimensions(WINDOW_WIDTH/2, WINDOW_WIDTH / 10);
-	titleText->setSpritePos({ WINDOW_WIDTH / 4, 50 });
+	cSpriteText* titleText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "resultTitleTxt");
+	titleText->setText("Score");
+	titleText->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_WIDTH / 10);
+	titleText->setSpritePos({ WINDOW_WIDTH / 2 - titleText->getSpriteDimensions().w/2, 50 });
 	uiSprites[newCam].push_back(titleText);
-	
+
 	// Adding buttons
 	// Button A
 	cSpriteButton* buttonA = new cSpriteButton();
 	buttonA->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
-	buttonA->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
-	buttonA->setSpritePos({ WINDOW_WIDTH / 2 - buttonA->getSpriteDimensions().w/2, 200 });
-	buttonA->setCallbackFunction(&StartRaceScene);
+	buttonA->setSpriteDimensions(WINDOW_WIDTH / 3, WINDOW_WIDTH / 20);
+	buttonA->setSpritePos({ WINDOW_WIDTH / 2 - buttonA->getSpriteDimensions().w / 2, WINDOW_HEIGHT - 100 });
+	buttonA->setCallbackFunction(&GoToStartScreen);
 	uiSprites[newCam].push_back(buttonA);
 	buttonContr = new cButtonController(buttonA);
 	// Button A text
-	cSpriteText* bAText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "raceTxt");
-	bAText->setText("RACE");
+	cSpriteText* bAText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "toTitleTxt");
+	bAText->setText("to Title screen");
 	bAText->setSpriteDimensions(buttonA->getSpriteDimensions().w, buttonA->getSpriteDimensions().h);
 	bAText->setSpritePos(buttonA->getPosition());
 	uiSprites[newCam].push_back(bAText);
 
-	// Button B
-	cSpriteButton* buttonB = new cSpriteButton();
-	buttonB->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
-	buttonB->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
-	buttonB->setSpritePos({ WINDOW_WIDTH / 2 - buttonB->getSpriteDimensions().w / 2, 275 });
-	buttonB->setCallbackFunction(&QuitGame);
-	uiSprites[newCam].push_back(buttonB);
-	buttonContr->addButton(buttonB);
-	// Button B text
-	cSpriteText* bBText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "exitTxt");
-	bBText->setText("EXIT");
-	bBText->setSpriteDimensions(buttonB->getSpriteDimensions().w, buttonB->getSpriteDimensions().h);
-	bBText->setSpritePos(buttonB->getPosition());
-	uiSprites[newCam].push_back(bBText);
-
 }
 
 
-cSceneStart::~cSceneStart()
+cSceneResults::~cSceneResults()
 {
 	// Cleaning up textures that were loaded for this specific scene.
 	cTextureMgr::getInstance()->deleteTexture("Background");
@@ -91,7 +74,7 @@ cSceneStart::~cSceneStart()
 	delete buttonContr;
 }
 
-void cSceneStart::activate()
+void cSceneResults::activate()
 {
 	// Registering button controller to all channels.
 	int numberOfPlayers = Input::GetNumberOfPlayers();
@@ -101,7 +84,7 @@ void cSceneStart::activate()
 	}
 }
 
-void cSceneStart::deactivate()
+void cSceneResults::deactivate()
 {
 	// Unregistering button controller
 	Input::UnRegisterChannelListener(buttonContr);

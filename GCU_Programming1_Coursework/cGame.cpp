@@ -100,7 +100,8 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	scenes.insert(pair<string, cScene*>("start", new cSceneStart(theRenderer)));
 	scenes.insert(pair<string, cScene*>("race", new cSceneRacing(theRenderer)));
-	setActiveScene("start");
+	scenes.insert(pair<string, cScene*>("result", new cSceneResults(theRenderer)));
+	setActiveScene("result");
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
@@ -178,6 +179,9 @@ double cGame::getElapsedSeconds()
 
 void cGame::cleanUp(SDL_Window* theSDLWND)
 {
+	// Deleting scenes
+	//TODO
+
 	// Delete our OpengL context
 	SDL_GL_DeleteContext(theSDLWND);
 

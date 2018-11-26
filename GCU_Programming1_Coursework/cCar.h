@@ -14,6 +14,8 @@ private:
 	fpoint physPos;			// Pixelindependent physical position.
 	float steering;			// The angle the steering wheel is turned.
 
+	float damage;		// How much this car has been harmed by collisions.
+
 	// Attributes of the car
 	float mass;
 	float airResist;

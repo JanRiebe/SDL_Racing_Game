@@ -106,7 +106,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		// Assigning values to the car
 		testCar = new cCar(1.0f, 0.1f, 500.0f, 10.0f, 5.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
-		testCar->setSpriteScale({ 1.0, 1.0 });
+		testCar->setSpriteScale({ 0.5f, 0.5f });
 		testCar->setSpritePos({ 0, 200*i });
 		testCar->setSpriteRotAngle(180 * i);
 		testCar->setSheetGrid(1, 1);
@@ -135,11 +135,11 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		uiSprites[newCam].push_back(testText);
 		player->setScoreSprite(testText);
 
-
+		/*
 		// Adding button sprites to scene for all cameras.
 		uiSprites[newCam].push_back(buttonA);
 		uiSprites[newCam].push_back(buttonB);
-
+		*/
 		
 	}
 
