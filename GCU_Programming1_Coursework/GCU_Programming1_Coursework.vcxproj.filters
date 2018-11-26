@@ -93,6 +93,9 @@
     <ClCompile Include="cSpriteButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cSceneStart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGame.h">
@@ -186,6 +189,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cSpriteButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneStart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

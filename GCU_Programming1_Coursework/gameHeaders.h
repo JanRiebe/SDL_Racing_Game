@@ -14,6 +14,7 @@
 #include "cCamera.h"
 #include "cScene.h"
 #include "cSceneRacing.h"
+#include "cSceneStart.h"
 #include "cFont.h"
 #include "cFontMgr.h"
 #include "cPlayer.h"

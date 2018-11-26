@@ -164,7 +164,7 @@ cSceneRacing::~cSceneRacing()
 	cTextureMgr::getInstance()->deleteTexture("car_01");
 	cTextureMgr::getInstance()->deleteTexture("car_02");
 
-	// Cleaning up the players and cameras.
+	// Cleaning up the players.
 	vector<cPlayer*>::iterator player = players.begin();
 	while (player != players.end())
 	{

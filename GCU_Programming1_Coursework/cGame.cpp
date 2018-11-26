@@ -52,6 +52,11 @@ void cGame::setActiveScene(string sceneName)
 		cout << "Failed to activate scene '" << sceneName << "'. No scene with this name found." << endl;
 }
 
+void cGame::QuitGame()
+{
+	loop = false;
+}
+
 
 void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
@@ -93,20 +98,26 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		cFontMgr::getInstance()->getFont("pirate")->createTextTexture(theRenderer, "some other text that is super long", textType::blended, color, transp)
 	);
 
-	scenes["race"] = new cSceneRacing(theRenderer);
-	setActiveScene("race");
+	scenes.insert(pair<string, cScene*>("start", new cSceneStart(theRenderer)));
+	scenes.insert(pair<string, cScene*>("race", new cSceneRacing(theRenderer)));
+	setActiveScene("start");
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
-	bool loop = true;
+	loop = true;
 
 	while (loop)
 	{
 		//We get the time that passed since the last frame
 		double elapsedTime = this->getElapsedSeconds();
 
-		loop = this->getInput(loop);
+		// Evaluating whether to continue the loop,
+		// by considering the return value of getInput
+		// and the side effects of getInput on loop.
+		// Note that the order is important.
+		loop = this->getInput(loop) && loop;
+
 		this->update(elapsedTime);
 		this->render(theSDLWND, theRenderer);
 	}

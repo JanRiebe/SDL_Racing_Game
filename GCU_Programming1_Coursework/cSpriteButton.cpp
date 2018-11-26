@@ -18,7 +18,7 @@ void cSpriteButton::OnClick()
 	cout << "Button clicked\n";
 
 	// Evoking function pointer
-	if(callbackFunction)
+	if (callbackFunction)
 		callbackFunction();
 }
 
@@ -37,5 +37,3 @@ void cSpriteButton::setCallbackFunction(void (* functionPointer)())
 {
 	callbackFunction = functionPointer;
 }
-
-

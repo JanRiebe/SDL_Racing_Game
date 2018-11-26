@@ -17,7 +17,7 @@ public:
 	void OnSelect();
 	void OnDeSelect();
 
-	void setCallbackFunction(void (*functionPointer)());
+	void setCallbackFunction(void(*functionPointer)());
 
 };
 

@@ -27,6 +27,7 @@
     <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cSceneRacing.cpp" />
+    <ClCompile Include="cSceneStart.cpp" />
     <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="cSpriteAnimation.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="cFontMgr.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="cPlayer.h" />
+    <ClInclude Include="cSceneStart.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="cSpriteButton.h" />

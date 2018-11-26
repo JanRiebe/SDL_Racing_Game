@@ -26,5 +26,10 @@ public:
 	void RecieveEvent(AbstractEvent e);
 private:
 	std::vector<IInputChannelListener*> listeners;
+	// Indicates whether the listeners have been changed during an event update.
+	// This might happen for example when a new scene is loaded.
+	// Used by RecieveEvent to immediately stop the sending of events to listeners,
+	// because listeners might have changed too much to continue iterating over it.
+	bool noChangeToListenersSinceEvent;
 };
 

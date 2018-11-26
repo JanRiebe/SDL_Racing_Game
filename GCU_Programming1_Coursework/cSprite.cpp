@@ -131,6 +131,7 @@ void cSprite::setSpriteDimensions(int width, int height)
 {
 	this->transform.w = width;
 	this->transform.h = height;
+	cout << "set dim " << width << " " << height << endl;
 }
 
 
