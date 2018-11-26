@@ -19,18 +19,6 @@ void testfuntionB()
 cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 {
 
-	cSpriteButton* buttonA = new cSpriteButton();
-	buttonA->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
-	buttonA->setSpritePos({ 20,100 });
-	buttonA->setSpriteScale({ 1.0,1.0 });
-	buttonA->setCallbackFunction(&testfuntionA);
-
-	cSpriteButton* buttonB = new cSpriteButton();
-	buttonB->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
-	buttonB->setSpritePos({ 20,200 });
-	buttonB->setSpriteScale({ 1.0,1.0 });
-	buttonB->setCallbackFunction(&testfuntionB);
-
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
@@ -38,11 +26,11 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	theCollisionMgr = new cCollisionMgr(theRenderer);
 
 
-	// TODO do all the stuff that needs to be done only once when the scene is loaded
 	// loading textures
 	cTextureMgr::getInstance()->addTexture("street", "Images\\street_tile_map.png");
 	cTextureMgr::getInstance()->addTexture("car_01", "Images\\car_01.png");
-	cTextureMgr::getInstance()->addTexture("car_02", "Images\\car_02.png");
+	cTextureMgr::getInstance()->addTexture("car_01_destr", "Images\\car_01_destr.png");
+	cTextureMgr::getInstance()->addTexture("car_02", "Images\\ramp.png");
 
 	// loading sounds
 
@@ -67,10 +55,9 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	sprites.push_back(tmpSpriteAnim);
 	
 	cCar* testCar;
-	LPCSTR names[2] = { "car_01" ,"car_02" };
+	LPCSTR names[2] = { "car_01_destr" ,"car_02" };
 
-	// Creating players and cameras.
-	
+	// Creating players and cameras.	
 	int numberOfPlayers = Input::GetNumberOfPlayers();
 	for (int i = 0; i < numberOfPlayers; ++i)
 	{
@@ -84,7 +71,6 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		// The window gets first split horizontally,
 		// if more than 2 players play it also gets split vertically.
 		SDL_Rect viewport = newCam->GetViewport();
-		cout << "vp " << viewport.w << " " << viewport.h << endl;
 		if (numberOfPlayers > 1)
 		{
 			// Setting the width of the viewport to half the window.
@@ -100,19 +86,15 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 				viewport.y = (WINDOW_HEIGHT / 2)*(i / 2);
 			}
 		}
-		cout << "af " << viewport.w << " " << viewport.h << endl;
 		newCam->SetViewport(viewport);
 
 		// Assigning values to the car
 		testCar = new cCar(1.0f, 0.1f, 500.0f, 10.0f, 5.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
-		testCar->setSpriteScale({ 0.5f, 0.5f });
 		testCar->setSpritePos({ 0, 200*i });
 		testCar->setSpriteRotAngle(180 * i);
-		testCar->setSheetGrid(1, 1);
-		testCar->setSpeed(1);
-		testCar->trim(0, 1);
-		testCar->play();
+		testCar->setSheetGrid(10, 1);
+		testCar->setSpriteScale({ 0.5f, 0.5f });
 		sprites.push_back(testCar);
 		theCollisionMgr->addCar(testCar);
 
@@ -126,27 +108,16 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		player->car = testCar;
 		testCar->setController(player);
 
+		/*
 		// Adding test text sprite
-		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "textureName");
-		testText->setText("Testing testing testing");
-		testText->setSpritePos({ 0, 0 });
-		testText->setSpriteScale({ 1.0,1.0 });
-		testText->setSpriteDimensions(300, 100);
+		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "scoreText");
+		testText->setText("Score");
+		testText->setSpriteDimensions(newCam->GetViewport().w, newCam->GetViewport().h / 10);
+		testText->setSpritePos({ 50, 50 });
 		uiSprites[newCam].push_back(testText);
 		player->setScoreSprite(testText);
-
-		/*
-		// Adding button sprites to scene for all cameras.
-		uiSprites[newCam].push_back(buttonA);
-		uiSprites[newCam].push_back(buttonB);
-		*/
-		
+				*/
 	}
-
-	// Adding buttons to button controller
-	buttonContr = new cButtonController(buttonA);
-	buttonContr->addButton(buttonB);
-
 
 
 }
@@ -162,6 +133,7 @@ cSceneRacing::~cSceneRacing()
 	// Cleaning up textures and sounds loaded for this scene.
 	cTextureMgr::getInstance()->deleteTexture("street");
 	cTextureMgr::getInstance()->deleteTexture("car_01");
+	cTextureMgr::getInstance()->deleteTexture("car_01_destr");
 	cTextureMgr::getInstance()->deleteTexture("car_02");
 
 	// Cleaning up the players.
@@ -175,9 +147,6 @@ cSceneRacing::~cSceneRacing()
 
 		++player;
 	}
-
-	// Cleaning up the button controller
-	delete buttonContr;
 }
 
 
@@ -193,10 +162,6 @@ void cSceneRacing::activate()
 		// Registering player controller
 		Input::RegisterChannelListener(*player, channelIndex);
 
-		// Registering button controller
-		// The same button controller is registered to all channels,
-		// because buttons are controlled by all players.
-		Input::RegisterChannelListener(buttonContr, channelIndex);
 	}	
 	
 	// Playing background sounds
@@ -213,8 +178,6 @@ void cSceneRacing::deactivate()
 	{
 		Input::UnRegisterChannelListener(*player);
 	}
-	// Unregistering button controller
-	Input::UnRegisterChannelListener(buttonContr);
 }
 
 void cSceneRacing::update(double deltaTime)

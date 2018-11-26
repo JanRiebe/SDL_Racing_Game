@@ -49,7 +49,7 @@ public:
 	SDL_Point getSpriteCentre();  // Return the sprites current position
 	void setSpriteCentre(SDL_Point sCentre); // set the position of the sprite
 	FPoint getSpriteScale();  // Return the sprites scaling factor
-	void setSpriteScale(FPoint sScale); // set the sprites scaling factor
+	virtual void setSpriteScale(FPoint sScale); // set the sprites scaling factor
 	void scaleSprite(); // update the sprites width & height
 	float getSpriteRotAngle();  // Return the sprites rotation angle
 	void setSpriteRotAngle(float angle); // set the sprites rotation angle

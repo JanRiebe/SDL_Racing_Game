@@ -1,11 +1,11 @@
 #include "cSpriteSheet.h"
-
+#include "gameHeaders.h"
 
 
 SDL_Rect * cSpriteSheet::findSourceRect(int index)
 {
 	sourceRect.x = sourceRect.w * (index % columns);
-	sourceRect.y = sourceRect.h * (index / rows);
+	sourceRect.y = sourceRect.h * (index / columns);
 
 	return &sourceRect;
 }
@@ -23,7 +23,7 @@ void cSpriteSheet::render(SDL_Renderer * theRenderer, int sheetIndex, SDL_Rect *
 
 
 
-cSpriteSheet::cSpriteSheet(int sheetRows, int sheetColumns):rows(sheetRows), columns(sheetColumns), cSprite()
+cSpriteSheet::cSpriteSheet(int sheetColumns, int sheetRows):rows(sheetRows), columns(sheetColumns), cSprite()
 {
 }
 
@@ -41,7 +41,7 @@ int cSpriteSheet::getSheetColumns()
 	return columns;
 }
 
-void cSpriteSheet::setSheetGrid(int sheetRows, int sheetColumns)
+void cSpriteSheet::setSheetGrid(int sheetColumns, int sheetRows)
 {
 	rows = sheetRows;
 	columns = sheetColumns;
@@ -49,4 +49,14 @@ void cSpriteSheet::setSheetGrid(int sheetRows, int sheetColumns)
 	//Set width and height of source rect that will be used to cut out the tile to render.
 	sourceRect.w = textureDimension.w / columns;
 	sourceRect.h = textureDimension.h / rows;
+}
+
+void cSpriteSheet::setSpriteScale(FPoint sScale)
+{
+	// Changing sScale depending on the sheet grid size,
+	sScale.X /= columns;
+	sScale.Y /= rows;
+	
+	// then callling the base class function.
+	cSprite::setSpriteScale(sScale);
 }

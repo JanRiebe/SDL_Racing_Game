@@ -91,6 +91,7 @@ void cCar::onCollision(fpoint impulse)
 
 	damage += impulse.length();
 	cout << "Car damage " << damage << endl;
+	setState(damage / 500);
 
 	//TODO move this into a function that is called by a destructable that has been destroyed
 	// If this car is controlled by someone.

@@ -18,10 +18,11 @@ public:
 	//Render a tile from the sprite sheet, indext by sheetIndex. Allows rotating.
 	void render(SDL_Renderer* theRenderer, int sheetIndex, SDL_Rect* theDestRect, double rotAngle, SDL_Point* spriteCentre, FPoint theScaling);
 	//Constructor. Parameter sheetRows and sheetColumns specify how the texture should be sliced into tiles.
-	cSpriteSheet(int sheetRows = 1, int sheetColumns = 1);
+	cSpriteSheet(int sheetColumns = 1, int sheetRows = 1);
 	~cSpriteSheet();
 	int getSheetRows();
 	int getSheetColumns();
-	void setSheetGrid(int sheetRows, int sheetColumns);
+	void setSheetGrid(int sheetColumns, int sheetRows);
+	virtual void setSpriteScale(FPoint sScale); // set the sprites scaling factor
 };
 

@@ -32,6 +32,8 @@ void cPlayer::OnEvent(AbstractEvent e)
 
 void cPlayer::OnDestroyedSomething(int s)
 {
+/*
 	score += s;
 	scoreSprite->setText(score, "Score");
+	*/
 }

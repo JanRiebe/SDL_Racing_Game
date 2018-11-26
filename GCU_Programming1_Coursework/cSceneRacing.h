@@ -3,7 +3,6 @@
 
 class cCollisionMgr;
 class cPlayer;
-class cButtonController;
 
 class cSceneRacing :
 	public cScene
@@ -11,7 +10,6 @@ class cSceneRacing :
 private:
 	vector<cPlayer*> players;
 	cCollisionMgr* theCollisionMgr;
-	cButtonController* buttonContr;
 public:
 	cSceneRacing(SDL_Renderer* theRenderer);
 	~cSceneRacing();

@@ -1,10 +1,10 @@
 #pragma once
-#include "cSpriteAnimation.h"
+#include "cSpriteState.h"
 
 class cPlayer;
 
 class cCar :
-	public cSpriteAnimation
+	public cSpriteState
 {
 private:
 	// Physical state
