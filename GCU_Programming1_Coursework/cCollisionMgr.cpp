@@ -195,13 +195,6 @@ void cCollisionMgr::calcCarTileColl()
 					// Broad phase collision detection.
 					if (checkBBoxColl((*carA)->getBoundingBox(), map->getBoundingBox(column, row), overlap))
 					{
-						cout << "calcCarTileColl " << column << " " << row << endl;
-						SDL_Rect a = (*carA)->getBoundingBox();
-						SDL_Rect b = map->getBoundingBox(column, row);
-						cout << "a.x" << a.x << " a.y " << a.y << " a.w " << a.w << " a.h " << a.h << endl;
-						cout << "b.x" << b.x << " b.y " << b.y << " b.w " << b.w << " b.h " << b.h << endl;
-
-
 						// Narrow phase collision detection.
 						if (checkNarrowColl(*carA, map, overlap))
 						{
