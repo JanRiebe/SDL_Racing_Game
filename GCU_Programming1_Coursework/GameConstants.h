@@ -48,6 +48,27 @@ typedef struct fpoint
 	float  X;
 	float  Y;
 
+
+	// Overloading - operator for fpoint,
+	// to allow shorthand negation in physics simulation.
+	fpoint operator-()
+	{
+		fpoint result;
+		result.X = -X;
+		result.Y = -Y;
+		return result;
+	}
+
+	// Overloading - operator for fpoint,
+	// to allow shorthand vector subtraction in physics simulation.
+	fpoint operator-(fpoint const &rhs)
+	{
+		fpoint result;
+		result.X = X - rhs.X;
+		result.Y = Y - rhs.Y;
+		return result;
+	}
+
 	// Overloading += operator for fpoint,
 	// to allow shorthand vector addition in physics simulation.
 	fpoint operator+=(fpoint const &other)
