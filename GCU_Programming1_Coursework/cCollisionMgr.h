@@ -48,7 +48,6 @@ public:
 	void addSprite(cSprite* sprite);
 	void addCamera(cCamera* cam);
 	void setMap(cSpriteMap* m);
-	// Calculates collisions and informs colliders.
 	void calcColl();
 
 

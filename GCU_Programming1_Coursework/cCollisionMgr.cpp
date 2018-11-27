@@ -178,7 +178,6 @@ void cCollisionMgr::calcCarSpriteColl()
 
 void cCollisionMgr::calcCarTileColl()
 {
-
 	// Calculating on screen collisions using pixel perfect collision
 
 	// Comparing every car on screen with every tile.
@@ -193,10 +192,16 @@ void cCollisionMgr::calcCarTileColl()
 				if (map->getMapDefinition().impassable[column][row])
 				{
 					SDL_Rect* overlap = new SDL_Rect();
-					SDL_Rect tileDimension = map->getBoundingBox(column, row);
 					// Broad phase collision detection.
-					if (checkBBoxColl((*carA)->getSpriteDimensions(), tileDimension, overlap))
+					if (checkBBoxColl((*carA)->getBoundingBox(), map->getBoundingBox(column, row), overlap))
 					{
+						cout << "calcCarTileColl " << column << " " << row << endl;
+						SDL_Rect a = (*carA)->getBoundingBox();
+						SDL_Rect b = map->getBoundingBox(column, row);
+						cout << "a.x" << a.x << " a.y " << a.y << " a.w " << a.w << " a.h " << a.h << endl;
+						cout << "b.x" << b.x << " b.y " << b.y << " b.w " << b.w << " b.h " << b.h << endl;
+
+
 						// Narrow phase collision detection.
 						if (checkNarrowColl(*carA, map, overlap))
 						{
@@ -220,26 +225,6 @@ void cCollisionMgr::calcCarTileColl()
 
 
 
-/*
-bool cCollisionMgr::checkBBoxColl(cSprite * a, cSprite * b, SDL_Rect * outOverlap)
-{
-	SDL_Rect aRect{
-		a->getPosition().x - a->getSpriteCentre().x,
-		a->getPosition().x - a->getSpriteCentre().x + a->getSpriteDimensions().h,	// Using height for x axis too, to have square bounding boxes
-		a->getPosition().y,
-		a->getPosition().y + a->getSpriteDimensions().h
-	};
-
-	SDL_Rect bRect{
-		b->getPosition().x - b->getSpriteCentre().x,
-		b->getPosition().x - b->getSpriteCentre().x + b->getSpriteDimensions().h,	// Using height for x axis too, to have square bounding boxes
-		b->getPosition().y,
-		b->getPosition().y + b->getSpriteDimensions().h
-	};
-
-	return checkBBoxColl(aRect, bRect, outOverlap);
-}
-*/
 
 bool cCollisionMgr::checkBBoxColl(SDL_Rect a, SDL_Rect b, SDL_Rect * outOverlap)
 {

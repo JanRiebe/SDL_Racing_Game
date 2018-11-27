@@ -40,12 +40,10 @@ void cSpriteMap::loadMap(string mapName)
 		for (int y = 0; y < MAP_HEIGHT; ++y)
 		{
 			mapDef.tiles[x][y] = (x + y + 1) % 2;//(x*y) % (cSpriteSheet::getSheetRows()*cSpriteSheet::getSheetColumns());
-			if(mapDef.tiles[x][y]==0)
-				mapDef.impassable[x][y] = true;
-			else
-				mapDef.impassable[x][y] = false;
+			mapDef.impassable[x][y] = false;
 		}
 	}
+	mapDef.impassable[0][1] = true;
 }
 
 MapDefinition cSpriteMap::getMapDefinition()
@@ -56,7 +54,7 @@ MapDefinition cSpriteMap::getMapDefinition()
 SDL_Rect cSpriteMap::getBoundingBox(int column, int row)
 {
 	// Get the bounding box for the tile at columns, row.
-	return *(findSourceRect(column*row+column));
+	return *(findDestinationRect(column, row, &transform));
 }
 
 

@@ -39,7 +39,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	// Creating sprites
 	
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
-	tmpSpriteMap->setSpritePos({ -100,-100 });
+	tmpSpriteMap->setSpritePos({ 0,0 });
 	tmpSpriteMap->setTexture(cTextureMgr::getInstance()->getTexture("street"));
 	tmpSpriteMap->setCollisionTexture(cTextureMgr::getInstance()->getTexture("street_coll"));
 	tmpSpriteMap->setSpriteScale({ 50, 50 });
