@@ -30,7 +30,6 @@ void cSpriteState::render(SDL_Renderer * theRenderer, cCamera * theCamera)
 
 void cSpriteState::setState(int s)
 {
-	cout << "set state " << s << endl;
 	// Checking s within range of the tile sheet grid.
 	if(s < getSheetRows()*getSheetColumns() && s >= 0)
 		// Set the state.
