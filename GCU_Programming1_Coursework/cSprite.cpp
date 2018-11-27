@@ -17,6 +17,8 @@ cSprite::cSprite() 			// Default constructor
 
 	this->transform = { 0, 0, 0, 0 };
 	this->spriteTexture = NULL;
+	this->spriteVisualTexture = NULL;
+	this->spriteCollisionTexture = NULL;
 	this->spriteCentre = {0, 0};
 	this->spriteScale = { 1, 1 };
 	this->spriteRotationAngle = 0;
@@ -88,17 +90,32 @@ cTexture* cSprite::getTexture()  // Return the sprites current image
 
 void cSprite::setTexture(cTexture* theSpriteTexture)  // set the image of the sprite
 {
-	this->spriteTexture = theSpriteTexture;
+	this->spriteVisualTexture = theSpriteTexture;
 
 	// Saving the width and height of the texture for easy access.
-	this->textureDimension.w = spriteTexture->getTWidth();
-	this->textureDimension.h = spriteTexture->getTHeight();
+	this->textureDimension.w = spriteVisualTexture->getTWidth();
+	this->textureDimension.h = spriteVisualTexture->getTHeight();
 	// Setting the dimensions of the transform rect depending on the texture size and the scale.
 	this->transform.w = (int)textureDimension.w * spriteScale.X;
 	this->transform.h = (int)textureDimension.h * spriteScale.Y;
 	// Setting the sprite center.
 	this->spriteCentre = { this->transform.w / 2, this->transform.h / 2 };
+
+	// Setting the texture to be rendered to the visual texture.
+	this->spriteTexture = spriteVisualTexture;
+
+	// Setting the collision texture to the same as the visual texture,
+	// if no collision texture has been set explicitly.
+	if (spriteCollisionTexture == NULL)
+		spriteCollisionTexture = theSpriteTexture;
 }
+
+void cSprite::setCollisionTexture(cTexture * theCollisionTexture)
+{
+	spriteCollisionTexture = theCollisionTexture;
+}
+
+
 
 
 
@@ -142,6 +159,21 @@ void cSprite::setSpriteDimensions(int width, int height)
 SDL_Rect cSprite::getSpriteDimensions()
 {
 	return this->transform;
+}
+SDL_Rect cSprite::getBoundingBox()
+{
+	SDL_Rect rect = transform;
+	if (rect.w < rect.h)
+	{
+		rect.w = rect.h;
+		rect.x -= getSpriteCentre().x;
+	}
+	else
+	{
+		rect.h = rect.w;
+		rect.y -= getSpriteCentre().y;
+	}
+	return rect;
 }
 /*
 =================
@@ -224,4 +256,12 @@ float cSprite::getSpriteRotAngle()  // Return the sprites current scaling
 void cSprite::setSpriteRotAngle(float angle)  // set the sprites current scaling
 {
 	this->spriteRotationAngle = angle;
+}
+
+void cSprite::setRenderCollision(bool renderCollisionTexture)
+{
+	if (renderCollisionTexture)
+		spriteTexture = spriteCollisionTexture;
+	else
+		spriteTexture = spriteVisualTexture;
 }

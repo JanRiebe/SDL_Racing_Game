@@ -4,6 +4,7 @@
 cCollisionMgr::cCollisionMgr(SDL_Renderer* r)
 {
 	theRenderer = r;
+	map = NULL;
 }
 
 
@@ -26,11 +27,16 @@ void cCollisionMgr::addCamera(cCamera * cam)
 	cameras.push_back(cam);
 }
 
+void cCollisionMgr::setMap(cSpriteMap * m)
+{
+	map = m;
+}
+
 void cCollisionMgr::calcColl()
 {
 	// Organise cars into on screen and off screen cars.
 	OrganiseCars();
-
+	
 	// Calculate collisions between cars.
 	// Collisions between on screen cars.
 	calcCarCollOnScr();
@@ -40,6 +46,9 @@ void cCollisionMgr::calcColl()
 	// Calculate collisions of cars with other sprites.
 	calcCarSpriteColl();
 	
+	// Calculate collisions between cars and tiles.
+	if(map)
+		calcCarTileColl();
 }
 
 
@@ -104,7 +113,7 @@ void cCollisionMgr::calcCarCollOnScr()
 		{
 			SDL_Rect* overlap = new SDL_Rect();
 			// Broad phase collision detection.
-			if (checkBBoxColl(*carA, *carB, overlap))
+			if (checkBBoxColl((*carA)->getBoundingBox(), (*carB)->getBoundingBox(), overlap))
 			{				
 				// Narrow phase collision detection.
 				if (checkNarrowColl(*carA, *carB, overlap))
@@ -146,7 +155,7 @@ void cCollisionMgr::calcCarCollOffScr()
 		while (carA != carB)
 		{
 			// Broad phase collision detection only for off screen cars.
-			if (checkBBoxColl(*carA, *carB, NULL))
+			if (checkBBoxColl((*carA)->getBoundingBox(), (*carB)->getBoundingBox(), NULL))
 			{
 				// Informing the cars that they have collided.
 				fpoint impulseA = (*carA)->getImpulse();
@@ -167,21 +176,83 @@ void cCollisionMgr::calcCarSpriteColl()
 	//TODO collisions between cars and other sprites
 }
 
+void cCollisionMgr::calcCarTileColl()
+{
+
+	// Calculating on screen collisions using pixel perfect collision
+
+	// Comparing every car on screen with every tile.
+	vector<cCar*>::iterator carA = onScreenCars.begin();
+	for (carA; carA != onScreenCars.end(); ++carA)
+	{
+		for (int column = 0; column < MAP_WIDTH; column++)
+		{
+			for (int row = 0; row < MAP_HEIGHT; row++)
+			{
+				// Only checking collisions with tiles that are impassable.
+				if (map->getMapDefinition().impassable[column][row])
+				{
+					SDL_Rect* overlap = new SDL_Rect();
+					SDL_Rect tileDimension = map->getBoundingBox(column, row);
+					// Broad phase collision detection.
+					if (checkBBoxColl((*carA)->getSpriteDimensions(), tileDimension, overlap))
+					{
+						// Narrow phase collision detection.
+						if (checkNarrowColl(*carA, map, overlap))
+						{
+							// Informing the cars that they have collided,
+							// passing it its own impulse inverted.
+							fpoint impulse = (*carA)->getImpulse() * -1;
+							(*carA)->onCollision(impulse);
+
+						}
+
+					}
+					// Freeing up the overlap rectangle
+					delete overlap;
+					overlap = NULL;
+				}
+			}
+		}
+	}
+	
+}
 
 
 
+/*
 bool cCollisionMgr::checkBBoxColl(cSprite * a, cSprite * b, SDL_Rect * outOverlap)
 {
-	// Assigning more readable variables for the sides of the bounding boxes.
-	int aLeft = a->getPosition().x - a->getSpriteCentre().x;
-	int aRight = a->getPosition().x - a->getSpriteCentre().x + a->getSpriteDimensions().h;	// Using height for x axis too, to have square bounding boxes
-	int aUp = a->getPosition().y;
-	int aDown = a->getPosition().y + a->getSpriteDimensions().h;
+	SDL_Rect aRect{
+		a->getPosition().x - a->getSpriteCentre().x,
+		a->getPosition().x - a->getSpriteCentre().x + a->getSpriteDimensions().h,	// Using height for x axis too, to have square bounding boxes
+		a->getPosition().y,
+		a->getPosition().y + a->getSpriteDimensions().h
+	};
 
-	int bLeft = b->getPosition().x - b->getSpriteCentre().x;
-	int bRight = b->getPosition().x - b->getSpriteCentre().x + b->getSpriteDimensions().h;	// Using height for x axis too, to have square bounding boxes
-	int bUp = b->getPosition().y;
-	int bDown = b->getPosition().y + b->getSpriteDimensions().h;
+	SDL_Rect bRect{
+		b->getPosition().x - b->getSpriteCentre().x,
+		b->getPosition().x - b->getSpriteCentre().x + b->getSpriteDimensions().h,	// Using height for x axis too, to have square bounding boxes
+		b->getPosition().y,
+		b->getPosition().y + b->getSpriteDimensions().h
+	};
+
+	return checkBBoxColl(aRect, bRect, outOverlap);
+}
+*/
+
+bool cCollisionMgr::checkBBoxColl(SDL_Rect a, SDL_Rect b, SDL_Rect * outOverlap)
+{
+	// Assigning more readable variables for the sides of the bounding boxes.
+	int aLeft = a.x;
+	int aRight = a.x + a.w;
+	int aUp = a.y;
+	int aDown = a.y + a.h;
+
+	int bLeft = b.x;
+	int bRight = b.x + b.w;
+	int bUp = b.y;
+	int bDown = b.y + b.h;
 
 	// With a little help from this page: https://www.geeksforgeeks.org/find-two-rectangles-overlap/
 	// No overlap in x
@@ -206,8 +277,6 @@ bool cCollisionMgr::checkBBoxColl(cSprite * a, cSprite * b, SDL_Rect * outOverla
 	// There has been a collision of the bounding boxes.
 	return true;
 }
-
-
 
 
 
@@ -286,8 +355,12 @@ SDL_Surface* cCollisionMgr::CreateOverlapSurface(SDL_Rect* overlapRect, cSprite*
 	// Rendering to render target.
 	// Setting the render target.
 	SDL_SetRenderTarget(theRenderer, renderTarget);
+	// Switching the rendermode of the sprite to to collision
+	sprite->setRenderCollision(true);
 	// Rendering the texture onto the new render target
 	sprite->render(theRenderer, camera);
+	// Switching the rendermode of the sprite back to to visual
+	sprite->setRenderCollision(false);
 
 	// Creating a surface from the render target texture, in order to read the data.
 	// The surface has the size of the overlap rect that needs to be checked.

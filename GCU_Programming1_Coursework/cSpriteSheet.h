@@ -9,6 +9,8 @@ private:
 	int rows;
 	//The rect that defines which part of the texture should be rendered.
 	SDL_Rect sourceRect;
+
+protected:
 	//Updates sourceRect according to the index. Returns a pointer to sourceRect.
 	SDL_Rect* findSourceRect(int index);
 

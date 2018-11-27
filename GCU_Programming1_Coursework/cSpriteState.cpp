@@ -19,11 +19,7 @@ void cSpriteState::render(SDL_Renderer * theRenderer, cCamera * theCamera)
 
 
 	//TODO remove debugging
-	SDL_Rect bBox;
-	bBox.x = transform.x - spriteCentre.x;
-	bBox.y = transform.y;
-	bBox.w = transform.h;
-	bBox.h = transform.h;
+	SDL_Rect bBox = getBoundingBox();
 	bBox = theCamera->WorldToScreen(bBox);
 	SDL_RenderDrawRect(theRenderer, &bBox);
 }

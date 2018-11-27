@@ -28,6 +28,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 
 	// loading textures
 	cTextureMgr::getInstance()->addTexture("street", "Images\\street_tile_map.png");
+	cTextureMgr::getInstance()->addTexture("street_coll", "Images\\street_tile_map_collision.png");
 	cTextureMgr::getInstance()->addTexture("car_01", "Images\\car_01.png");
 	cTextureMgr::getInstance()->addTexture("car_01_destr", "Images\\car_01_destr.png");
 	cTextureMgr::getInstance()->addTexture("car_02", "Images\\ramp.png");
@@ -40,11 +41,13 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ -100,-100 });
 	tmpSpriteMap->setTexture(cTextureMgr::getInstance()->getTexture("street"));
+	tmpSpriteMap->setCollisionTexture(cTextureMgr::getInstance()->getTexture("street_coll"));
 	tmpSpriteMap->setSpriteScale({ 50, 50 });
 	tmpSpriteMap->setSheetGrid(4, 4);
 	tmpSpriteMap->loadMap("foo");
 	sprites.push_back(tmpSpriteMap);
-	
+	theCollisionMgr->setMap(tmpSpriteMap);
+	/*
 	cSpriteAnimation* tmpSpriteAnim = new cSpriteAnimation();
 	tmpSpriteAnim->setTexture(cTextureMgr::getInstance()->getTexture("Charactervector"));
 	tmpSpriteAnim->setSpriteScale({ 0.1f, 0.1f });
@@ -53,7 +56,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	tmpSpriteAnim->trim(4, 4);
 	tmpSpriteAnim->play();
 	sprites.push_back(tmpSpriteAnim);
-	
+	*/
 	cCar* testCar;
 	LPCSTR names[2] = { "car_01_destr" ,"car_02" };
 

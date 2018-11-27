@@ -21,5 +21,7 @@ public:
 	//Renders this texture as a tile map.
 	void render(SDL_Renderer* theRenderer, SDL_Rect* theDestRect, FPoint theScaling);
 	void loadMap(string mapName);
+	MapDefinition getMapDefinition();
+	SDL_Rect getBoundingBox(int columns, int row);
 };
 
