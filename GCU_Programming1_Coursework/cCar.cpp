@@ -3,7 +3,7 @@
 
 
 
-cCar::cCar(float mass, float airResistance, float enginePower, float tireSlippingPoint, float steerReactiveness): mass(mass), airResist(airResistance), engine(enginePower), slipping(tireSlippingPoint), steerReactive(steerReactiveness)
+cCar::cCar(float mass, float airResistance, float enginePower, float tireSlippingPoint, float steerReactiveness): mass(mass), airResist(airResistance), engine(enginePower), tireFriction(tireSlippingPoint), steerReactive(steerReactiveness)
 {
 	controller = NULL;
 }
@@ -35,44 +35,46 @@ void cCar::steer(float angle)
 
 void cCar::update(double deltaTime)
 {
+	// Storing the position before this update.
+	lastPos = physPos;
+	
 	// Calculating velocity.
 	// Adding forces that act at one point in time.
 	//velocity += impulse;
 	// Adding forces that act over the whole frame.
 	velocity += acceleration * deltaTime;
 	// Subtracting air resistance.
-	velocity -= velocity*(airResist*deltaTime);
+	velocity -= velocity*(airResist/mass)*deltaTime;
 	
 	// Calculating new rotation.
 	// velocity.length() is the current speed
 	spriteRotationAngle += steering * steerReactive * sqrt(velocity.length())* deltaTime;
 
 	// Calculating new position.
-	// If velocity is over tire slipping point,
-	// the velocity is simply applied in both dimentions.
-	if (velocity.length()* deltaTime > slipping)
-	{
-		//physPos += velocity * deltaTime;
-		//cout << "slipping\n";
-	}
-	// Else the velocity is only applyied in the forward direction.
-	else
-	{
-		velocity = calculateForwardVelocity(velocity);
-	}
-	physPos += velocity * deltaTime;
+	// Calculating effect of tire friction, between 0 and 1.
+	float slippingFactor = min(1, max(0, (velocity.length() * deltaTime / tireFriction)));
+	// The velocity that the car actually travels at.
+	// Different than the variable "velocity", since that one does not account for tire friction.
+	// Interpolates between velocity independent of tires and forward velocity that is fully dependent on tires.
+	fpoint effectiveVel = velocity * slippingFactor + calculateForwardVelocity(velocity) * (1 - slippingFactor);
+	
+	// Easing the velocity to the effective velocity.
+	// Comparable with loosing centrifugal force due to tire friction.
+	velocity = velocity / (2) + effectiveVel / (2);
 
+	// Calculating the physics position based on the vlocity.
+	physPos += effectiveVel * deltaTime;
+	
 	// Apply the physical position to the sprite pixel position.
 	transform.x = physPos.X;
 	transform.y = physPos.Y;
 
-	// Resetting impulse.
-	//impulse = { 0,0 };
 	// Resetting acceleration.
 	acceleration = { 0,0 };
 	// Resetting steering.
 	steering = 0;
 
+	// Calling base class update.
 	cSpriteSheet::update(deltaTime);
 }
 
@@ -85,14 +87,15 @@ void cCar::setSpritePos(SDL_Point worldPos)
 
 void cCar::onCollision(fpoint impulse)
 {
+	// Resetting the position from the last update.
+	// This helps avoiding cars getting stuck within each other.
+	physPos = lastPos;
+
 	// Calculating force
-	//fpoint force = (impulse - velocity) / 2;
-	fpoint force = impulse - getImpulse()*1.1;
-	
+	fpoint force = impulse - getImpulse()*1.1;	
 
 	// Applying force
 	addImpulse(force);
-	//velocity = { 0,0 };
 
 	damage += force.length();
 	cout << "Car damage " << damage << endl;

@@ -12,6 +12,7 @@ private:
 	//fpoint impulse;			// Forces acting over the time of a frame.
 	fpoint velocity;
 	fpoint physPos;			// Pixelindependent physical position.
+	fpoint lastPos;
 	float steering;			// The angle the steering wheel is turned.
 
 	float damage;		// How much this car has been harmed by collisions.
@@ -20,7 +21,7 @@ private:
 	float mass;
 	float airResist;
 	float engine;	// How strong the engine is.
-	float slipping;	// The force at which the tires slip.
+	float tireFriction;	// The force at which the tires slip.
 	float steerReactive;
 	// Calculates a unit vector in the sprite's forward direction.
 	fpoint forwardVector();
