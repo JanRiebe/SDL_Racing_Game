@@ -101,7 +101,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	scenes.insert(pair<string, cScene*>("start", new cSceneStart(theRenderer)));
 	scenes.insert(pair<string, cScene*>("race", new cSceneRacing(theRenderer)));
 	scenes.insert(pair<string, cScene*>("result", new cSceneResults(theRenderer)));
-	setActiveScene("race");
+	setActiveScene("start");
 }
 
 void cGame::run(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)

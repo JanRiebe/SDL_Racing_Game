@@ -9,7 +9,7 @@ class cCar :
 private:
 	// Physical state
 	fpoint acceleration;	// Forces acting at a single time point.
-	fpoint impulse;			// Forces acting over the time of a frame.
+	//fpoint impulse;			// Forces acting over the time of a frame.
 	fpoint velocity;
 	fpoint physPos;			// Pixelindependent physical position.
 	float steering;			// The angle the steering wheel is turned.
@@ -24,6 +24,8 @@ private:
 	float steerReactive;
 	// Calculates a unit vector in the sprite's forward direction.
 	fpoint forwardVector();
+	// Calculates and returns the effective velocity in the forward direction.
+	fpoint calculateForwardVelocity(fpoint velocity);
 
 	cPlayer* controller;		// Who controls this car.
 

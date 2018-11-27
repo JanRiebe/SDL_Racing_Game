@@ -95,7 +95,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		testCar = new cCar(1.0f, 0.1f, 500.0f, 10.0f, 5.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
 		testCar->setSpritePos({ 0, 200*i });
-		testCar->setSpriteRotAngle(180 * i);
+		testCar->setSpriteRotAngle(90 * i);
 		testCar->setSheetGrid(10, 1);
 		testCar->setSpriteScale({ 0.5f, 0.5f });
 		sprites.push_back(testCar);

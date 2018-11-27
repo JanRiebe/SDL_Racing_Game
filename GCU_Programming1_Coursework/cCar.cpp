@@ -17,7 +17,7 @@ void cCar::addImpulse(fpoint force)
 {
 	// Using the overwritten operators of fpoint
 	// to add the external force to the impulse.
-	impulse += force / mass;
+	velocity += force / mass;
 }
 
 void cCar::accelerate(float force)
@@ -37,7 +37,7 @@ void cCar::update(double deltaTime)
 {
 	// Calculating velocity.
 	// Adding forces that act at one point in time.
-	velocity += impulse;
+	//velocity += impulse;
 	// Adding forces that act over the whole frame.
 	velocity += acceleration * deltaTime;
 	// Subtracting air resistance.
@@ -58,8 +58,7 @@ void cCar::update(double deltaTime)
 	// Else the velocity is only applyied in the forward direction.
 	else
 	{
-		fpoint forwards = forwardVector();
-		velocity = forwards * forwards.dotProduct(&velocity);
+		velocity = calculateForwardVelocity(velocity);
 	}
 	physPos += velocity * deltaTime;
 
@@ -68,7 +67,7 @@ void cCar::update(double deltaTime)
 	transform.y = physPos.Y;
 
 	// Resetting impulse.
-	impulse = { 0,0 };
+	//impulse = { 0,0 };
 	// Resetting acceleration.
 	acceleration = { 0,0 };
 	// Resetting steering.
@@ -88,7 +87,7 @@ void cCar::onCollision(fpoint impulse)
 {
 	// Calculating force
 	//fpoint force = (impulse - velocity) / 2;
-	fpoint force = impulse - velocity*mass;
+	fpoint force = impulse - getImpulse()*1.1;
 	
 
 	// Applying force
@@ -113,7 +112,7 @@ void cCar::onCollision(fpoint impulse)
 
 fpoint cCar::getImpulse()
 {
-	return velocity * mass;
+	return calculateForwardVelocity(velocity) * mass;
 }
 
 void cCar::setController(cPlayer * c)
@@ -131,4 +130,10 @@ fpoint cCar::forwardVector()
 	v.X = -sin(spriteRotationAngle * 2 * PI / 360);
 	v.Y = cos(spriteRotationAngle * 2 * PI / 360);
 	return v;
+}
+
+fpoint cCar::calculateForwardVelocity(fpoint velocity)
+{
+	fpoint forwards = forwardVector();
+	return forwards * forwards.dotProduct(&velocity);
 }
