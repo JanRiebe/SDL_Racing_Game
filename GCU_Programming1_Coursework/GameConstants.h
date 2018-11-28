@@ -148,4 +148,12 @@ enum CollisionMessage
 
 
 
+enum Teams
+{
+	POLICE,
+	CRIMINALS,
+	NUMBER_OF_TEAMS
+};
+
+
 #endif

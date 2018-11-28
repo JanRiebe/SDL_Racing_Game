@@ -1,5 +1,6 @@
 #pragma once
 #include "cScene.h"
+#include "GameConstants.h"
 
 class cCollisionMgr;
 class cPlayer;
@@ -13,6 +14,8 @@ private:
 	cCollisionMgr* theCollisionMgr;
 	double timer;
 	cSpriteText* timerText;
+	cSpriteText* scoreTexts[NUMBER_OF_TEAMS];
+
 public:
 	cSceneRacing(SDL_Renderer* theRenderer);
 	~cSceneRacing();

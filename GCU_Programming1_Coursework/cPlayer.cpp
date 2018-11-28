@@ -2,19 +2,14 @@
 #include "cCar.h"
 #include "gameHeaders.h"
 
-cPlayer::cPlayer()
+cPlayer::cPlayer(Teams team) : team(team)
 {
-	score = 0;
+
 }
 
 
 cPlayer::~cPlayer()
 {
-}
-
-void cPlayer::setScoreSprite(cSpriteText * s)
-{
-	scoreSprite = s;
 }
 
 void cPlayer::OnEvent(AbstractEvent e)
@@ -32,8 +27,9 @@ void cPlayer::OnEvent(AbstractEvent e)
 
 void cPlayer::OnReachedSafeHouse()
 {
-	cout << "Player reached safe house\n";
-	score++;
-	scoreSprite->setText(score, "Score: ");
+	// Increment the score.
+	cScoreMgr::getInstance()->increment(team);
+
+	// Resetting the player's car to the start position.
 	car->setSpritePos({ 0, 0 });
 }

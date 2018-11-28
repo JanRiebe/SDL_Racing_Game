@@ -1,5 +1,6 @@
 #pragma once
 #include "IInputChannelListener.h"
+#include "GameConstants.h"
 
 class cCar;
 class cSpriteText;
@@ -8,15 +9,12 @@ class cPlayer :
 	public IInputChannelListener
 {
 private:
-	//cCar* car;
-	int score;
-	cSpriteText* scoreSprite;
+	Teams team;
 
 public:
-	cPlayer();
+	cPlayer(Teams team);
 	~cPlayer();
 	cCar* car;
-	void setScoreSprite(cSpriteText* s);
 
 	void OnEvent(AbstractEvent e);
 

@@ -21,7 +21,6 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 {
 	timer = 60;
 
-
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
@@ -77,7 +76,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	int numberOfPlayers = Input::GetNumberOfPlayers();
 	for (int i = 0; i < numberOfPlayers; ++i)
 	{
-		cPlayer* player = new cPlayer();
+		cPlayer* player = new cPlayer((Teams)i);
 		players.push_back(player);
 		// Creating a camera per player.
 		cCamera* newCam = new cCamera();
@@ -124,7 +123,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		player->car = testCar;
 		testCar->setController(player);
 
-		
+		/*
 		// Adding score text sprite
 		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), scoreTextTextureNames[i]);
 		testText->setSpriteDimensions(newCam->GetViewport().w, newCam->GetViewport().h / 10);
@@ -133,7 +132,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		viewport_UI_sprites[newCam].push_back(testText);
 		player->setScoreSprite(testText);
 
-
+		*/
 		
 				
 	}
@@ -148,7 +147,19 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	timerText->setSpritePos({ 300, 0 });
 	global_UI_sprites.push_back(timerText);
 
-
+	// Adding police score sprite
+	scoreTexts[0] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "policeScore");
+	scoreTexts[0]->setSpriteDimensions(100, 100);
+	scoreTexts[0]->setText("0");
+	scoreTexts[0]->setSpritePos({ 0, 50 });
+	global_UI_sprites.push_back(scoreTexts[0]);
+	
+	// Adding criminals score sprite
+	scoreTexts[1] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "criminalScore");
+	scoreTexts[1]->setSpriteDimensions(100, 100);
+	scoreTexts[1]->setText("0");
+	scoreTexts[1]->setSpritePos({ global_UI_cam.GetViewport().w - 2* scoreTexts[1]->getSpriteDimensions().w, 50 });
+	global_UI_sprites.push_back(scoreTexts[1]);
 }
 
 cSceneRacing::~cSceneRacing()
@@ -219,6 +230,19 @@ void cSceneRacing::update(double deltaTime)
 	// Once the timer runs out the scene ends.
 	if (timer <= 0)
 		cGame::getInstance()->setActiveScene("result");
+
+
+	// Updating score texts, if the score has changed.
+	// Research on iterating over enums: https://stackoverflow.com/questions/261963/how-can-i-iterate-over-an-enum
+	for (int i = POLICE; i != NUMBER_OF_TEAMS; i++)
+	{
+		// If this score has been updated, since it was last read.
+		cScoreMgr* scoreMgr = cScoreMgr::getInstance();
+		if (scoreMgr->isDirty((Teams)i))
+			scoreTexts[i]->setText(scoreMgr->getScore((Teams)i));
+	}
+	
+
 #pragma endregion
 
 

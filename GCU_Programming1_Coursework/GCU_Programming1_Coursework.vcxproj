@@ -26,10 +26,12 @@
     <ClCompile Include="cCollisionMgr.cpp" />
     <ClCompile Include="cFont.cpp" />
     <ClCompile Include="cFontMgr.cpp" />
+    <ClCompile Include="cHighScoreTable.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cSceneRacing.cpp" />
     <ClCompile Include="cSceneResults.cpp" />
     <ClCompile Include="cSceneStart.cpp" />
+    <ClCompile Include="cScoreMgr.cpp" />
     <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="cSpriteAnimation.cpp" />
@@ -60,10 +62,12 @@
     <ClInclude Include="cCollisionMgr.h" />
     <ClInclude Include="cFont.h" />
     <ClInclude Include="cFontMgr.h" />
+    <ClInclude Include="cHighScoreTable.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cSceneResults.h" />
     <ClInclude Include="cSceneStart.h" />
+    <ClInclude Include="cScoreMgr.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="cSpriteButton.h" />

@@ -38,6 +38,8 @@ public:
 	// Ends the game
 	void QuitGame();
 
+	cHighScoreTable highscores;
+
 private:
 	static cGame* pInstance;
 
@@ -59,6 +61,7 @@ private:
 	cScene* activeScene;
 	
 	cCamera camera;
+
 };
 
 #endif

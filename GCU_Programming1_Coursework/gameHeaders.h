@@ -21,5 +21,7 @@
 #include "cPlayer.h"
 #include "cButtonController.h"
 #include "iCollider.h"
+#include "cHighScoreTable.h"
+#include "cScoreMgr.h"
 
 #endif
