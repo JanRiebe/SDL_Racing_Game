@@ -19,7 +19,7 @@ void testfuntionB()
 
 cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 {
-	timer = 60;
+	timer = 20;
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
@@ -226,10 +226,13 @@ void cSceneRacing::update(double deltaTime)
 
 	// Updating the timer and setting the timer text.
 	timer -= deltaTime;
-	timerText->setText((int)timer, "Sec: ");
+	timerText->setText((int)timer, "Time left: ");
 	// Once the timer runs out the scene ends.
 	if (timer <= 0)
+	{
 		cGame::getInstance()->setActiveScene("result");
+		cScoreMgr::getInstance()->SaveScores();
+	}
 
 
 	// Updating score texts, if the score has changed.

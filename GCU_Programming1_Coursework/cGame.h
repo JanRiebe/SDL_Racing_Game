@@ -38,7 +38,6 @@ public:
 	// Ends the game
 	void QuitGame();
 
-	cHighScoreTable highscores;
 
 private:
 	static cGame* pInstance;

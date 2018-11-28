@@ -5,6 +5,11 @@ cScoreMgr* cScoreMgr::pInstance = NULL;
 
 
 
+int cScoreMgr::calculateScore(int points, int timeInSeconds)
+{
+	return (points*1000)/timeInSeconds;
+}
+
 cScoreMgr::cScoreMgr()
 {
 	for (int i = 0; i < NUMBER_OF_TEAMS; i++)
@@ -61,4 +66,18 @@ void cScoreMgr::increment(Teams team)
 bool cScoreMgr::isDirty(Teams team)
 {
 	return dirty[team];
+}
+
+void cScoreMgr::SaveScores()
+{
+	for (int i = 0; i < NUMBER_OF_TEAMS; i++)
+	{
+		highscores.addItem(""+i, calculateScore(scores[i], 1));		//TODO add time taken to get the score
+	}
+	highscores.saveToFile(PATH_HIGHSCORES);
+}
+
+void cScoreMgr::LoadScores()
+{
+	highscores.saveToFile(PATH_HIGHSCORES);
 }

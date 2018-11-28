@@ -42,6 +42,9 @@ const int MAP_HEIGHT = 64;
 //The maximum number of players
 const int MAX_PLAYERS = 4;
 
+#define PATH_HIGHSCORES "Data\\highscores.dat"
+
+
 // This header file contains all the constants & enumarated types for the game
 typedef struct fpoint
 {
