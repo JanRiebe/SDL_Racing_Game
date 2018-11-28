@@ -85,30 +85,33 @@ void cCar::setSpritePos(SDL_Point worldPos)
 	cSprite::setSpritePos(worldPos);
 }
 
-void cCar::onCollision(fpoint impulse)
+void cCar::onCollision(CollisionMessage message, fpoint impulse)
 {
-	// Resetting the position from the last update.
-	// This helps avoiding cars getting stuck within each other.
-	physPos = lastPos;
 
-	// Calculating force
-	fpoint force = impulse - getImpulse()*1.1;	
-
-	// Applying force
-	addImpulse(force);
-
-	damage += force.length();
-	cout << "Car damage " << damage << endl;
-	setState(damage / 500);
-
-
-	//TODO move this into a function that is called by a destructable that has been destroyed
-	// If this car is controlled by someone.
-	if (controller)
+	// If this car is controlled by someone and it has reached the target.
+	if (controller && message == SAFEHOUSE)
 	{
-		// Inform this someone that he destroyed something.
-		controller->OnDestroyedSomething(1);//TODO pass in score points from the destroyed object
+		// Inform this someone that he reached the safehouse.
+		controller->OnReachedSafeHouse();
 	}
+	else if (message != TRIGGER)
+	{
+
+		// Resetting the position from the last update.
+		// This helps avoiding cars getting stuck within each other.
+		physPos = lastPos;
+
+		// Calculating force
+		fpoint force = impulse - getImpulse()*1.1;
+
+		// Applying force
+		addImpulse(force);
+
+		damage += force.length();
+		cout << "Car damage " << damage << endl;
+		setState(damage / 500);
+	}
+
 }
 
 

@@ -20,6 +20,6 @@ public:
 
 	void OnEvent(AbstractEvent e);
 
-	void OnDestroyedSomething(int score);
+	void OnReachedSafeHouse();
 };
 

@@ -38,6 +38,8 @@ protected:
 	// Allows rending the texture of this sprite in a tint, without affecting the texture for other sprites.
 	SDL_Color tint;
 
+	CollisionMessage collMessage;
+
 public:
 	cSprite();			// Default constructor
 	cSprite(cTexture* theSpriteTexture);			// Default constructor
@@ -69,11 +71,15 @@ public:
 	void setRenderCollision(bool renderCollisionTexture);
 	bool usePixelCollision();		// Returns whether pixelPerfect collision should be checked for this sprite. Else bounding box collision is used.
 	// Called by the collision manager when this has collided with another sprite.
-	virtual void onCollision(fpoint impulse);
+	virtual void onCollision(CollisionMessage message = COLLISION, fpoint impulse = { 0,0 });
 	// Returns the impulse. For normal sprites the returned fpoint has the values 0, 0.
 	virtual fpoint getImpulse();
 	// Returns whether this collider moves.
 	virtual bool isStatic();
+	// Get the message that this collider sends to other colliders on collision. Overwrite this to define specific messages.
+	virtual CollisionMessage getCollisionMessage();
+	virtual void setCollisionMessage(CollisionMessage m);
+
 
 	// Overwrite this to add per frame behaviour.
 	virtual void update(double deltaTime) {};

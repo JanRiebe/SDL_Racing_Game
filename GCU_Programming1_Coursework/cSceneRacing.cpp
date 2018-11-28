@@ -4,6 +4,7 @@
 #include "cPlayer.h"
 #include "cCar.h"
 #include "cCollisionMgr.h"
+#include "cGame.h"
 
 
 //TODO remove test callback function
@@ -18,6 +19,8 @@ void testfuntionB()
 
 cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 {
+	timer = 60;
+
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
@@ -57,8 +60,18 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 	tmpSpriteAnim->play();
 	sprites.push_back(tmpSpriteAnim);
 	*/
+
+	cSprite* safeHouse = new cSprite();
+	safeHouse->setTexture(cTextureMgr::getInstance()->getTexture("Charactervector"));
+	safeHouse->setSpritePos({ 500,500 });
+	sprites.push_back(safeHouse);
+	safeHouse->setCollisionMessage(SAFEHOUSE);
+	theCollisionMgr->addCollider(safeHouse);
+
 	cCar* testCar;
 	LPCSTR names[2] = { "car_01_destr" ,"car_02" };
+
+	LPCSTR scoreTextTextureNames[2] = { "scoreTxtr_01" ,"scoreTxtr_02" };
 
 	// Creating players and cameras.	
 	int numberOfPlayers = Input::GetNumberOfPlayers();
@@ -111,16 +124,29 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		player->car = testCar;
 		testCar->setController(player);
 
-		/*
-		// Adding test text sprite
-		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "scoreText");
-		testText->setText("Score");
+		
+		// Adding score text sprite
+		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), scoreTextTextureNames[i]);
 		testText->setSpriteDimensions(newCam->GetViewport().w, newCam->GetViewport().h / 10);
+		testText->setText("Score");
 		testText->setSpritePos({ 50, 50 });
-		uiSprites[newCam].push_back(testText);
+		viewport_UI_sprites[newCam].push_back(testText);
 		player->setScoreSprite(testText);
-				*/
+
+
+		
+				
 	}
+
+	// Adding camera for UI for all players
+	global_UI_cam.SetViewport({ 0,0,WINDOW_WIDTH,WINDOW_HEIGHT });
+
+	// Adding timer text sprite
+	timerText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "timerText");
+	timerText->setSpriteDimensions(global_UI_cam.GetViewport().w/2, global_UI_cam.GetViewport().h / 10);
+	timerText->setText("Timer");
+	timerText->setSpritePos({ 300, 0 });
+	global_UI_sprites.push_back(timerText);
 
 
 }
@@ -185,6 +211,17 @@ void cSceneRacing::deactivate()
 
 void cSceneRacing::update(double deltaTime)
 {
+#pragma region global scene behaviour
+
+	// Updating the timer and setting the timer text.
+	timer -= deltaTime;
+	timerText->setText((int)timer, "Sec: ");
+	// Once the timer runs out the scene ends.
+	if (timer <= 0)
+		cGame::getInstance()->setActiveScene("result");
+#pragma endregion
+
+
 	// Letting scene update prites and cameras and stuff.
 	cScene::update(deltaTime);
 

@@ -45,7 +45,7 @@ public:
 	void setSpritePos(SDL_Point worldPos);
 
 	// Called by the collision manager when this has collided with another sprite.
-	virtual void onCollision(fpoint impulse);
+	virtual void onCollision(CollisionMessage message = COLLISION, fpoint impulse = { 0,0 });
 	// Returns the current impulse.
 	fpoint getImpulse();
 

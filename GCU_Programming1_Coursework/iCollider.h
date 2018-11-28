@@ -23,9 +23,13 @@ public:
 	virtual void setRenderCollision(bool renderCollisionTexture) = 0;
 
 	// Called by the collision manager when this has collided with another collider.
-	virtual void onCollision(fpoint impulse) = 0;
+	virtual void onCollision(CollisionMessage message = COLLISION, fpoint impulse = { 0,0 }) = 0;
 
 	// Call this to recieve the impulse the collider would send to another collider on collision.
 	virtual fpoint getImpulse() = 0;
+
+	// Get the message that this collider sends to other colliders on collision.
+	virtual CollisionMessage getCollisionMessage() = 0;
+
 };
 

@@ -8,6 +8,7 @@ class cCamera;
 #define BOUNDING_ONLY false
 #define PIXEL_PERFECT true
 
+
 class cCollisionMgr
 {
 private:

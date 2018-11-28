@@ -30,10 +30,10 @@ void cPlayer::OnEvent(AbstractEvent e)
 	}
 }
 
-void cPlayer::OnDestroyedSomething(int s)
+void cPlayer::OnReachedSafeHouse()
 {
-/*
-	score += s;
-	scoreSprite->setText(score, "Score");
-	*/
+	cout << "Player reached safe house\n";
+	score++;
+	scoreSprite->setText(score, "Score: ");
+	car->setSpritePos({ 0, 0 });
 }

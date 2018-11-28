@@ -27,18 +27,18 @@ cScene::~cScene()
 
 	
 
-	// Cleaning up the cameras and ui sprites.
+	// Cleaning up the cameras and viewport ui sprites.
 	vector<cCamera*>::iterator camera = cameras.begin();
 	while (camera != cameras.end())
 	{
 		// Cleaning up the ui sprites.
-		sprite = uiSprites[(*camera)].begin();
-		while (sprite != uiSprites[(*camera)].end())
+		sprite = viewport_UI_sprites[(*camera)].begin();
+		while (sprite != viewport_UI_sprites[(*camera)].end())
 		{
 			// Deleting the sprite.
 			delete *sprite;
 			// Removing the sprite from the vector.
-			uiSprites[(*camera)].erase(sprite);
+			viewport_UI_sprites[(*camera)].erase(sprite);
 
 			++sprite;
 		}
@@ -49,6 +49,18 @@ cScene::~cScene()
 		cameras.erase(camera);
 
 		++camera;
+	}
+
+	// Cleaning up the sprites.
+	sprite = global_UI_sprites.begin();
+	while (sprite != global_UI_sprites.end())
+	{
+		// Deleting the sprite.
+		delete *sprite;
+		// Removing the sprite from the vector.
+		sprites.erase(sprite);
+
+		++sprite;
 	}
 
 }
@@ -64,7 +76,7 @@ void cScene::update(double deltaTime)
 		(*it)->update(deltaTime);
 	}
 
-	// Updating all cameras and ui sprites
+	// Updating all cameras and viewport ui sprites
 	vector<cCamera*>::iterator camera = cameras.begin();
 	for (camera; camera != cameras.end(); ++camera)
 	{
@@ -72,10 +84,16 @@ void cScene::update(double deltaTime)
 		(*camera)->update(deltaTime);
 
 		// Updating ui sprites
-		it = uiSprites[(*camera)].begin();
-		for (it; it != uiSprites[(*camera)].end(); ++it) {
+		it = viewport_UI_sprites[(*camera)].begin();
+		for (it; it != viewport_UI_sprites[(*camera)].end(); ++it) {
 			(*it)->update(deltaTime);
 		}
+	}
+
+	// Updating all global UI sprites
+	it = global_UI_sprites.begin();
+	for (it; it != global_UI_sprites.end(); ++it) {
+		(*it)->update(deltaTime);
 	}
 }
 
@@ -96,18 +114,27 @@ void cScene::render(SDL_Renderer * theRenderer)
 			(*it)->render(theRenderer, *camera);
 		}		
 
-		// Rendering all screen space sprites
+		// Rendering all viewport space sprites
 		// Saving the camera position so it can be restored.
 		SDL_Point tmpCamPos = (*camera)->GetPosition();
 		// Setting the camera position to 0,0 to render in screen/viewport space.
 		(*camera)->SetPosition({ 0,0 });
-		it = uiSprites[(*camera)].begin();
-		for (it; it != uiSprites[(*camera)].end(); ++it) {
+		it = viewport_UI_sprites[(*camera)].begin();
+		for (it; it != viewport_UI_sprites[(*camera)].end(); ++it) {
 			// Rendering the sprite using the camera for the relevant player
 			(*it)->render(theRenderer, *camera);
 		}
 		// Resetting the camera position
 		(*camera)->SetPosition(tmpCamPos);
+
 	}
 	
+	// Rendering global UI sprites
+	// Setting the right viewport for the whole frame
+	SDL_RenderSetViewport(theRenderer, &(global_UI_cam.GetViewport()));
+	vector<cSprite*>::iterator it = global_UI_sprites.begin();
+	for (it; it != global_UI_sprites.end(); ++it) {
+		// Rendering the sprite using the global UI camera
+		(*it)->render(theRenderer, &global_UI_cam);
+	}
 }

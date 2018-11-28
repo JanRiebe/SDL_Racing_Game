@@ -5,6 +5,7 @@ cSprite.cpp
 =================
 */
 #include "cSprite.h"
+#include "GameConstants.h"
 /*
 =================
 - Data constructor initializes the cSprite to the data passed to
@@ -24,6 +25,8 @@ cSprite::cSprite() 			// Default constructor
 	this->spriteRotationAngle = 0;
 
 	tint = { 255,255,255,255 };
+
+	collMessage = COLLISION;
 }
 
 cSprite::cSprite(cTexture* theSpriteTexture) 			// Default constructor
@@ -271,7 +274,7 @@ bool cSprite::usePixelCollision()
 	return true;
 }
 
-void cSprite::onCollision(fpoint impulse)
+void cSprite::onCollision(CollisionMessage message, fpoint impulse)
 {
 	cout << "Collision with sprite\n";
 }
@@ -285,4 +288,14 @@ bool cSprite::isStatic()
 {
 	//TODO allow setting static
 	return false;
+}
+
+CollisionMessage cSprite::getCollisionMessage()
+{
+	return collMessage;
+}
+
+void cSprite::setCollisionMessage(CollisionMessage m)
+{
+	collMessage = m;
 }

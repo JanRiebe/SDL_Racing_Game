@@ -97,8 +97,8 @@ void cCollisionMgr::DetectCollisions(vector<iCollider*>* colliders, bool usePixe
 			{
 				fpoint impulseA = (*collA)->getImpulse();
 				fpoint impulseB = (*collB)->getImpulse();
-				(*collA)->onCollision(impulseB);
-				(*collB)->onCollision(impulseA);
+				(*collA)->onCollision((*collB)->getCollisionMessage(), impulseB);
+				(*collB)->onCollision((*collA)->getCollisionMessage(), impulseA);
 
 			}
 
@@ -132,10 +132,8 @@ void cCollisionMgr::DetectCollisions(vector<iCollider*>* colliders, bool usePixe
 							// Narrow phase collision detection.
 							if (checkNarrowColl(*collA, map, overlap))
 							{
-								// Informing the colliders that they have collided,
-								// passing it its own impulse inverted.
-								fpoint impulse = (*collA)->getImpulse() * -1;
-								(*collA)->onCollision(impulse);
+								// Informing the collider that it has collided.
+								(*collA)->onCollision(COLLISION);
 
 							}
 

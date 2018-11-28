@@ -137,4 +137,15 @@ inline SDL_Point operator+(SDL_Point const &a, SDL_Point const &b)
 enum class soundType { sfx, music };
 enum class textType { solid, blended, shaded };
 
+
+// Messages that are passed between colliders on collision.
+enum CollisionMessage
+{
+	COLLISION,
+	TRIGGER,
+	SAFEHOUSE
+};
+
+
+
 #endif
