@@ -99,7 +99,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		testCar->setSheetGrid(10, 1);
 		testCar->setSpriteScale({ 0.5f, 0.5f });
 		sprites.push_back(testCar);
-		theCollisionMgr->addCar(testCar);
+		theCollisionMgr->addCollider(testCar);
 
 		// Giving the camera to the collision manager
 		theCollisionMgr->addCamera(newCam);

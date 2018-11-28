@@ -20,5 +20,6 @@
 #include "cFontMgr.h"
 #include "cPlayer.h"
 #include "cButtonController.h"
+#include "iCollider.h"
 
 #endif

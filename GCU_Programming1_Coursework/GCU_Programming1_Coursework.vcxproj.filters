@@ -105,6 +105,9 @@
     <ClCompile Include="cSpriteState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="iCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cGame.h">
@@ -210,6 +213,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cSpriteState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

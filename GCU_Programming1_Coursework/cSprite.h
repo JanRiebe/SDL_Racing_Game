@@ -11,10 +11,12 @@ cSprite.h
 #include "cTextureMgr.h"
 #include "cTexture.h"
 #include "cCamera.h"
+#include "iCollider.h"
 
 class cCollider;
 
-class cSprite
+class cSprite:
+	public iCollider
 {
 protected:
 	// position
@@ -52,7 +54,6 @@ public:
 	void setCollisionTexture(cTexture* theCollisionTexture);  // set the collision texture, which is used for checking pixel perfect collision
 	void setSpriteDimensions(int texWidth, int textHeight);
 	SDL_Rect getSpriteDimensions(); // Return sprite dimensions
-	virtual SDL_Rect getBoundingBox();		// Returns the bounding box in world coordinates, which is always a square with the longer side of the transform dimensions as width and height.
 	SDL_Point getSpriteCentre();  // Return the sprites current position
 	void setSpriteCentre(SDL_Point sCentre); // set the position of the sprite
 	FPoint getSpriteScale();  // Return the sprites scaling factor
@@ -60,8 +61,19 @@ public:
 	void scaleSprite(); // update the sprites width & height
 	float getSpriteRotAngle();  // Return the sprites rotation angle
 	void setSpriteRotAngle(float angle); // set the sprites rotation angle
+	
+	// iCollider
+	// Returns the bounding box in world coordinates, which is always a square with the longer side of the transform dimensions as width and height.
+	virtual SDL_Rect getBoundingBox();		
 	// Sets the texture to be rendered to either the collision texture or the visual texture, depending on the parameter.
 	void setRenderCollision(bool renderCollisionTexture);
+	bool usePixelCollision();		// Returns whether pixelPerfect collision should be checked for this sprite. Else bounding box collision is used.
+	// Called by the collision manager when this has collided with another sprite.
+	virtual void onCollision(fpoint impulse);
+	// Returns the impulse. For normal sprites the returned fpoint has the values 0, 0.
+	virtual fpoint getImpulse();
+	// Returns whether this collider moves.
+	virtual bool isStatic();
 
 	// Overwrite this to add per frame behaviour.
 	virtual void update(double deltaTime) {};

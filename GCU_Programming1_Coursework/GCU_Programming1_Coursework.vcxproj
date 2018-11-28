@@ -45,6 +45,7 @@
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cScene.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="iCollider.cpp" />
     <ClCompile Include="IInputChannelListener.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputChannel.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="cSpriteButton.h" />
     <ClInclude Include="cSpriteState.h" />
     <ClInclude Include="cSpriteText.h" />
+    <ClInclude Include="iCollider.h" />
     <ClInclude Include="IInputChannelListener.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputChannel.h" />

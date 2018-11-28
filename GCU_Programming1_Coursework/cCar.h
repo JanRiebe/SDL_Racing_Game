@@ -44,8 +44,8 @@ public:
 	// Overwrites function in cSprite, to set the physics position as well.
 	void setSpritePos(SDL_Point worldPos);
 
-	// Called by the collision manager when this has collided with another ICollidable.
-	void onCollision(fpoint impulse);
+	// Called by the collision manager when this has collided with another sprite.
+	virtual void onCollision(fpoint impulse);
 	// Returns the current impulse.
 	fpoint getImpulse();
 

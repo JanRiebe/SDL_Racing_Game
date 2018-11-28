@@ -265,3 +265,24 @@ void cSprite::setRenderCollision(bool renderCollisionTexture)
 	else
 		spriteTexture = spriteVisualTexture;
 }
+
+bool cSprite::usePixelCollision()
+{
+	return true;
+}
+
+void cSprite::onCollision(fpoint impulse)
+{
+	cout << "Collision with sprite\n";
+}
+
+fpoint cSprite::getImpulse()
+{
+	return fpoint();
+}
+
+bool cSprite::isStatic()
+{
+	//TODO allow setting static
+	return false;
+}
