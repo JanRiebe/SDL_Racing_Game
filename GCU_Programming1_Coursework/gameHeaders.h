@@ -16,6 +16,7 @@
 #include "cSceneRacing.h"
 #include "cSceneStart.h"
 #include "cSceneResults.h"
+#include "cSceneHighscores.h"
 #include "cFont.h"
 #include "cFontMgr.h"
 #include "cPlayer.h"

@@ -34,13 +34,19 @@ public:
 
 	// Sets the active scene to be updated and rendered.
 	void setActiveScene(string sceneName);
+	void destroyScene(string sceneName);
+	void addScene(string sceneName, cScene* scene);
 	
+	SDL_Renderer* getRenderer();
+
 	// Ends the game
 	void QuitGame();
 
 
 private:
 	static cGame* pInstance;
+
+	SDL_Renderer* theRenderer;
 
 	// Whether the main game loop is running. Once this is is false, the game ends.
 	bool loop;

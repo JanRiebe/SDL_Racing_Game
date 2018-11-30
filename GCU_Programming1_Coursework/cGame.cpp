@@ -52,6 +52,36 @@ void cGame::setActiveScene(string sceneName)
 		cout << "Failed to activate scene '" << sceneName << "'. No scene with this name found." << endl;
 }
 
+void cGame::destroyScene(string sceneName)
+{
+	// Research on deleting element from map: https://stackoverflow.com/questions/5460678/whats-the-best-way-to-delete-an-entry-mapint-a
+	map<string, cScene *>::iterator it = scenes.find(sceneName);
+	if (it != scenes.end()) {
+		delete it->second;
+		scenes.erase(it);
+	}	
+	cout << "successfully deleted scene " << sceneName << endl;
+}
+
+void cGame::addScene(string sceneName, cScene * scene)
+{
+	cout << "adding scene " << sceneName << endl;
+	// If there already is a scene with this name,
+	// delete the existing scene.
+	if(scenes.count(sceneName)>0)
+	destroyScene(sceneName);
+
+	// Adding the new scene.
+	scenes.insert(pair<string, cScene*>(sceneName, scene));
+}
+
+
+
+SDL_Renderer * cGame::getRenderer()
+{
+	return theRenderer;
+}
+
 void cGame::QuitGame()
 {
 	loop = false;
@@ -60,6 +90,7 @@ void cGame::QuitGame()
 
 void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 {
+	this->theRenderer = theRenderer;
 
 	this->m_lastTime = high_resolution_clock::now();
 
@@ -80,11 +111,13 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	theTextureMgr->addTexture("Charactervector", "Images\\Charactervector.png");
 	theTextureMgr->addTexture("Button", "Images\\button.png");
 
-	theSoundMgr->add("who", "Audio\\who10Edit.wav", soundType::music);
-	theSoundMgr->add("shot", "Audio\\shot007.wav", soundType::sfx);
+	theSoundMgr->add("menu_music", "Audio\\243978__orangefreesounds__deep-drive-synth-loop.wav", soundType::music);
+	theSoundMgr->add("racing_music", "Audio\\116621__timbre__remix-3-of-116327-ajc-heartattack-b1.flac", soundType::music);
+	theSoundMgr->add("result_music", "Audio\\241441__foolboymedia__ocean-drift.wav", soundType::music);
+	theSoundMgr->add("crash_fx", "Audio\\67617__qubodup__metal-crash-collision.wav", soundType::sfx);
 
 	// Adding a text texture
-	cFontMgr::getInstance()->addFont("pirate", "Fonts\\BlackPearl.ttf", 64);
+	cFontMgr::getInstance()->addFont("main_font", "Fonts\\neon_pixel-7.ttf", 64);
 	SDL_Color color;
 	color.r = 255;
 	color.g = 255;
@@ -93,15 +126,15 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	SDL_Color transp = color;
 	transp.a = 0;
 	theTextureMgr->addTexture("testText0",
-		cFontMgr::getInstance()->getFont("pirate")->createTextTexture(theRenderer, "Test", textType::blended, color, transp)
+		cFontMgr::getInstance()->getFont("main_font")->createTextTexture(theRenderer, "Test", textType::blended, color, transp)
 	);
 	theTextureMgr->addTexture("testText1",
-		cFontMgr::getInstance()->getFont("pirate")->createTextTexture(theRenderer, "some other text that is super long", textType::blended, color, transp)
+		cFontMgr::getInstance()->getFont("main_font")->createTextTexture(theRenderer, "some other text that is super long", textType::blended, color, transp)
 	);
 
-	scenes.insert(pair<string, cScene*>("start", new cSceneStart(theRenderer)));
-	scenes.insert(pair<string, cScene*>("race", new cSceneRacing(theRenderer)));
-	scenes.insert(pair<string, cScene*>("result", new cSceneResults(theRenderer)));
+	addScene("start", new cSceneStart(theRenderer));
+	addScene("result", new cSceneResults(theRenderer));
+	addScene("highscores", new cSceneHighscores(theRenderer));
 	setActiveScene("start");
 }
 

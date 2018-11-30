@@ -6,25 +6,15 @@
 #include "cCollisionMgr.h"
 #include "cGame.h"
 
+cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
+{
 
-//TODO remove test callback function
-void testfuntionA()
-{
-	cout << "function A evoked\n";
-}
-void testfuntionB()
-{
-	cout << "function B evoked\n";
-}
-
-cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
-{
-	timer = 20;
+	timer = 15;
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
-	// Creating collsion manager
+												// Creating collsion manager
 	theCollisionMgr = new cCollisionMgr(theRenderer);
 
 
@@ -39,7 +29,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 
 
 	// Creating sprites
-	
+
 	cSpriteMap* tmpSpriteMap = new cSpriteMap();
 	tmpSpriteMap->setSpritePos({ 0,0 });
 	tmpSpriteMap->setTexture(cTextureMgr::getInstance()->getTexture("street"));
@@ -104,9 +94,9 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		newCam->SetViewport(viewport);
 
 		// Assigning values to the car
-		testCar = new cCar(1.0f, 0.1f, 500.0f, 10.0f, 5.0f);
+		testCar = new cCar(1.0f, 0.5f, 300.0f, 10.0f, 5.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
-		testCar->setSpritePos({ 0, 200*i });
+		testCar->setSpritePos({ 0, 200 * i });
 		testCar->setSpriteRotAngle(90 * i);
 		testCar->setSheetGrid(10, 1);
 		testCar->setSpriteScale({ 0.5f, 0.5f });
@@ -115,7 +105,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 
 		// Giving the camera to the collision manager
 		theCollisionMgr->addCamera(newCam);
-		
+
 		// Pinning the camera to a sprite.
 		newCam->setTarget(testCar);
 
@@ -125,7 +115,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 
 		/*
 		// Adding score text sprite
-		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), scoreTextTextureNames[i]);
+		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), scoreTextTextureNames[i]);
 		testText->setSpriteDimensions(newCam->GetViewport().w, newCam->GetViewport().h / 10);
 		testText->setText("Score");
 		testText->setSpritePos({ 50, 50 });
@@ -133,37 +123,41 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene()
 		player->setScoreSprite(testText);
 
 		*/
-		
-				
+
+
 	}
 
 	// Adding camera for UI for all players
 	global_UI_cam.SetViewport({ 0,0,WINDOW_WIDTH,WINDOW_HEIGHT });
 
 	// Adding timer text sprite
-	timerText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "timerText");
-	timerText->setSpriteDimensions(global_UI_cam.GetViewport().w/2, global_UI_cam.GetViewport().h / 10);
+	timerText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "timerText");
+	timerText->setSpriteDimensions(global_UI_cam.GetViewport().w / 2, global_UI_cam.GetViewport().h / 10);
 	timerText->setText("Timer");
 	timerText->setSpritePos({ 300, 0 });
 	global_UI_sprites.push_back(timerText);
 
 	// Adding police score sprite
-	scoreTexts[0] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "policeScore");
+	scoreTexts[0] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "policeScore");
 	scoreTexts[0]->setSpriteDimensions(100, 100);
 	scoreTexts[0]->setText("0");
 	scoreTexts[0]->setSpritePos({ 0, 50 });
 	global_UI_sprites.push_back(scoreTexts[0]);
-	
+
 	// Adding criminals score sprite
-	scoreTexts[1] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "criminalScore");
+	scoreTexts[1] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "criminalScore");
 	scoreTexts[1]->setSpriteDimensions(100, 100);
 	scoreTexts[1]->setText("0");
-	scoreTexts[1]->setSpritePos({ global_UI_cam.GetViewport().w - 2* scoreTexts[1]->getSpriteDimensions().w, 50 });
+	scoreTexts[1]->setSpritePos({ global_UI_cam.GetViewport().w - 2 * scoreTexts[1]->getSpriteDimensions().w, 50 });
 	global_UI_sprites.push_back(scoreTexts[1]);
+
+
+	cout << "Scene race created\n";
 }
 
 cSceneRacing::~cSceneRacing()
 {
+
 	// Deactivate the scene, to ensure no controllers are registered to input channels anymore.
 	deactivate();
 
@@ -182,11 +176,9 @@ cSceneRacing::~cSceneRacing()
 	{
 		// Deleting the controller.
 		delete *player;
-		// Removing the controller pointer from the vector.
-		players.erase(player);
-
 		++player;
 	}
+	players.clear();
 }
 
 
@@ -205,8 +197,7 @@ void cSceneRacing::activate()
 	}	
 	
 	// Playing background sounds
-	cSoundMgr::getInstance()->getSnd("who")->play(1);
-	cSoundMgr::getInstance()->getSnd("shot")->play(1);
+	cSoundMgr::getInstance()->getSnd("racing_music")->play(1);
 }
 
 void cSceneRacing::deactivate()
@@ -219,6 +210,7 @@ void cSceneRacing::deactivate()
 		Input::UnRegisterChannelListener(*player);
 	}
 }
+
 
 void cSceneRacing::update(double deltaTime)
 {

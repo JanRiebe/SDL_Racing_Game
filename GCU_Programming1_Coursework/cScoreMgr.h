@@ -29,5 +29,6 @@ public:
 
 	void SaveScores();
 	void LoadScores();
+	string getHighscoreEntry(int entryIndex);
 };
 

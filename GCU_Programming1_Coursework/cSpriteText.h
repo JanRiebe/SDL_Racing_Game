@@ -19,6 +19,7 @@ public:
 	void setFont(cFont* font);
 	void setColor(SDL_Color c);
 	void setText(LPCSTR text);
+	void setText(string str);
 	void setText(int x, string str = "");
 };
 

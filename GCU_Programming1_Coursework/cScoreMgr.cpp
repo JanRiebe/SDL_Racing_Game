@@ -72,12 +72,22 @@ void cScoreMgr::SaveScores()
 {
 	for (int i = 0; i < NUMBER_OF_TEAMS; i++)
 	{
-		highscores.addItem(""+i, calculateScore(scores[i], 1));		//TODO add time taken to get the score
+		highscores.addItem("Jan", calculateScore(scores[i], 1));		//TODO add time taken to get the score
 	}
 	highscores.saveToFile(PATH_HIGHSCORES);
 }
 
 void cScoreMgr::LoadScores()
 {
-	highscores.saveToFile(PATH_HIGHSCORES);
+	highscores.loadFromFile(PATH_HIGHSCORES);
+}
+
+string cScoreMgr::getHighscoreEntry(int entryIndex)
+{
+	// If the entry index is higher than the maximum number of entries.
+	// Just for safety. Should not happen.
+	if(entryIndex >= HIGHSCORE_LIST_ENTRIES)
+		return "---";
+
+	return highscores.getEntry(entryIndex);
 }

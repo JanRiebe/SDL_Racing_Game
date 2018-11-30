@@ -5,7 +5,8 @@
 
 IInputChannelListener::~IInputChannelListener()
 {
-	channel->UnRegister(this);
+	if(channel != NULL)
+		channel->UnRegister(this);
 }
 
 void IInputChannelListener::Register(InputChannel * c)

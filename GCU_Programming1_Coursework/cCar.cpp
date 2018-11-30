@@ -1,6 +1,6 @@
 #include "cCar.h"
 #include "cPlayer.h"
-
+#include "cSoundMgr.h"
 
 
 cCar::cCar(float mass, float airResistance, float enginePower, float tireSlippingPoint, float steerReactiveness): mass(mass), airResist(airResistance), engine(enginePower), tireFriction(tireSlippingPoint), steerReactive(steerReactiveness)
@@ -94,8 +94,9 @@ void cCar::onCollision(CollisionMessage message, fpoint impulse)
 		// Inform this someone that he reached the safehouse.
 		controller->OnReachedSafeHouse();
 	}
-	else if (message != TRIGGER)
+	else if (message == COLLISION)
 	{
+		cSoundMgr::getInstance()->getSnd("crash_fx")->play(1);
 
 		// Resetting the position from the last update.
 		// This helps avoiding cars getting stuck within each other.

@@ -44,6 +44,7 @@ const int MAX_PLAYERS = 4;
 
 #define PATH_HIGHSCORES "Data\\highscores.dat"
 
+#define HIGHSCORE_LIST_ENTRIES 10
 
 // This header file contains all the constants & enumarated types for the game
 typedef struct fpoint

@@ -15,6 +15,7 @@ class cCamera;
 class cScene
 {
 protected:
+	SDL_Renderer* theRenderer;
 	vector<cSprite*> sprites;		// Sprites that are rendered in world space
 	map<cCamera*, vector<cSprite*>> viewport_UI_sprites;		// Sprites that are rendered in viewport space, organised by camera
 	vector<cSprite*> global_UI_sprites;							// Sprites that are rendered in window space, using the global_UI_cam
@@ -23,7 +24,7 @@ protected:
 
 	bool isInitialised;		// Indicates whether activate has been called at least once.
 public:
-	cScene();
+	cScene(SDL_Renderer* theRenderer);
 	virtual ~cScene();
 	// Gets called when the scene is activated.
 	virtual void activate() = 0;

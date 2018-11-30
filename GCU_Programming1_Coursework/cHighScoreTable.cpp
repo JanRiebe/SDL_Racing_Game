@@ -3,6 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
+#include "GameConstants.h"
 
 
 cHighScoreTable::cHighScoreTable()
@@ -10,10 +11,6 @@ cHighScoreTable::cHighScoreTable()
 
 }
 
-cHighScoreTable::cHighScoreTable(int maxSize)
-{
-	this->MAX_SIZE = maxSize;
-}
 
 bool cHighScoreTable::loadFromFile(string highScoreFile)
 {
@@ -68,7 +65,7 @@ int  cHighScoreTable::addItem(Item entry)
 {
 	int row = this->tableEntries.size();
 
-	if (row == this->MAX_SIZE)
+	if (row == HIGHSCORE_LIST_ENTRIES)
 	{
 		cout << "Table full" << endl;
 		this->tableSize = row;
@@ -94,9 +91,26 @@ int cHighScoreTable::addItem(string name, int score)
 cHighScoreTable::Item cHighScoreTable::getItem(int row)
 {
 	Item tblItem;
-	tblItem.Name  = this->tableEntries[row]->Name;
-	tblItem.score = this->tableEntries[row]->score;
+
+	// Checking whether there are enough entries in the table.
+	if (this->tableEntries.size() > row)
+	{
+		tblItem.Name = this->tableEntries[row]->Name;
+		tblItem.score = this->tableEntries[row]->score;
+	}
+	else
+	{
+		tblItem.Name = "---";
+		tblItem.score = 0;
+	}
 	return tblItem;
+}
+
+string cHighScoreTable::getEntry(int row)
+{
+	cout << "getEntry\n";
+	Item item = getItem(row);
+	return item.Name +" " + to_string(item.score);
 }
 
 void cHighScoreTable::clearTable()

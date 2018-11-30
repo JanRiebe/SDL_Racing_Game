@@ -22,7 +22,7 @@ private:
 	Mix_Chunk * SoundFX = NULL;
 	Mix_Music * sMusic = NULL;
 	soundType theSoundType;
-
+	
 public:
 	cSound();
 	cSound(soundType sndType);

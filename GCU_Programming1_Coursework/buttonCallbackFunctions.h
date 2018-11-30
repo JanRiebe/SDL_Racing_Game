@@ -6,6 +6,8 @@
 
 void GoToStartScreen();
 
+void GoToHighscoreScreen();
+
 void StartRaceScene();
 
 void QuitGame();

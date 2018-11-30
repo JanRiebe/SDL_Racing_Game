@@ -7,17 +7,17 @@
 
 
 
-cSceneStart::cSceneStart(SDL_Renderer* theRenderer)
+cSceneStart::cSceneStart(SDL_Renderer* theRenderer): cScene(theRenderer)
 {
-	
+
 
 	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
 	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
 
-	
 
-	// loading textures
-	cTextureMgr::getInstance()->addTexture("Background", "Images\\tmp_menu_bg.jpg");
+
+												// loading textures
+	cTextureMgr::getInstance()->addTexture("Menu_Background_City", "Images\\architecture-buildings-city-169647_small.png");
 
 
 
@@ -32,47 +32,65 @@ cSceneStart::cSceneStart(SDL_Renderer* theRenderer)
 
 	// Background
 	cSprite * background = new cSprite();
-	background->setTexture(cTextureMgr::getInstance()->getTexture("Background"));
+	background->setTexture(cTextureMgr::getInstance()->getTexture("Menu_Background_City"));
 	background->setSpriteDimensions(WINDOW_WIDTH, WINDOW_HEIGHT);
 	global_UI_sprites.push_back(background);
 
 	// Adding title text sprite
-	cSpriteText* titleText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "titleTxt");
+	cSpriteText* titleText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "titleTxt");
 	titleText->setText("Jan's fun and educational racing game");
-	titleText->setSpriteDimensions(WINDOW_WIDTH/2, WINDOW_WIDTH / 10);
+	titleText->setSpriteDimensions(WINDOW_WIDTH / 2, WINDOW_WIDTH / 10);
 	titleText->setSpritePos({ WINDOW_WIDTH / 4, 50 });
 	global_UI_sprites.push_back(titleText);
-	
+
 	// Adding buttons
 	// Button A
 	cSpriteButton* buttonA = new cSpriteButton();
 	buttonA->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
 	buttonA->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
-	buttonA->setSpritePos({ WINDOW_WIDTH / 2 - buttonA->getSpriteDimensions().w/2, 200 });
+	buttonA->setSpritePos({ WINDOW_WIDTH / 2 - buttonA->getSpriteDimensions().w / 2, 200 });
 	buttonA->setCallbackFunction(&StartRaceScene);
 	global_UI_sprites.push_back(buttonA);
 	buttonContr = new cButtonController(buttonA);
 	// Button A text
-	cSpriteText* bAText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "raceTxt");
+	cSpriteText* bAText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "raceTxt");
 	bAText->setText("RACE");
 	bAText->setSpriteDimensions(buttonA->getSpriteDimensions().w, buttonA->getSpriteDimensions().h);
 	bAText->setSpritePos(buttonA->getPosition());
 	global_UI_sprites.push_back(bAText);
+
+
+	// Button C
+	cSpriteButton* buttonC = new cSpriteButton();
+	buttonC->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
+	buttonC->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
+	buttonC->setSpritePos({ WINDOW_WIDTH / 2 - buttonC->getSpriteDimensions().w / 2, 350 });
+	buttonC->setCallbackFunction(&QuitGame);
+	global_UI_sprites.push_back(buttonC);
+	buttonContr->addButton(buttonC);
+	// Button C text
+	cSpriteText* bCText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "exitTxt");
+	bCText->setText("EXIT");
+	bCText->setSpriteDimensions(buttonC->getSpriteDimensions().w, buttonC->getSpriteDimensions().h);
+	bCText->setSpritePos(buttonC->getPosition());
+	global_UI_sprites.push_back(bCText);
+
 
 	// Button B
 	cSpriteButton* buttonB = new cSpriteButton();
 	buttonB->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
 	buttonB->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
 	buttonB->setSpritePos({ WINDOW_WIDTH / 2 - buttonB->getSpriteDimensions().w / 2, 275 });
-	buttonB->setCallbackFunction(&QuitGame);
+	buttonB->setCallbackFunction(&GoToHighscoreScreen);
 	global_UI_sprites.push_back(buttonB);
 	buttonContr->addButton(buttonB);
 	// Button B text
-	cSpriteText* bBText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("pirate"), "exitTxt");
-	bBText->setText("EXIT");
+	cSpriteText* bBText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "startToHighscoresTxt");
+	bBText->setText("Highscores");
 	bBText->setSpriteDimensions(buttonB->getSpriteDimensions().w, buttonB->getSpriteDimensions().h);
 	bBText->setSpritePos(buttonB->getPosition());
 	global_UI_sprites.push_back(bBText);
+
 
 }
 
@@ -95,6 +113,9 @@ void cSceneStart::activate()
 	{
 		Input::RegisterChannelListener(buttonContr, i);
 	}
+
+	// Playing music
+	cSoundMgr::getInstance()->getSnd("menu_music")->play(-1);
 }
 
 void cSceneStart::deactivate()

@@ -18,7 +18,6 @@ private:
 	};
 
 	int tableSize;
-	int MAX_SIZE = 10;
 
 	Item tableEntry;
 
@@ -28,7 +27,6 @@ private:
 
 public:
 	cHighScoreTable();
-	cHighScoreTable(int maxSize);
 
 	bool loadFromFile(string highScoreFile);
 	bool saveToFile(string highScoreFile);
@@ -36,6 +34,7 @@ public:
 	int  addItem(Item entry);
 	int  addItem(string name, int score);
 	Item getItem(int row);
+	string getEntry(int row);
 	void clearTable();
 	string convertToString();
 	int getTableSize();

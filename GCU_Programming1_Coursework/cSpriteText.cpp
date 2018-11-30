@@ -56,9 +56,14 @@ void cSpriteText::setText(LPCSTR text)
 	
 }
 
+void cSpriteText::setText(string str)
+{
+	LPCSTR lpc_str = str.c_str();		// This basically just creates a pointer to the string, so I need to keep the string in memory while I use this.
+	setText(lpc_str);
+}
+
 void cSpriteText::setText(int x, string str)
 {
 	str += " "+ to_string(x);
-	LPCSTR lpc_str = str.c_str();		// This basically just creates a pointer to the string, so I need to keep the string in memory while I use this.
-	setText(lpc_str);
+	setText(str);
 }

@@ -3,11 +3,10 @@
 #include "inputHeaders.h"
 
 
-cScene::cScene()
+cScene::cScene(SDL_Renderer * renderer): theRenderer(renderer)
 {
 	isInitialised = false;
 }
-
 
 cScene::~cScene()
 {
@@ -19,11 +18,9 @@ cScene::~cScene()
 	{
 		// Deleting the sprite.
 		delete *sprite;
-		// Removing the sprite from the vector.
-		sprites.erase(sprite);
-
 		++sprite;
 	}
+	sprites.clear();
 
 	
 
@@ -37,31 +34,30 @@ cScene::~cScene()
 		{
 			// Deleting the sprite.
 			delete *sprite;
-			// Removing the sprite from the vector.
-			viewport_UI_sprites[(*camera)].erase(sprite);
 
 			++sprite;
 		}
+		viewport_UI_sprites[(*camera)].clear();
 
 		// Deleting the camera.
 		delete *camera;
-		// Removing the camera from the vector.
-		cameras.erase(camera);
 
 		++camera;
 	}
+	cameras.clear();
 
-	// Cleaning up the sprites.
+
+
+	// Cleaning up the global ui sprites.
 	sprite = global_UI_sprites.begin();
 	while (sprite != global_UI_sprites.end())
 	{
 		// Deleting the sprite.
 		delete *sprite;
-		// Removing the sprite from the vector.
-		sprites.erase(sprite);
 
 		++sprite;
 	}
+	global_UI_sprites.clear();
 
 }
 

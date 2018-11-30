@@ -28,6 +28,7 @@
     <ClCompile Include="cFontMgr.cpp" />
     <ClCompile Include="cHighScoreTable.cpp" />
     <ClCompile Include="cPlayer.cpp" />
+    <ClCompile Include="cSceneHighscores.cpp" />
     <ClCompile Include="cSceneRacing.cpp" />
     <ClCompile Include="cSceneResults.cpp" />
     <ClCompile Include="cSceneStart.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="cHighScoreTable.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="cPlayer.h" />
+    <ClInclude Include="cSceneHighscores.h" />
     <ClInclude Include="cSceneResults.h" />
     <ClInclude Include="cSceneStart.h" />
     <ClInclude Include="cScoreMgr.h" />
