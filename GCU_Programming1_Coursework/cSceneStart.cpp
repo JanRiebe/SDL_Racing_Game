@@ -10,9 +10,9 @@
 cSceneStart::cSceneStart(SDL_Renderer* theRenderer): cScene(theRenderer)
 {
 
-
-	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
-	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
+	// Registering input devices to input channels
+	Input::RegisterDevice(KEYBOARD_WASD, 0);	//tmp here, should be on the registration screen
+	Input::RegisterDevice(KEYBOARD_ARROWS, 1);	//tmp here, should be on the registration screen
 
 
 

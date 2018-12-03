@@ -8,13 +8,10 @@
 
 cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 {
-
-	timer = 15;
-
-	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
-	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
-
-												// Creating collsion manager
+	// Setting the timer.
+	timer = 50;
+	
+	// Creating collsion manager
 	theCollisionMgr = new cCollisionMgr(theRenderer);
 
 
@@ -36,7 +33,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	tmpSpriteMap->setCollisionTexture(cTextureMgr::getInstance()->getTexture("street_coll"));
 	tmpSpriteMap->setSpriteScale({ 50, 50 });
 	tmpSpriteMap->setSheetGrid(4, 4);
-	tmpSpriteMap->loadMap("foo");
+	tmpSpriteMap->loadMap("map");
 	sprites.push_back(tmpSpriteMap);
 	theCollisionMgr->setMap(tmpSpriteMap);
 	/*
@@ -218,7 +215,7 @@ void cSceneRacing::update(double deltaTime)
 
 	// Updating the timer and setting the timer text.
 	timer -= deltaTime;
-	timerText->setText((int)timer, "Time left: ");
+	//timerText->setText((int)timer, "Time left: ");
 	// Once the timer runs out the scene ends.
 	if (timer <= 0)
 	{

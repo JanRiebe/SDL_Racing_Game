@@ -1,5 +1,6 @@
 #include "cSpriteMap.h"
-
+#include <iostream>
+#include <fstream>
 
 
 cSpriteMap::cSpriteMap(int sheetRows, int sheetColumns): cSpriteSheet(sheetRows, sheetColumns)
@@ -35,15 +36,50 @@ void cSpriteMap::render(SDL_Renderer * theRenderer, SDL_Rect * theDestRect, FPoi
 
 void cSpriteMap::loadMap(string mapName)
 {
+	
+
+	// Clean old map definition
 	for (int x = 0; x < MAP_WIDTH; ++x)
 	{
 		for (int y = 0; y < MAP_HEIGHT; ++y)
 		{
-			mapDef.tiles[x][y] = (x + y + 1) % 2;//(x*y) % (cSpriteSheet::getSheetRows()*cSpriteSheet::getSheetColumns());
+			mapDef.tiles[x][y] = 0;
 			mapDef.impassable[x][y] = false;
 		}
 	}
-	mapDef.impassable[0][1] = true;
+
+
+	string path = "Data\\" + mapName + ".dat";
+	ifstream file;
+		
+	file.open(path, ios::binary);
+	if (!file.is_open())
+	{
+		cout << "Error opening file " << mapName <<".dat" << endl;
+	}
+
+	
+
+
+	int x = 0;
+	int y = 0;
+	while (!file.eof() && x < MAP_WIDTH && y < MAP_HEIGHT) {
+		file >> mapDef.tiles[x][y];
+
+		cout << "Read in " << mapDef.tiles[x][y] << endl;
+
+		x++;
+		if (x == MAP_WIDTH)
+		{
+			x = 0;
+			y++;
+		}
+	}
+	file.close();
+	
+
+	cout << "Successfully loaded map file " << mapName << ".map" << endl;
+
 }
 
 MapDefinition cSpriteMap::getMapDefinition()

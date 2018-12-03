@@ -7,10 +7,7 @@
 
 cSceneHighscores::cSceneHighscores(SDL_Renderer* theRenderer) :cScene(theRenderer)
 {
-
-	Input::RegisterDevice(KEYBOARD_ARROWS, 0);	//tmp here, should be on the registration screen
-	Input::RegisterDevice(KEYBOARD_WASD, 1);	//tmp here, should be on the registration screen
-
+	
 
 
 												// loading textures
