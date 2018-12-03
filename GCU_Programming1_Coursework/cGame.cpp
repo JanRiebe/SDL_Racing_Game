@@ -94,6 +94,8 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 
 	this->m_lastTime = high_resolution_clock::now();
 
+	// Hiding the mouse cursor
+	SDL_ShowCursor(SDL_DISABLE);
 
 	// Clear the buffer with a black background
 	SDL_SetRenderDrawColor(theRenderer, 0, 0, 0, 255);
