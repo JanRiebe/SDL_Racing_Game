@@ -26,16 +26,6 @@ void cSpriteAnimation::render(SDL_Renderer * theRenderer, cCamera * theCamera)
 	// using the camera to translate world to screen position
 	// and calling sprite sheet to render the sprite.
 	cSpriteSheet::render(theRenderer, getCurrentFrame(), &theCamera->WorldToScreen(transform), (double)spriteRotationAngle, &spriteCentre, spriteScale);
-
-
-	//TODO remove debugging
-	SDL_Rect bBox;
-	bBox.x = transform.x - spriteCentre.x;
-	bBox.y = transform.y;
-	bBox.w = transform.h;
-	bBox.h = transform.h;
-	bBox = theCamera->WorldToScreen(bBox);
-	SDL_RenderDrawRect(theRenderer, &bBox);
 }
 
 void cSpriteAnimation::render(SDL_Renderer * theRenderer, SDL_Rect * theDestRect, FPoint theScaling)
