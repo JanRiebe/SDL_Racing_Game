@@ -18,6 +18,8 @@ cSceneStart::cSceneStart(SDL_Renderer* theRenderer): cScene(theRenderer)
 
 												// loading textures
 	cTextureMgr::getInstance()->addTexture("Menu_Background_City", "Images\\architecture-buildings-city-169647_small.png");
+	cTextureMgr::getInstance()->addTexture("Keys_WASD", "Images\\buttons_wasd.png");
+	cTextureMgr::getInstance()->addTexture("Keys_Arrows", "Images\\buttons_arrows.png");
 
 
 
@@ -92,6 +94,17 @@ cSceneStart::cSceneStart(SDL_Renderer* theRenderer): cScene(theRenderer)
 	global_UI_sprites.push_back(bBText);
 
 
+	// Key help sprites
+	// WASD
+	cSprite * keys = new cSprite();
+	keys->setTexture(cTextureMgr::getInstance()->getTexture("Keys_WASD"));
+	keys->setSpritePos({100, WINDOW_HEIGHT/2 - keys->getSpriteDimensions().h/2});
+	global_UI_sprites.push_back(keys);
+	// Arrows
+	keys = new cSprite();
+	keys->setTexture(cTextureMgr::getInstance()->getTexture("Keys_Arrows"));
+	keys->setSpritePos({WINDOW_WIDTH - keys->getSpriteDimensions().w - 100, WINDOW_HEIGHT / 2 - keys->getSpriteDimensions().h / 2 });
+	global_UI_sprites.push_back(keys);
 }
 
 
