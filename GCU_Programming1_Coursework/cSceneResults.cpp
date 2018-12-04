@@ -36,6 +36,7 @@ cSceneResults::cSceneResults(SDL_Renderer* theRenderer) :cScene(theRenderer)
 	titleText->setSpritePos({ WINDOW_WIDTH / 2 - titleText->getSpriteDimensions().w / 2, 50 });
 	global_UI_sprites.push_back(titleText);
 
+	/*
 	// Adding score text sprites
 	scoreTexts[0] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "scoreTxt_A");
 	scoreTexts[0]->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_HEIGHT / 4);
@@ -46,7 +47,7 @@ cSceneResults::cSceneResults(SDL_Renderer* theRenderer) :cScene(theRenderer)
 	scoreTexts[1]->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_HEIGHT / 4);
 	scoreTexts[1]->setSpritePos({ 3 * WINDOW_WIDTH / 4 - scoreTexts[1]->getSpriteDimensions().w / 2, WINDOW_HEIGHT / 2 - scoreTexts[1]->getSpriteDimensions().h / 2 });
 	global_UI_sprites.push_back(scoreTexts[1]);
-
+	*/
 
 	// Adding buttons
 	// Button A
@@ -101,9 +102,10 @@ void cSceneResults::activate()
 	}
 
 	// Showing the score
+	/*
 	scoreTexts[0]->setText(cScoreMgr::getInstance()->getScore(POLICE));
 	scoreTexts[1]->setText(cScoreMgr::getInstance()->getScore(CRIMINALS));
-
+	*/
 	// Play music
 	cSoundMgr::getInstance()->getSnd("result_music")->play(1);
 }

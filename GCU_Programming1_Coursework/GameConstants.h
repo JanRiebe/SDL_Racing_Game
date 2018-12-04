@@ -36,8 +36,11 @@ using namespace std;
 #define WINDOW_HEIGHT 512
 
 //Define the dimensions for tile maps
-const int MAP_WIDTH = 64;
-const int MAP_HEIGHT = 64;
+const int MAP_WIDTH = 32;
+const int MAP_HEIGHT = 32;
+
+// How many checkpoints a player needs to visit to complete one round
+#define CHECKPOINTS_ROUND 3
 
 //The maximum number of players
 const int MAX_PLAYERS = 4;
@@ -147,17 +150,9 @@ enum CollisionMessage
 {
 	COLLISION,
 	TRIGGER,
-	SAFEHOUSE
+	CHECKPOINT
 };
 
-
-
-enum Teams
-{
-	POLICE,
-	CRIMINALS,
-	NUMBER_OF_TEAMS
-};
 
 
 #endif

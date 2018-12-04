@@ -27,6 +27,7 @@ cSprite::cSprite() 			// Default constructor
 	tint = { 255,255,255,255 };
 
 	collMessage = COLLISION;
+	collisionStatic = false;
 }
 
 cSprite::cSprite(cTexture* theSpriteTexture) 			// Default constructor
@@ -286,8 +287,7 @@ fpoint cSprite::getImpulse()
 
 bool cSprite::isStatic()
 {
-	//TODO allow setting static
-	return false;
+	return collisionStatic;
 }
 
 CollisionMessage cSprite::getCollisionMessage()
@@ -298,4 +298,9 @@ CollisionMessage cSprite::getCollisionMessage()
 void cSprite::setCollisionMessage(CollisionMessage m)
 {
 	collMessage = m;
+}
+
+void cSprite::setStatic(bool st)
+{
+	collisionStatic = st;
 }

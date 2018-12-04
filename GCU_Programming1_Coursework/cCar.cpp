@@ -89,10 +89,11 @@ void cCar::onCollision(CollisionMessage message, fpoint impulse)
 {
 
 	// If this car is controlled by someone and it has reached the target.
-	if (controller && message == SAFEHOUSE)
+	if (controller && message == CHECKPOINT)
 	{
+		cout << "Reached finish\n";
 		// Inform this someone that he reached the safehouse.
-		controller->OnReachedSafeHouse();
+		controller->OnReachedCheckpoint();
 	}
 	else if (message == COLLISION)
 	{

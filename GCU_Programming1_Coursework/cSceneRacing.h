@@ -14,7 +14,7 @@ private:
 	cCollisionMgr* theCollisionMgr;
 	double timer;
 	cSpriteText* timerText;
-	cSpriteText* scoreTexts[NUMBER_OF_TEAMS];
+	
 
 public:
 	cSceneRacing(SDL_Renderer* theRenderer);

@@ -5,18 +5,8 @@ cScoreMgr* cScoreMgr::pInstance = NULL;
 
 
 
-int cScoreMgr::calculateScore(int points, int timeInSeconds)
-{
-	return (points*1000)/timeInSeconds;
-}
-
 cScoreMgr::cScoreMgr()
 {
-	for (int i = 0; i < NUMBER_OF_TEAMS; i++)
-	{
-		scores[i] = 0;
-		dirty[i] = true;
-	}
 }
 
 
@@ -41,38 +31,51 @@ cScoreMgr* cScoreMgr::getInstance()
 	return cScoreMgr::pInstance;
 }
 
-void cScoreMgr::setScore(Teams team, int value)
+void cScoreMgr::setScore(string name, int value)
 {
-	scores[team] = value;
-	dirty[team] = true;
+	scores[name] = value;
+	dirty[name] = true;
 }
 
-int cScoreMgr::getScore(Teams team)
+int cScoreMgr::getScore(string name)
 {
-	cout << "get score team " << team << scores[team]<<endl;
+	// If no score with this name is stored, return 0.
+	if (scores.count(name) <= 0)
+		return 0;
 
-	dirty[team] = false;
+	cout << "get score " << name << scores[name]<<endl;
 
-	return scores[team];
+	dirty[name] = false;
+
+	return scores[name];
 }
 
-void cScoreMgr::increment(Teams team)
+void cScoreMgr::increment(string name)
 {
-	scores[team]++;
-	
-	dirty[team] = true;
+	// If a score with this name exists, increase it.
+	if (scores.count(name) > 0)
+	{
+		scores[name]++;
+
+		dirty[name] = true;
+	}
 }
 
-bool cScoreMgr::isDirty(Teams team)
+bool cScoreMgr::isDirty(string name)
 {
-	return dirty[team];
+	if (dirty.count(name) > 0)
+		return dirty[name];
+
+	// Returning that the score is not dirty if no score with this name exists.
+	return false;
 }
 
 void cScoreMgr::SaveScores()
 {
-	for (int i = 0; i < NUMBER_OF_TEAMS; i++)
+	map<string, int>::iterator it = scores.begin();
+	for (it; it!=scores.end(); it++)
 	{
-		highscores.addItem("Jan", calculateScore(scores[i], 1));		//TODO add time taken to get the score
+		highscores.addItem(it->first, it->second);
 	}
 	highscores.saveToFile(PATH_HIGHSCORES);
 }

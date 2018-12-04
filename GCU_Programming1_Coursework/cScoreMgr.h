@@ -9,12 +9,11 @@ class cScoreMgr
 {
 private:
 	static cScoreMgr* pInstance;
-	int scores[NUMBER_OF_TEAMS];
-	bool dirty[NUMBER_OF_TEAMS];		// Indicates whether the score has been updated since it has last been read.
+	map<string, int> scores;
+	map<string, bool> dirty;		// Indicates whether the score has been updated since it has last been read.
 
 	cHighScoreTable highscores;
 
-	int calculateScore(int points, int timeInSeconds);
 
 public:
 	cScoreMgr();
@@ -22,10 +21,10 @@ public:
 
 	static cScoreMgr* getInstance();
 
-	void setScore(Teams team, int value);
-	int getScore(Teams team);
-	void increment(Teams team);
-	bool isDirty(Teams team);
+	void setScore(string, int value);
+	int getScore(string);
+	void increment(string);
+	bool isDirty(string);
 
 	void SaveScores();
 	void LoadScores();

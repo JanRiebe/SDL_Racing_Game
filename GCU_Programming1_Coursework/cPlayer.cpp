@@ -2,9 +2,9 @@
 #include "cCar.h"
 #include "gameHeaders.h"
 
-cPlayer::cPlayer(Teams team) : team(team)
+cPlayer::cPlayer(string name) : name(name)
 {
-
+	car = NULL;
 }
 
 
@@ -14,7 +14,7 @@ cPlayer::~cPlayer()
 
 void cPlayer::OnEvent(AbstractEvent e)
 {
-	if (e.flag == DIRECTION)
+	if (e.flag == DIRECTION && car)
 	{
 		car->accelerate(e.value_y);
 		car->steer(e.value_x);
@@ -25,11 +25,15 @@ void cPlayer::OnEvent(AbstractEvent e)
 	}
 }
 
-void cPlayer::OnReachedSafeHouse()
+void cPlayer::OnReachedCheckpoint()
 {
 	// Increment the score.
-	cScoreMgr::getInstance()->increment(team);
+	cScoreMgr::getInstance()->setScore(name + "_finish", 1);
 
-	// Resetting the player's car to the start position.
-	car->setSpritePos({ 0, 0 });
+	car = NULL;
+}
+
+string cPlayer::getName()
+{
+	return name;
 }

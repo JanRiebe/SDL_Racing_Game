@@ -9,15 +9,17 @@ class cPlayer :
 	public IInputChannelListener
 {
 private:
-	Teams team;
+	string name;
 
 public:
-	cPlayer(Teams team);
+	cPlayer(string name);
 	~cPlayer();
 	cCar* car;
 
 	void OnEvent(AbstractEvent e);
 
-	void OnReachedSafeHouse();
+	void OnReachedCheckpoint();
+
+	string getName();
 };
 

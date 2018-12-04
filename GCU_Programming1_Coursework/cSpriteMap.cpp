@@ -57,16 +57,18 @@ void cSpriteMap::loadMap(string mapName)
 	{
 		cout << "Error opening file " << mapName <<".dat" << endl;
 	}
-
 	
-
-
 	int x = 0;
 	int y = 0;
 	while (!file.eof() && x < MAP_WIDTH && y < MAP_HEIGHT) {
+		// Reading in the raw tile definition
 		file >> mapDef.tiles[x][y];
 
-		cout << "Read in " << mapDef.tiles[x][y] << endl;
+		// Processing the tile definition
+		// The last part of the number indicates whether the tile is passable, 0 = impassable 1 = passable
+		mapDef.impassable[x][y] = 1 - mapDef.tiles[x][y] % 2;
+		// Removing the last part of the number.
+		mapDef.tiles[x][y] = mapDef.tiles[x][y] / 10;
 
 		x++;
 		if (x == MAP_WIDTH)
@@ -76,7 +78,7 @@ void cSpriteMap::loadMap(string mapName)
 		}
 	}
 	file.close();
-	
+	cout << x << " " << y << endl;
 
 	cout << "Successfully loaded map file " << mapName << ".map" << endl;
 

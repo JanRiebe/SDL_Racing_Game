@@ -9,7 +9,7 @@
 cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 {
 	// Setting the timer.
-	timer = 50;
+	timer = 0;
 	
 	// Creating collsion manager
 	theCollisionMgr = new cCollisionMgr(theRenderer);
@@ -31,7 +31,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	tmpSpriteMap->setSpritePos({ 0,0 });
 	tmpSpriteMap->setTexture(cTextureMgr::getInstance()->getTexture("street"));
 	tmpSpriteMap->setCollisionTexture(cTextureMgr::getInstance()->getTexture("street_coll"));
-	tmpSpriteMap->setSpriteScale({ 50, 50 });
+	tmpSpriteMap->setSpriteScale({ 16, 16 });
 	tmpSpriteMap->setSheetGrid(4, 4);
 	tmpSpriteMap->loadMap("map");
 	sprites.push_back(tmpSpriteMap);
@@ -49,9 +49,12 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 
 	cSprite* safeHouse = new cSprite();
 	safeHouse->setTexture(cTextureMgr::getInstance()->getTexture("Charactervector"));
-	safeHouse->setSpritePos({ 500,500 });
+	safeHouse->setSpritePos({ 256 * 14 , 256 * 11 });
+	//safeHouse->setSpriteDimensions(256, 256);
+	safeHouse->setSpriteScale({ 0.3f, 0.3f });
 	sprites.push_back(safeHouse);
-	safeHouse->setCollisionMessage(SAFEHOUSE);
+	safeHouse->setCollisionMessage(CHECKPOINT);
+	safeHouse->setStatic(true);
 	theCollisionMgr->addCollider(safeHouse);
 
 	cCar* testCar;
@@ -63,7 +66,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	int numberOfPlayers = Input::GetNumberOfPlayers();
 	for (int i = 0; i < numberOfPlayers; ++i)
 	{
-		cPlayer* player = new cPlayer((Teams)i);
+		cPlayer* player = new cPlayer(names[i]);
 		players.push_back(player);
 		// Creating a camera per player.
 		cCamera* newCam = new cCamera();
@@ -91,10 +94,10 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 		newCam->SetViewport(viewport);
 
 		// Assigning values to the car
-		testCar = new cCar(1.0f, 0.5f, 300.0f, 10.0f, 5.0f);
+		testCar = new cCar(1.0f, 0.5f, 300.0f, 10.0f, 10.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
-		testCar->setSpritePos({ 0, 200 * i });
-		testCar->setSpriteRotAngle(90 * i);
+		testCar->setSpritePos( {256 * 14 + 56 + 128 *i , 256 * 10 });// {256 * 4 + 56 + 128 *i , 256 * 7 });
+		testCar->setSpriteRotAngle(-180);
 		testCar->setSheetGrid(10, 1);
 		testCar->setSpriteScale({ 0.5f, 0.5f });
 		sprites.push_back(testCar);
@@ -110,17 +113,6 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 		player->car = testCar;
 		testCar->setController(player);
 
-		/*
-		// Adding score text sprite
-		cSpriteText* testText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), scoreTextTextureNames[i]);
-		testText->setSpriteDimensions(newCam->GetViewport().w, newCam->GetViewport().h / 10);
-		testText->setText("Score");
-		testText->setSpritePos({ 50, 50 });
-		viewport_UI_sprites[newCam].push_back(testText);
-		player->setScoreSprite(testText);
-
-		*/
-
 
 	}
 
@@ -133,7 +125,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	timerText->setText("Timer");
 	timerText->setSpritePos({ 300, 0 });
 	global_UI_sprites.push_back(timerText);
-
+	/*
 	// Adding police score sprite
 	scoreTexts[0] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "policeScore");
 	scoreTexts[0]->setSpriteDimensions(100, 100);
@@ -147,9 +139,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	scoreTexts[1]->setText("0");
 	scoreTexts[1]->setSpritePos({ global_UI_cam.GetViewport().w - 2 * scoreTexts[1]->getSpriteDimensions().w, 50 });
 	global_UI_sprites.push_back(scoreTexts[1]);
-
-
-	cout << "Scene race created\n";
+	*/
 }
 
 cSceneRacing::~cSceneRacing()
@@ -211,38 +201,40 @@ void cSceneRacing::deactivate()
 
 void cSceneRacing::update(double deltaTime)
 {
-#pragma region global scene behaviour
-
-	// Updating the timer and setting the timer text.
-	timer -= deltaTime;
-	//timerText->setText((int)timer, "Time left: ");
-	// Once the timer runs out the scene ends.
-	if (timer <= 0)
-	{
-		cGame::getInstance()->setActiveScene("result");
-		cScoreMgr::getInstance()->SaveScores();
-	}
-
-
-	// Updating score texts, if the score has changed.
-	// Research on iterating over enums: https://stackoverflow.com/questions/261963/how-can-i-iterate-over-an-enum
-	for (int i = POLICE; i != NUMBER_OF_TEAMS; i++)
-	{
-		// If this score has been updated, since it was last read.
-		cScoreMgr* scoreMgr = cScoreMgr::getInstance();
-		if (scoreMgr->isDirty((Teams)i))
-			scoreTexts[i]->setText(scoreMgr->getScore((Teams)i));
-	}
-	
-
-#pragma endregion
-
-
 	// Letting scene update prites and cameras and stuff.
 	cScene::update(deltaTime);
 
 	// Calculating collisions
 	theCollisionMgr->calcColl();
+
+
+	// Updating the timer and transition to result scene.
+	timer += deltaTime;
+
+	// Checking whether the player has reached the finish
+	// end ending the scene, if he has.
+	vector<cPlayer*>::iterator player = players.begin();
+	for (player; player!=players.end(); player++)
+	{
+		cScoreMgr* scoreMgr = cScoreMgr::getInstance();
+		string name = (*player)->getName();
+		// If this score has been updated, since it was last read
+		// and the score is bigger than 0 (indicating that the finish was reached),
+		if (scoreMgr->isDirty(name+"_finish") && scoreMgr->getScore(name + "_finish") > 0)
+		{
+			// save the time needed to reach the finish
+			scoreMgr->setScore(name + "_time", timer);
+			// and transition the scene.
+			cScoreMgr::getInstance()->SaveScores();
+			cGame::getInstance()->setActiveScene("result");
+		}
+	}
+
+
+
+
+	
+
 }
 
 void cSceneRacing::render(SDL_Renderer * renderer)

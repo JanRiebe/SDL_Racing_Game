@@ -39,6 +39,7 @@ protected:
 	SDL_Color tint;
 
 	CollisionMessage collMessage;
+	bool collisionStatic;
 
 public:
 	cSprite();			// Default constructor
@@ -79,6 +80,8 @@ public:
 	// Get the message that this collider sends to other colliders on collision. Overwrite this to define specific messages.
 	virtual CollisionMessage getCollisionMessage();
 	virtual void setCollisionMessage(CollisionMessage m);
+
+	void setStatic(bool st);
 
 
 	// Overwrite this to add per frame behaviour.

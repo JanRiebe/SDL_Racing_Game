@@ -114,7 +114,7 @@ void cCollisionMgr::DetectCollisions(vector<iCollider*>* colliders, bool usePixe
 		/*
 		Collisions between a collider an tiles in the map
 		*/
-		if (map)
+		if (map && !(*collA)->isStatic())
 		{
 
 			// Going through all tiles in the map
