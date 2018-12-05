@@ -21,6 +21,7 @@ public:
 
 	static cScoreMgr* getInstance();
 
+	map<string, int> getAllScores();
 	void setScore(string, int value);
 	int getScore(string);
 	void increment(string);

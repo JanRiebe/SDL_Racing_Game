@@ -2,7 +2,7 @@
 #include "cCar.h"
 #include "gameHeaders.h"
 
-cPlayer::cPlayer(string name) : name(name)
+cPlayer::cPlayer(string name, cSceneRacing* scene) : name(name), scene(scene)
 {
 	car = NULL;
 }
@@ -27,8 +27,7 @@ void cPlayer::OnEvent(AbstractEvent e)
 
 void cPlayer::OnReachedCheckpoint()
 {
-	// Increment the score.
-	cScoreMgr::getInstance()->setScore(name + "_finish", 1);
+	scene->playerFinished(this);
 
 	car = NULL;
 }

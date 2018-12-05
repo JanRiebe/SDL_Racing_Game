@@ -13,8 +13,8 @@ private:
 	vector<cPlayer*> players;
 	cCollisionMgr* theCollisionMgr;
 	double timer;
-	cSpriteText* timerText;
-	
+	cSpriteText* timerNumbers[4][10];
+	vector<cSpriteText*> scoreTexts;
 
 public:
 	cSceneRacing(SDL_Renderer* theRenderer);
@@ -25,5 +25,7 @@ public:
 	void deactivate();
 	void update(double deltaTime);
 	void render(SDL_Renderer* renderer);	//TODO remove
+
+	void playerFinished(cPlayer* p);
 };
 

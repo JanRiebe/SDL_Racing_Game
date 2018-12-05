@@ -3,16 +3,17 @@
 #include "GameConstants.h"
 
 class cCar;
-class cSpriteText;
+class cSceneRacing;
 
 class cPlayer :
 	public IInputChannelListener
 {
 private:
 	string name;
+	cSceneRacing* scene;
 
 public:
-	cPlayer(string name);
+	cPlayer(string name, cSceneRacing* scene);
 	~cPlayer();
 	cCar* car;
 

@@ -36,18 +36,20 @@ cSceneResults::cSceneResults(SDL_Renderer* theRenderer) :cScene(theRenderer)
 	titleText->setSpritePos({ WINDOW_WIDTH / 2 - titleText->getSpriteDimensions().w / 2, 50 });
 	global_UI_sprites.push_back(titleText);
 
-	/*
-	// Adding score text sprites
-	scoreTexts[0] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "scoreTxt_A");
-	scoreTexts[0]->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_HEIGHT / 4);
-	scoreTexts[0]->setSpritePos({ WINDOW_WIDTH / 4 - scoreTexts[0]->getSpriteDimensions().w / 2, WINDOW_HEIGHT / 2 - scoreTexts[0]->getSpriteDimensions().h / 2 });
-	global_UI_sprites.push_back(scoreTexts[0]);
 
-	scoreTexts[1] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "scoreTxt_B");
-	scoreTexts[1]->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_HEIGHT / 4);
-	scoreTexts[1]->setSpritePos({ 3 * WINDOW_WIDTH / 4 - scoreTexts[1]->getSpriteDimensions().w / 2, WINDOW_HEIGHT / 2 - scoreTexts[1]->getSpriteDimensions().h / 2 });
-	global_UI_sprites.push_back(scoreTexts[1]);
-	*/
+	// Creating score sprites
+	for (int i = 0; i < NUMBER_OF_CHANNELS; ++i)
+	{
+		// Adding score text
+		cSpriteText* scoreText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "score_screen_texture_" + i);
+		scoreText->setSpriteDimensions(100, 100);
+		scoreText->setSpritePos({ WINDOW_WIDTH / 2 - 100, 200 + 50 * i });
+		scoreTexts.push_back(scoreText);
+		global_UI_sprites.push_back(scoreText);
+	}
+
+
+
 
 	// Adding buttons
 	// Button A
@@ -101,11 +103,25 @@ void cSceneResults::activate()
 		Input::RegisterChannelListener(buttonContr, i);
 	}
 
-	// Showing the score
-	/*
-	scoreTexts[0]->setText(cScoreMgr::getInstance()->getScore(POLICE));
-	scoreTexts[1]->setText(cScoreMgr::getInstance()->getScore(CRIMINALS));
-	*/
+
+	// Set scores for players
+	cScoreMgr* scoreMgr = cScoreMgr::getInstance();
+	int i = 0;
+	vector<cSpriteText*>::iterator text = scoreTexts.begin();
+	for (text; text != scoreTexts.end(); text++, i++)
+	{
+		int score = scoreMgr->getScore("Player " + to_string(i));
+		
+		if (i < numberOfPlayers) {
+			(*text)->setText(score, "Player " + to_string(i));
+			(*text)->setVisible(true);
+		}
+		else
+			(*text)->setVisible(false);
+	}
+
+
+
 	// Play music
 	cSoundMgr::getInstance()->getSnd("result_music")->play(1);
 }

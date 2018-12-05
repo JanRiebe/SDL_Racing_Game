@@ -19,6 +19,8 @@ class cSprite:
 	public iCollider
 {
 protected:
+	bool visible;
+
 	// position
 	SDL_Rect transform;
 	SDL_Point spriteCentre;
@@ -87,5 +89,6 @@ public:
 	// Overwrite this to add per frame behaviour.
 	virtual void update(double deltaTime) {};
 
+	void setVisible(bool visible);
 };
 #endif

@@ -31,6 +31,11 @@ cScoreMgr* cScoreMgr::getInstance()
 	return cScoreMgr::pInstance;
 }
 
+map<string, int> cScoreMgr::getAllScores()
+{
+	return scores;
+}
+
 void cScoreMgr::setScore(string name, int value)
 {
 	scores[name] = value;

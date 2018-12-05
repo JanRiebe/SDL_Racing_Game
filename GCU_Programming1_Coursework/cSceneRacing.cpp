@@ -66,8 +66,10 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	int numberOfPlayers = Input::GetNumberOfPlayers();
 	for (int i = 0; i < numberOfPlayers; ++i)
 	{
-		cPlayer* player = new cPlayer(names[i]);
+		// Creating a player
+		cPlayer* player = new cPlayer("Player " + to_string(i), this);
 		players.push_back(player);
+
 		// Creating a camera per player.
 		cCamera* newCam = new cCamera();
 		cameras.push_back(newCam);
@@ -112,34 +114,35 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 		// Giving the player a sprite to control.
 		player->car = testCar;
 		testCar->setController(player);
-
-
+		
+		// Adding score text
+		cSpriteText* scoreText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "policeScore");
+		scoreText->setSpriteDimensions(100, 100);
+		scoreText->setText("0");
+		scoreText->setSpritePos({ 0, 50 });
+		scoreTexts.push_back(scoreText);
+		viewport_UI_sprites[newCam].push_back(scoreText);
+		
 	}
 
 	// Adding camera for UI for all players
 	global_UI_cam.SetViewport({ 0,0,WINDOW_WIDTH,WINDOW_HEIGHT });
+	
 
-	// Adding timer text sprite
-	timerText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "timerText");
-	timerText->setSpriteDimensions(global_UI_cam.GetViewport().w / 2, global_UI_cam.GetViewport().h / 10);
-	timerText->setText("Timer");
-	timerText->setSpritePos({ 300, 0 });
-	global_UI_sprites.push_back(timerText);
-	/*
-	// Adding police score sprite
-	scoreTexts[0] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "policeScore");
-	scoreTexts[0]->setSpriteDimensions(100, 100);
-	scoreTexts[0]->setText("0");
-	scoreTexts[0]->setSpritePos({ 0, 50 });
-	global_UI_sprites.push_back(scoreTexts[0]);
+	// Adding timer text sprites
+	for (int p = 0; p < 4; ++p)
+	{
+		for (int i = 0; i < 10; ++i)
+		{
+			timerNumbers[p][i] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "timerNumbers_" + (p * 10 + i));
+			timerNumbers[p][i]->setSpriteDimensions(50, 50);
+			timerNumbers[p][i]->setText(i,"");
+			timerNumbers[p][i]->setSpritePos({ WINDOW_WIDTH/2 - p*50, 0 });
+			timerNumbers[p][i]->setVisible(false);
+			global_UI_sprites.push_back(timerNumbers[p][i]);
+		}
+	}
 
-	// Adding criminals score sprite
-	scoreTexts[1] = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "criminalScore");
-	scoreTexts[1]->setSpriteDimensions(100, 100);
-	scoreTexts[1]->setText("0");
-	scoreTexts[1]->setSpritePos({ global_UI_cam.GetViewport().w - 2 * scoreTexts[1]->getSpriteDimensions().w, 50 });
-	global_UI_sprites.push_back(scoreTexts[1]);
-	*/
 }
 
 cSceneRacing::~cSceneRacing()
@@ -211,34 +214,41 @@ void cSceneRacing::update(double deltaTime)
 	// Updating the timer and transition to result scene.
 	timer += deltaTime;
 
-	// Checking whether the player has reached the finish
-	// end ending the scene, if he has.
-	vector<cPlayer*>::iterator player = players.begin();
-	for (player; player!=players.end(); player++)
+	// Display timer
+	for (int p = 0; p < 4; ++p)
 	{
-		cScoreMgr* scoreMgr = cScoreMgr::getInstance();
-		string name = (*player)->getName();
-		// If this score has been updated, since it was last read
-		// and the score is bigger than 0 (indicating that the finish was reached),
-		if (scoreMgr->isDirty(name+"_finish") && scoreMgr->getScore(name + "_finish") > 0)
+		// Setting all timer sprites invisible.
+		for (int i = 0; i < 10; ++i)
 		{
-			// save the time needed to reach the finish
-			scoreMgr->setScore(name + "_time", timer);
-			// and transition the scene.
-			cScoreMgr::getInstance()->SaveScores();
-			cGame::getInstance()->setActiveScene("result");
+			timerNumbers[p][i]->setVisible(false);
 		}
+		// Setting the right ones visible.
+		int i;
+		if(p>0)
+			i = (((int)timer) / (10*p)) % 10;
+		else
+			i = ((int)timer) % 10;
+
+		timerNumbers[p][i]->setVisible(true);
 	}
 
-
-
-
-	
-
+		
 }
 
 void cSceneRacing::render(SDL_Renderer * renderer)
 {
 	cScene::render(renderer);
+}
+
+void cSceneRacing::playerFinished(cPlayer * p)
+{
+	// Store the time needed to reach the finish
+	cScoreMgr::getInstance()->setScore(p->getName(), timer);
+
+	// Save highscores
+	cScoreMgr::getInstance()->SaveScores();
+
+	// Transition to result scene.
+	cGame::getInstance()->setActiveScene("result");
 }
 

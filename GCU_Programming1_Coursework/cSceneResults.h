@@ -11,7 +11,7 @@ class cSceneResults :
 {
 private:
 	cButtonController* buttonContr;
-	//cSpriteText* scoreTexts[NUMBER_OF_TEAMS];
+	vector<cSpriteText*> scoreTexts;
 
 public:
 	cSceneResults(SDL_Renderer* theRenderer);
