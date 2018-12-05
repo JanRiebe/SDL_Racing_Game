@@ -16,8 +16,11 @@ void cPlayer::OnEvent(AbstractEvent e)
 {
 	if (e.flag == DIRECTION && car)
 	{
-		car->accelerate(e.value_y);
-		car->steer(e.value_x);
+		if(e.value_y!=0)
+			car->accelerate(e.value_y);
+
+		if (e.value_x != 0)
+			car->steer(e.value_x);
 	}
 	else if (e.flag == CONFIRM)
 	{

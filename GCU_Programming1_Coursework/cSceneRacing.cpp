@@ -18,9 +18,8 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	// loading textures
 	cTextureMgr::getInstance()->addTexture("street", "Images\\street_tile_map.png");
 	cTextureMgr::getInstance()->addTexture("street_coll", "Images\\street_tile_map_collision.png");
-	cTextureMgr::getInstance()->addTexture("car_01", "Images\\car_01.png");
-	cTextureMgr::getInstance()->addTexture("car_01_destr", "Images\\car_01_destr.png");
-	cTextureMgr::getInstance()->addTexture("car_02", "Images\\ramp.png");
+	cTextureMgr::getInstance()->addTexture("car_01", "Images\\car_01_destr.png");
+	cTextureMgr::getInstance()->addTexture("car_02", "Images\\car_02_destr.png");
 
 	// loading sounds
 
@@ -50,6 +49,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	cSprite* safeHouse = new cSprite();
 	safeHouse->setTexture(cTextureMgr::getInstance()->getTexture("Charactervector"));
 	safeHouse->setSpritePos({ 256 * 14 , 256 * 11 });
+
 	//safeHouse->setSpriteDimensions(256, 256);
 	safeHouse->setSpriteScale({ 0.3f, 0.3f });
 	sprites.push_back(safeHouse);
@@ -58,9 +58,8 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	theCollisionMgr->addCollider(safeHouse);
 
 	cCar* testCar;
-	LPCSTR names[2] = { "car_01_destr" ,"car_02" };
+	LPCSTR names[2] = { "car_01" ,"car_02" };
 
-	LPCSTR scoreTextTextureNames[2] = { "scoreTxtr_01" ,"scoreTxtr_02" };
 
 	// Creating players and cameras.	
 	int numberOfPlayers = Input::GetNumberOfPlayers();
@@ -96,9 +95,9 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 		newCam->SetViewport(viewport);
 
 		// Assigning values to the car
-		testCar = new cCar(1.0f, 0.5f, 300.0f, 10.0f, 10.0f);
+		testCar = new cCar(1.0f, 0.1f, 1000.0f, 7.0f, 10.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
-		testCar->setSpritePos( {256 * 14 + 56 + 128 *i , 256 * 10 });// {256 * 4 + 56 + 128 *i , 256 * 7 });
+		testCar->setSpritePos( {256 * 4 + 56 + 128 *i , 256 * 7 });
 		testCar->setSpriteRotAngle(-180);
 		testCar->setSheetGrid(10, 1);
 		testCar->setSpriteScale({ 0.5f, 0.5f });
@@ -187,7 +186,7 @@ void cSceneRacing::activate()
 	}	
 	
 	// Playing background sounds
-	cSoundMgr::getInstance()->getSnd("racing_music")->play(1);
+	cSoundMgr::getInstance()->getSnd("racing_music")->play(-1);
 
 	// Clearing the scores from the last race.
 	cScoreMgr::getInstance()->clear();

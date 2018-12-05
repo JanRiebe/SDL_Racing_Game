@@ -23,7 +23,7 @@ void cCar::addImpulse(fpoint force)
 void cCar::accelerate(float force)
 {
 	// Adding a force in the forward direction of the sprite.
-	acceleration += forwardVector() * force * engine / mass;
+	acceleration += forwardVector() * (force * engine / mass) / ((damage+200)/200);
 }
 
 void cCar::steer(float angle)
@@ -110,8 +110,7 @@ void cCar::onCollision(CollisionMessage message, fpoint impulse)
 		addImpulse(force);
 
 		damage += force.length();
-		cout << "Car damage " << damage << endl;
-		setState(damage / 500);
+		setState(damage / 300);
 	}
 
 }
