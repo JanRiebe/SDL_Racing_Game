@@ -20,6 +20,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	cTextureMgr::getInstance()->addTexture("street_coll", "Images\\street_tile_map_collision.png");
 	cTextureMgr::getInstance()->addTexture("car_01", "Images\\car_01_destr.png");
 	cTextureMgr::getInstance()->addTexture("car_02", "Images\\car_02_destr.png");
+	cTextureMgr::getInstance()->addTexture("finish_line", "Images\\finish_line.png");
 
 	// loading sounds
 
@@ -46,16 +47,16 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	sprites.push_back(tmpSpriteAnim);
 	*/
 
-	cSprite* safeHouse = new cSprite();
-	safeHouse->setTexture(cTextureMgr::getInstance()->getTexture("Charactervector"));
-	safeHouse->setSpritePos({ 256 * 14 , 256 * 11 });
+	cSprite* finishLine = new cSprite();
+	finishLine->setTexture(cTextureMgr::getInstance()->getTexture("finish_line"));
+	finishLine->setSpritePos({ 256 * 14 , 256 * 11 });
 
 	//safeHouse->setSpriteDimensions(256, 256);
-	safeHouse->setSpriteScale({ 0.3f, 0.3f });
-	sprites.push_back(safeHouse);
-	safeHouse->setCollisionMessage(CHECKPOINT);
-	safeHouse->setStatic(true);
-	theCollisionMgr->addCollider(safeHouse);
+	finishLine->setSpriteScale({ 2, 2 });
+	sprites.push_back(finishLine);
+	finishLine->setCollisionMessage(CHECKPOINT);
+	finishLine->setStatic(true);
+	theCollisionMgr->addCollider(finishLine);
 
 	cCar* testCar;
 	LPCSTR names[2] = { "car_01" ,"car_02" };
@@ -113,7 +114,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 		// Giving the player a sprite to control.
 		player->car = testCar;
 		testCar->setController(player);
-		
+		/*
 		// Adding score text
 		cSpriteText* scoreText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "policeScore");
 		scoreText->setSpriteDimensions(100, 100);
@@ -121,7 +122,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 		scoreText->setSpritePos({ 0, 50 });
 		scoreTexts.push_back(scoreText);
 		viewport_UI_sprites[newCam].push_back(scoreText);
-		
+		*/
 	}
 
 	// Adding camera for UI for all players
@@ -156,8 +157,8 @@ cSceneRacing::~cSceneRacing()
 	// Cleaning up textures and sounds loaded for this scene.
 	cTextureMgr::getInstance()->deleteTexture("street");
 	cTextureMgr::getInstance()->deleteTexture("car_01");
-	cTextureMgr::getInstance()->deleteTexture("car_01_destr");
 	cTextureMgr::getInstance()->deleteTexture("car_02");
+	cTextureMgr::getInstance()->deleteTexture("finish_line");
 
 	// Cleaning up the players.
 	vector<cPlayer*>::iterator player = players.begin();

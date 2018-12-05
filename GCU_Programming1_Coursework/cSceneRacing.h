@@ -14,7 +14,7 @@ private:
 	cCollisionMgr* theCollisionMgr;
 	double timer;
 	cSpriteText* timerNumbers[4][10];
-	vector<cSpriteText*> scoreTexts;
+	//vector<cSpriteText*> scoreTexts;
 
 public:
 	cSceneRacing(SDL_Renderer* theRenderer);

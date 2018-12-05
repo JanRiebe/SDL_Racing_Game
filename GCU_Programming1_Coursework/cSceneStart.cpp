@@ -41,15 +41,15 @@ cSceneStart::cSceneStart(SDL_Renderer* theRenderer): cScene(theRenderer)
 	// Adding title text sprite
 	cSpriteText* titleText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "titleTxt");
 	titleText->setText("Jan's fun and educational racing game");
-	titleText->setSpriteDimensions(WINDOW_WIDTH / 2, WINDOW_WIDTH / 10);
-	titleText->setSpritePos({ WINDOW_WIDTH / 4, 50 });
+	titleText->setSpriteDimensions(WINDOW_WIDTH - 100, WINDOW_WIDTH / 10);
+	titleText->setSpritePos({ 50, 50 });
 	global_UI_sprites.push_back(titleText);
 
 	// Adding buttons
 	// Button A
 	cSpriteButton* buttonA = new cSpriteButton();
 	buttonA->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
-	buttonA->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
+	buttonA->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_WIDTH / 15);
 	buttonA->setSpritePos({ WINDOW_WIDTH / 2 - buttonA->getSpriteDimensions().w / 2, 200 });
 	buttonA->setCallbackFunction(&StartRaceScene);
 	global_UI_sprites.push_back(buttonA);
@@ -65,7 +65,7 @@ cSceneStart::cSceneStart(SDL_Renderer* theRenderer): cScene(theRenderer)
 	// Button C
 	cSpriteButton* buttonC = new cSpriteButton();
 	buttonC->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
-	buttonC->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
+	buttonC->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_WIDTH / 15);
 	buttonC->setSpritePos({ WINDOW_WIDTH / 2 - buttonC->getSpriteDimensions().w / 2, 350 });
 	buttonC->setCallbackFunction(&QuitGame);
 	global_UI_sprites.push_back(buttonC);
@@ -81,7 +81,7 @@ cSceneStart::cSceneStart(SDL_Renderer* theRenderer): cScene(theRenderer)
 	// Button B
 	cSpriteButton* buttonB = new cSpriteButton();
 	buttonB->setTexture(cTextureMgr::getInstance()->getTexture("Button"));
-	buttonB->setSpriteDimensions(WINDOW_WIDTH / 10, WINDOW_WIDTH / 20);
+	buttonB->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_WIDTH / 15);
 	buttonB->setSpritePos({ WINDOW_WIDTH / 2 - buttonB->getSpriteDimensions().w / 2, 275 });
 	buttonB->setCallbackFunction(&GoToHighscoreScreen);
 	global_UI_sprites.push_back(buttonB);

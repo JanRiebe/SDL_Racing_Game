@@ -97,7 +97,7 @@ void cCar::onCollision(CollisionMessage message, fpoint impulse)
 	}
 	else if (message == COLLISION)
 	{
-		cSoundMgr::getInstance()->getSnd("crash_fx")->play(1);
+		cSoundMgr::getInstance()->getSnd("crash_fx")->play(0);
 
 		// Resetting the position from the last update.
 		// This helps avoiding cars getting stuck within each other.
