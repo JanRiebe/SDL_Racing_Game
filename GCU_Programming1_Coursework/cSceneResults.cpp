@@ -31,7 +31,7 @@ cSceneResults::cSceneResults(SDL_Renderer* theRenderer) :cScene(theRenderer)
 
 	// Adding title text sprite
 	cSpriteText* titleText = new cSpriteText(theRenderer, cFontMgr::getInstance()->getFont("main_font"), "resultTitleTxt");
-	titleText->setText("Score");
+	titleText->setText("Game Over");
 	titleText->setSpriteDimensions(WINDOW_WIDTH / 5, WINDOW_WIDTH / 10);
 	titleText->setSpritePos({ WINDOW_WIDTH / 2 - titleText->getSpriteDimensions().w / 2, 50 });
 	global_UI_sprites.push_back(titleText);
