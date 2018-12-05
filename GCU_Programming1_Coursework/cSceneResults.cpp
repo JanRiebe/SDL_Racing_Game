@@ -110,10 +110,10 @@ void cSceneResults::activate()
 	vector<cSpriteText*>::iterator text = scoreTexts.begin();
 	for (text; text != scoreTexts.end(); text++, i++)
 	{
-		int score = scoreMgr->getScore("Player " + to_string(i));
+		int score = scoreMgr->getScore("Player_" + to_string(i));
 		
 		if (i < numberOfPlayers) {
-			(*text)->setText(score, "Player " + to_string(i));
+			(*text)->setText(score, "Player_" + to_string(i));
 			(*text)->setVisible(true);
 		}
 		else

@@ -67,7 +67,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 	for (int i = 0; i < numberOfPlayers; ++i)
 	{
 		// Creating a player
-		cPlayer* player = new cPlayer("Player " + to_string(i), this);
+		cPlayer* player = new cPlayer("Player_" + to_string(i), this);
 		players.push_back(player);
 
 		// Creating a camera per player.
@@ -188,6 +188,9 @@ void cSceneRacing::activate()
 	
 	// Playing background sounds
 	cSoundMgr::getInstance()->getSnd("racing_music")->play(1);
+
+	// Clearing the scores from the last race.
+	cScoreMgr::getInstance()->clear();
 }
 
 void cSceneRacing::deactivate()
@@ -223,11 +226,7 @@ void cSceneRacing::update(double deltaTime)
 			timerNumbers[p][i]->setVisible(false);
 		}
 		// Setting the right ones visible.
-		int i;
-		if(p>0)
-			i = (((int)timer) / (10*p)) % 10;
-		else
-			i = ((int)timer) % 10;
+		int i = ( ((int)timer) / ((int)pow(10,p))) % 10;
 
 		timerNumbers[p][i]->setVisible(true);
 	}

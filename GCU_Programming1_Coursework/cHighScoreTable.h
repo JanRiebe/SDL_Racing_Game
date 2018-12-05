@@ -13,7 +13,8 @@ private:
 
 		bool operator < ( const Item& rhs) const
 		{
-			return rhs.score < score;
+			// Inversed comparison to sort in inverse order.
+			return rhs.score > score;
 		}
 	};
 
@@ -21,8 +22,8 @@ private:
 
 	Item tableEntry;
 
-	vector<Item*> tableEntries;
-	vector<Item*>::iterator row;
+	vector<Item> tableEntries;
+	//vector<Item*>::iterator row;
 
 
 public:

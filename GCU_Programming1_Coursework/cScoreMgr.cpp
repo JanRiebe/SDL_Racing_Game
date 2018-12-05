@@ -31,10 +31,6 @@ cScoreMgr* cScoreMgr::getInstance()
 	return cScoreMgr::pInstance;
 }
 
-map<string, int> cScoreMgr::getAllScores()
-{
-	return scores;
-}
 
 void cScoreMgr::setScore(string name, int value)
 {
@@ -73,6 +69,12 @@ bool cScoreMgr::isDirty(string name)
 
 	// Returning that the score is not dirty if no score with this name exists.
 	return false;
+}
+
+void cScoreMgr::clear()
+{
+	scores.clear();
+	dirty.clear();
 }
 
 void cScoreMgr::SaveScores()

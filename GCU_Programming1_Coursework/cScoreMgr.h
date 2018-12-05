@@ -21,11 +21,11 @@ public:
 
 	static cScoreMgr* getInstance();
 
-	map<string, int> getAllScores();
 	void setScore(string, int value);
 	int getScore(string);
 	void increment(string);
 	bool isDirty(string);
+	void clear();
 
 	void SaveScores();
 	void LoadScores();
