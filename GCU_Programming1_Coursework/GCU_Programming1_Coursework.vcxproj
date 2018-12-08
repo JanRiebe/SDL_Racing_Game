@@ -48,7 +48,6 @@
     <ClCompile Include="cTextureMgr.cpp" />
     <ClCompile Include="cScene.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="iCollider.cpp" />
     <ClCompile Include="IInputChannelListener.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputChannel.cpp" />
@@ -94,6 +93,10 @@
     <ClInclude Include="cScene.h" />
     <ClInclude Include="inputHeaders.h" />
     <ClInclude Include="MapDefinition.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{69d591d8-5701-4cae-b171-a69cca8ea401}</ProjectGuid>

@@ -105,9 +105,6 @@
     <ClCompile Include="cSpriteState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="iCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cHighScoreTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -236,5 +233,9 @@
     <ClInclude Include="cSceneHighscores.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

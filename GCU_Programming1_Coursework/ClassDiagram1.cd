@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Association&lt;A, B&gt;">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAACAAAAICAAAAEAAAAAAAAAAEAAAAAAAAAAAACAQA=</HashCode>
+      <FileName>Association.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cButtonController">
+    <Position X="12.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAEAAEAAAAAAAAAAAIAMgAAAAAABAAA=</HashCode>
+      <FileName>cButtonController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cCamera">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAgBAACAAAAAAJAAADIAAAAAAAgAEAAAAAAAEAAA=</HashCode>
+      <FileName>cCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cCar">
+    <Position X="7.25" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYAAQAAAAAAAwAFAAAAMAAAAAGACgBQAQEQIACQEBAA=</HashCode>
+      <FileName>cCar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cCollisionMgr">
+    <Position X="24.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAgAgAAAAAARABIAAABgQAwCQAAgACAEBA=</HashCode>
+      <FileName>cCollisionMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cFont">
+    <Position X="26.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAIAAAABAAAAAAAAAIAAAAGAAAAAA=</HashCode>
+      <FileName>cFont.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cFontMgr">
+    <Position X="21" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAABAAAAAEAAAQIFAACAAAAABA=</HashCode>
+      <FileName>cFontMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cGame">
+    <Position X="22.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SBAEAgEAAgEAGAABAAEAEJAAAAAEAAQADAAiAACUgAA=</HashCode>
+      <FileName>cGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cHighScoreTable">
+    <Position X="24.5" Y="5.75" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="cHighScoreTable::Item" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>cHighScoreTable.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAQAAIJAAAIAGAAAAgAQAJAAAAAAAQAAIAAAA=</HashCode>
+      <FileName>cHighScoreTable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller">
+    <Position X="14.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAQAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cPlayer">
+    <Position X="17" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABACAAAAgAAAAAEAAAIAIAAAEAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>cPlayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cScene">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEAAAAAAAAAAAAAAQAAAAAAgAAAiCBAAAACUACA=</HashCode>
+      <FileName>cScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSceneHighscores">
+    <Position X="8.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAgAAAAAAAACAQAAAAAAAAAQAAAAAAACAAAA=</HashCode>
+      <FileName>cSceneHighscores.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSceneRacing">
+    <Position X="10.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAECAAAAAAAAAAACAQAAIAAAAAAAAIAIAAAAUAAA=</HashCode>
+      <FileName>cSceneRacing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSceneResults">
+    <Position X="13" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAEAAAAAAIAAAgAAAQAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>cSceneResults.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSceneStart">
+    <Position X="15.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABEAAAAAAAAAAAAAAQAAAAAQAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>cSceneStart.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cScoreMgr">
+    <Position X="26.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAABAAAAAAAAAAAIRCgAAAAACAWAAAAiAAAgAAA=</HashCode>
+      <FileName>cScoreMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSDL2WNDManager">
+    <Position X="21" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAIAEAAAEAAIAABABAAAQACAACAAAAAAI=</HashCode>
+      <FileName>cSDL2WNDManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSound">
+    <Position X="22.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAISIAAAAAAAAAAAICAAACIAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>cSound.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSoundMgr">
+    <Position X="24.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAEAAgAAAAAAgAQAAAICAgACAAA=</HashCode>
+      <FileName>cSoundMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSprite">
+    <Position X="5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QzAGIAgASAAAAkyCADACYgAgAAAGCAAgBAQICiAUEAA=</HashCode>
+      <FileName>cSprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSpriteAnimation">
+    <Position X="2.75" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAAAAAMAAAIACCACQAQAUAAAAAAAUIAA=</HashCode>
+      <FileName>cSpriteAnimation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSpriteButton">
+    <Position X="0.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABEAAQAAAAAAAAEDAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>cSpriteButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSpriteMap">
+    <Position X="5" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAIgAAAAAKAAIAAAAAABAAAAAAAAAQAQAAA=</HashCode>
+      <FileName>cSpriteMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSpriteSheet">
+    <Position X="5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAgAAAAAAAAAAAAABAIAAAAEAgCBAACAAAAIAQAAA=</HashCode>
+      <FileName>cSpriteSheet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSpriteState">
+    <Position X="7.25" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAAQAAQ=</HashCode>
+      <FileName>cSpriteState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSpriteText">
+    <Position X="9.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAIAABAAAAAAAAACAAAAAACAAAAAgACACAAAAAAIIAA=</HashCode>
+      <FileName>cSpriteText.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cTexture">
+    <Position X="26.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABIAAAhAAAAAkAAIEAAACAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>cTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cTextureMgr">
+    <Position X="21" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAgAAAhAAIAAAAAAACQQIAAACAAAEAAA=</HashCode>
+      <FileName>cTextureMgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="iCollider">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAEgAACAAAAAAAAAACAAAAAAAACAQAAA=</HashCode>
+      <FileName>iCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IInputChannelListener">
+    <Position X="14.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAEAACAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IInputChannelListener.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Input">
+    <Position X="22.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAQAAAAAAWAAAEABJAAAAIAAQggQAAQA=</HashCode>
+      <FileName>Input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputChannel">
+    <Position X="24.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAIABAAAAAAAACAAAEAA=</HashCode>
+      <FileName>InputChannel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="AbstractEvent">
+    <Position X="21" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAMAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractEvent.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="fpoint">
+    <Position X="1.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAQAAAAAAAABAAAAgAAAAYAA=</HashCode>
+      <FileName>GameConstants.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MapDefinition">
+    <Position X="22.75" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>MapDefinition.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="FPoint" Collapsed="true">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameConstants.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="AbstractEventFlag">
+    <Position X="21" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAQAAAAAAAAAAAAAQACAAAAAAAAA=</HashCode>
+      <FileName>AbstractEvent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="soundType">
+    <Position X="26.25" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameConstants.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="textType">
+    <Position X="21" Y="24.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAEAEAAAAA=</HashCode>
+      <FileName>GameConstants.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CollisionMessage">
+    <Position X="22.75" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIQAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameConstants.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="deviceID">
+    <Position X="24.5" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAACAAAAAAAAAKAABAAAAAAAAEAAE=</HashCode>
+      <FileName>Input.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
