@@ -96,7 +96,7 @@ cSceneRacing::cSceneRacing(SDL_Renderer* theRenderer) : cScene(theRenderer)
 		newCam->SetViewport(viewport);
 
 		// Assigning values to the car
-		testCar = new cCar(1.0f, 0.1f, 1000.0f, 7.0f, 10.0f);
+		testCar = new cCar(1.0f, 0.1f, 400.0f, 10.0f, 10.0f);
 		testCar->setTexture(cTextureMgr::getInstance()->getTexture(names[i]));
 		testCar->setSpritePos( {256 * 4 + 56 + 128 *i , 256 * 7 });
 		testCar->setSpriteRotAngle(-180);

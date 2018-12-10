@@ -93,10 +93,14 @@
     <ClInclude Include="cScene.h" />
     <ClInclude Include="inputHeaders.h" />
     <ClInclude Include="MapDefinition.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GCU_Programming1_Coursework.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{69d591d8-5701-4cae-b171-a69cca8ea401}</ProjectGuid>
